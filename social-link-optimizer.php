@@ -155,6 +155,10 @@ function prefix_filter_social_links_stylesheets() {
 }
 add_action( 'wp_enqueue_scripts', 'prefix_filter_social_links_stylesheets' );
 
+/**
+ * 5. Add page template
+ * @see https://www.wpexplorer.com/wordpress-page-templates-plugin/
+ */
 class GPASocialLinkOptimizerTemplate {
 
 	/**
