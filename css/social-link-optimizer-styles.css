@@ -1,0 +1,52 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+
+.gpa-social-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(32rem, 1fr));
+  grid-column-gap: 2rem;
+  grid-row-gap: 8rem;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 120rem !important; /* override twenty-twenty */
+  list-style: none;
+}
+
+.gpa-social-list > li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.gpa-social-list > li > .gpa-social-title {
+  order: 1;
+  margin: 2rem auto;
+}
+
+.gpa-social-list > li > .gpa-social-title > a::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: block;
+  cursor: pointer;
+}
+
+.gpa-social-list > li > .gpa-social-thumbnail {
+  height: 20rem;
+  overflow: hidden;
+}
+
+@media (max-width: 739px) {
+  .gpa-social-list > li > .gpa-social-thumbnail {
+    height: auto;
+  }
+}
+
+.gpa-social-list > li > .gpa-social-thumbnail > img {
+  object-fit: scale-down;
+}
