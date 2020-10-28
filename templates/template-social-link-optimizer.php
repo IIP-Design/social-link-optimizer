@@ -70,7 +70,7 @@ get_header();
             </ul>
             <?php
           } else {
-            the_content( __( 'Continue reading', 'twentytwenty' ) );
+            the_content( __( 'Continue reading', 'gpalab-slo' ) );
           }
           ?>
     
@@ -82,7 +82,7 @@ get_header();
         <?php
         wp_link_pages(
           array(
-            'before'      => '<nav class="post-nav-links bg-light-background" aria-label="' . esc_attr__( 'Page', 'twentytwenty' ) . '"><span class="label">' . __( 'Pages:', 'twentytwenty' ) . '</span>',
+            'before'      => '<nav class="post-nav-links bg-light-background" aria-label="' . esc_attr__( 'Page', 'gpalab-slo' ) . '"><span class="label">' . __( 'Pages:', 'gpalab-slo' ) . '</span>',
             'after'       => '</nav>',
             'link_before' => '<span class="page-number">',
             'link_after'  => '</span>',

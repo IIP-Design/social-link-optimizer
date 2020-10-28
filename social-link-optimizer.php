@@ -8,7 +8,7 @@
  * Author URI:        https://lab.america.gov
  * License:           GNU General Public License v2.0
  * License URI:       https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
- * Text Domain:       gpalab-social-link-optimizer
+ * Text Domain:       gpalab-slo
  *
  * @package GPALAB_SLO
  */
@@ -25,33 +25,33 @@ $version = '0.0.1';
  */
 function gpa_lab_social_link_optimizer() {
   $labels = array(
-    'name'                  => _x( 'Social Links', 'Post Type General Name', 'text_domain' ),
-    'singular_name'         => _x( 'Social Link', 'Post Type Singular Name', 'text_domain' ),
-    'menu_name'             => __( 'Social Links', 'text_domain' ),
-    'name_admin_bar'        => __( 'Social Links', 'text_domain' ),
-    'archives'              => __( 'Social Links', 'text_domain' ),
-    'attributes'            => __( 'Item Attributes', 'text_domain' ),
-    'parent_item_colon'     => __( 'Parent Item:', 'text_domain' ),
-    'all_items'             => __( 'All Items', 'text_domain' ),
-    'add_new_item'          => __( 'Add New Item', 'text_domain' ),
-    'add_new'               => __( 'Add New', 'text_domain' ),
-    'new_item'              => __( 'New Item', 'text_domain' ),
-    'edit_item'             => __( 'Edit Item', 'text_domain' ),
-    'update_item'           => __( 'Update Item', 'text_domain' ),
-    'view_item'             => __( 'View Item', 'text_domain' ),
-    'view_items'            => __( 'View Items', 'text_domain' ),
-    'search_items'          => __( 'Search Item', 'text_domain' ),
-    'not_found'             => __( 'Not found', 'text_domain' ),
-    'not_found_in_trash'    => __( 'Not found in Trash', 'text_domain' ),
-    'featured_image'        => __( 'Featured Image', 'text_domain' ),
-    'set_featured_image'    => __( 'Set featured image', 'text_domain' ),
-    'remove_featured_image' => __( 'Remove featured image', 'text_domain' ),
-    'use_featured_image'    => __( 'Use as featured image', 'text_domain' ),
-    'insert_into_item'      => __( 'Insert into item', 'text_domain' ),
-    'uploaded_to_this_item' => __( 'Uploaded to this item', 'text_domain' ),
-    'items_list'            => __( 'Items list', 'text_domain' ),
-    'items_list_navigation' => __( 'Items list navigation', 'text_domain' ),
-    'filter_items_list'     => __( 'Filter items list', 'text_domain' ),
+    'name'                  => _x( 'Social Links', 'Post Type General Name', 'gpalab-slo' ),
+    'singular_name'         => _x( 'Social Link', 'Post Type Singular Name', 'gpalab-slo' ),
+    'menu_name'             => __( 'Social Links', 'gpalab-slo' ),
+    'name_admin_bar'        => __( 'Social Links', 'gpalab-slo' ),
+    'archives'              => __( 'Social Links', 'gpalab-slo' ),
+    'attributes'            => __( 'Item Attributes', 'gpalab-slo' ),
+    'parent_item_colon'     => __( 'Parent Item:', 'gpalab-slo' ),
+    'all_items'             => __( 'All Items', 'gpalab-slo' ),
+    'add_new_item'          => __( 'Add New Item', 'gpalab-slo' ),
+    'add_new'               => __( 'Add New', 'gpalab-slo' ),
+    'new_item'              => __( 'New Item', 'gpalab-slo' ),
+    'edit_item'             => __( 'Edit Item', 'gpalab-slo' ),
+    'update_item'           => __( 'Update Item', 'gpalab-slo' ),
+    'view_item'             => __( 'View Item', 'gpalab-slo' ),
+    'view_items'            => __( 'View Items', 'gpalab-slo' ),
+    'search_items'          => __( 'Search Item', 'gpalab-slo' ),
+    'not_found'             => __( 'Not found', 'gpalab-slo' ),
+    'not_found_in_trash'    => __( 'Not found in Trash', 'gpalab-slo' ),
+    'featured_image'        => __( 'Featured Image', 'gpalab-slo' ),
+    'set_featured_image'    => __( 'Set featured image', 'gpalab-slo' ),
+    'remove_featured_image' => __( 'Remove featured image', 'gpalab-slo' ),
+    'use_featured_image'    => __( 'Use as featured image', 'gpalab-slo' ),
+    'insert_into_item'      => __( 'Insert into item', 'gpalab-slo' ),
+    'uploaded_to_this_item' => __( 'Uploaded to this item', 'gpalab-slo' ),
+    'items_list'            => __( 'Items list', 'gpalab-slo' ),
+    'items_list_navigation' => __( 'Items list navigation', 'gpalab-slo' ),
+    'filter_items_list'     => __( 'Filter items list', 'gpalab-slo' ),
   );
 
   $rewrite = array(
@@ -62,8 +62,8 @@ function gpa_lab_social_link_optimizer() {
   );
 
   $args = array(
-    'label'               => __( 'Social Link', 'text_domain' ),
-    'description'         => __( 'Post Type Description', 'text_domain' ),
+    'label'               => __( 'Social Link', 'gpalab-slo' ),
+    'description'         => __( 'Post Type Description', 'gpalab-slo' ),
     'labels'              => $labels,
     'supports'            => array( 'title', 'thumbnail', 'custom-fields' ),
     'taxonomies'          => array( 'category', 'post_tag' ),
@@ -96,7 +96,7 @@ add_action( 'init', 'gpa_lab_social_link_optimizer', 0 );
 function gpa_lab_social_link_optimizer_custom_meta() {
   add_meta_box(
     'gpa_lab_meta',
-    __( 'Link this social post to', 'gpa_lab-textdomain' ),
+    __( 'Link this social post to', 'gpalab-slo' ),
     'gpa_lab_social_link_optimizer_meta_callback',
     'social_link'
   );
@@ -121,7 +121,7 @@ function gpa_lab_social_link_optimizer_meta_callback( $post ) {
       class="gpa-lab-social-links-row-title"
       style="margin-right: 0.5rem;"
     >
-      <?php esc_html_e( 'Link:', 'gpa_lab-textdomain' ); ?>
+      <?php esc_html_e( 'Link:', 'gpalab-slo' ); ?>
     </label>
     <input
       type="text"
