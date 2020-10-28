@@ -1,0 +1,21 @@
+{
+  "name": "gpalab/social-link-optimizer",
+  "type": "wordpress-plugin",
+  "description" : "Plugin to add a Social Link custom post type, custom meta box, and Social Link Optimizer page template",
+  "authors": [
+    {
+      "name": "U.S. Department of State, Bureau of Global Public Affairs Digital Lab <gpa-lab@america.gov>"
+    },
+    {
+      "name": "Edwin Mah"
+    },
+    {
+      "name": "Marek Rewers"
+    }
+  ],
+  "require": {
+    "composer/installers": "~1.0"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable" : true
+}
