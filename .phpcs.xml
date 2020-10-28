@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<ruleset name="GPA/LAB Standard" namespace="GPALAB\CS\Standard">
+
+<description>A modification on the WordPress PHP coding standard, which comforms to the GPA/LAB style guide.</description>
+
+<!-- List of files/directories to check. -->
+<file>./templates</file>
+<file>./social-link-optimizer.php</file>
+
+<!-- Exclude empty index.php files from testing. -->
+<exclude-pattern>*/vendor</exclude-pattern>
+<exclude-pattern>*/index.php</exclude-pattern>
+
+<arg name="colors"/>
+<arg name="extensions" value="php" />
+<arg value="s"/>
+
+<!-- Uncomment the below line if you only want a summary report. -->
+<!-- <arg name="report" value="summary" /> -->
+
+<rule ref="PHPCompatibilityWP" />
+
+<!-- Include the three WordPress coding standards rulesets. -->
+<rule ref="WordPress-Core" />
+<rule ref="WordPress-Docs" />
+<rule ref="WordPress-Extra" />
+
+<!-- Exclude unwanted rules from the Wordpress ruleset. -->
+<rule ref="WordPress">
+  <exclude name="Generic.WhiteSpace.DisallowSpaceIndent" />
+  <exclude name="PEAR.Functions.FunctionCallSignature.Indent" />
+  <exclude name="PEAR.Functions.FunctionCallSignature.OpeningIndent" />
+  <exclude name="WordPress.Arrays.ArrayIndentation.ItemNotAligned" />
+  <exclude name="WordPress.Arrays.ArrayIndentation.MultiLineArrayItemNotAligned" />
+  <exclude name="WordPress.WhiteSpace.PrecisionAlignment" />
+</rule>
+
+<!-- Add custom rule to use two spaces for indents rather than tabs. -->
+<rule ref="Generic.WhiteSpace.ScopeIndent">
+  <properties>
+    <property name="indent" value="2"/>
+    <property name="tabIndent" value="false"/>
+  </properties>
+</rule>
+
+</ruleset>

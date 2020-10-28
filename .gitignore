@@ -1,1 +1,6 @@
+# Local files
 .DS_Store
+.vscode/
+
+# Dependencies
+vendor/
