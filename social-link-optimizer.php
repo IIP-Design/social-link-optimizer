@@ -98,7 +98,9 @@ function gpa_lab_social_link_optimizer_custom_meta() {
     'gpa_lab_meta',
     __( 'Link this social post to', 'gpalab-slo' ),
     'gpa_lab_social_link_optimizer_meta_callback',
-    'social_link'
+    'social_link',
+    'normal',
+    'high'
   );
 }
 add_action( 'add_meta_boxes', 'gpa_lab_social_link_optimizer_custom_meta' );
@@ -175,7 +177,23 @@ function prefix_filter_social_links_permalink( $url, $post ) {
 add_filter( 'post_type_link', 'prefix_filter_social_links_permalink', 10, 2 );
 
 /**
- * 4. enqueue styles
+ * 4. Relocate featured image meta box
+ */
+function gpa_lab_social_link_optimizer_image_meta_box() {
+  remove_meta_box( 'postimagediv', 'social_link', 'side' );
+  add_meta_box(
+    'postimagediv',
+    __( 'Featured Image' ),
+    'post_thumbnail_meta_box',
+    'social_link',
+    'normal', // move to normal from side
+    'low'
+  );
+}
+add_action('do_meta_boxes', 'gpa_lab_social_link_optimizer_image_meta_box');
+
+/**
+ * 5. enqueue styles
  */
 function prefix_filter_social_links_stylesheets() {
   wp_enqueue_style(
@@ -188,7 +206,7 @@ function prefix_filter_social_links_stylesheets() {
 add_action( 'wp_enqueue_scripts', 'prefix_filter_social_links_stylesheets' );
 
 /**
- * 5. Add page template
+ * 6. Add page template
  *
  * @see https://www.wpexplorer.com/wordpress-page-templates-plugin/
  */
