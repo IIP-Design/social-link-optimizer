@@ -23,7 +23,7 @@ $version = '0.0.1';
 /**
  * 1. Register custom post type
  */
-function gpa_lab_social_link_optimizer() {
+function gpalab_slo_cpt() {
   $labels = array(
     'name'                  => _x( 'Social Links', 'Post Type General Name', 'gpalab-slo' ),
     'singular_name'         => _x( 'Social Link', 'Post Type Singular Name', 'gpalab-slo' ),
@@ -86,32 +86,30 @@ function gpa_lab_social_link_optimizer() {
   register_post_type( 'social_link', $args );
 
 }
-
-add_action( 'init', 'gpa_lab_social_link_optimizer', 0 );
-
+add_action( 'init', 'gpalab_slo_cpt', 0 );
 
 /**
  * 2. Add custom meta box
  */
-function gpa_lab_social_link_optimizer_custom_meta() {
+function gpalab_slo_custom_meta() {
   add_meta_box(
     'gpa_lab_meta',
     __( 'Link this social post to', 'gpalab-slo' ),
-    'gpa_lab_social_link_optimizer_meta_callback',
+    'gpalab_slo_meta_callback',
     'social_link',
     'normal',
     'high'
   );
 }
-add_action( 'add_meta_boxes', 'gpa_lab_social_link_optimizer_custom_meta' );
+add_action( 'add_meta_boxes', 'gpalab_slo_custom_meta' );
 
 /**
  * 2.1 Display the meta box
  *
  * @param object $post    WordPress post Object.
  */
-function gpa_lab_social_link_optimizer_meta_callback( $post ) {
-  wp_nonce_field( basename( __FILE__ ), 'gpa_lab_social_link_optimizer_nonce' );
+function gpalab_slo_meta_callback( $post ) {
+  wp_nonce_field( basename( __FILE__ ), 'gpalab_slo_nonce' );
 
   $post_meta = get_post_meta( $post->ID );
   $slo_meta  = $post_meta['gpa-lab-social-links-meta-text'];
@@ -142,11 +140,11 @@ function gpa_lab_social_link_optimizer_meta_callback( $post ) {
  *
  * @param int $post_id   WordPress post id.
  */
-function gpa_lab_social_link_optimizer_meta_save( $post_id ) {
+function gpalab_slo_meta_save( $post_id ) {
   // Save status.
   $is_autosave    = wp_is_post_autosave( $post_id );
   $is_revision    = wp_is_post_revision( $post_id );
-  $is_valid_nonce = ( isset( $_POST['gpa_lab_social_link_optimizer_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['gpa_lab_social_link_optimizer_nonce'] ) ), basename( __FILE__ ) ) ) ? 'true' : 'false';
+  $is_valid_nonce = ( isset( $_POST['gpalab_slo_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['gpalab_slo_nonce'] ) ), basename( __FILE__ ) ) ) ? 'true' : 'false';
 
   if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {
     return;
@@ -157,7 +155,7 @@ function gpa_lab_social_link_optimizer_meta_save( $post_id ) {
     update_post_meta( $post_id, 'gpa-lab-social-links-meta-text', sanitize_text_field( wp_unslash( $_POST['gpa-lab-social-links-meta-text'] ) ) );
   }
 }
-add_action( 'save_post', 'gpa_lab_social_link_optimizer_meta_save' );
+add_action( 'save_post', 'gpalab_slo_meta_save' );
 
 /**
  * 3. Filter the Social Link permalink
@@ -165,7 +163,7 @@ add_action( 'save_post', 'gpa_lab_social_link_optimizer_meta_save' );
  * @param string $url     Social media link.
  * @param object $post    WordPress post Object.
  */
-function prefix_filter_social_links_permalink( $url, $post ) {
+function gpalab_slo_filter_permalink( $url, $post ) {
   $custom_link = get_post_field( 'gpa-lab-social-links-meta-text', $post->ID );
 
   if ( $custom_link && 'social_link' === get_post_type( $post->ID ) ) {
@@ -174,12 +172,12 @@ function prefix_filter_social_links_permalink( $url, $post ) {
 
   return $url;
 }
-add_filter( 'post_type_link', 'prefix_filter_social_links_permalink', 10, 2 );
+add_filter( 'post_type_link', 'gpalab_slo_filter_permalink', 10, 2 );
 
 /**
  * 4. Relocate featured image meta box
  */
-function gpa_lab_social_link_optimizer_image_meta_box() {
+function gpalab_slo_image_meta_box() {
   remove_meta_box( 'postimagediv', 'social_link', 'side' );
   add_meta_box(
     'postimagediv',
@@ -190,12 +188,12 @@ function gpa_lab_social_link_optimizer_image_meta_box() {
     'low'
   );
 }
-add_action('do_meta_boxes', 'gpa_lab_social_link_optimizer_image_meta_box');
+add_action('do_meta_boxes', 'gpalab_slo_image_meta_box');
 
 /**
  * 5. enqueue styles
  */
-function prefix_filter_social_links_stylesheets() {
+function gpalab_slo_stylesheets() {
   wp_enqueue_style(
     'social-bio-links',
     plugin_dir_url( __FILE__ ) . 'css/social-link-optimizer-styles.css',
@@ -203,7 +201,7 @@ function prefix_filter_social_links_stylesheets() {
     $version
   );
 }
-add_action( 'wp_enqueue_scripts', 'prefix_filter_social_links_stylesheets' );
+add_action( 'wp_enqueue_scripts', 'gpalab_slo_stylesheets' );
 
 /**
  * 6. Add page template
