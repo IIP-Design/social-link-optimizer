@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Social Link Optimizer (in child theme)
+ * Template Name: Social Link Optimizer
  * Template Post Type: page
  *
  * @package GPALAB_SLO
@@ -41,8 +41,14 @@ get_header();
           if ( is_search() || ! is_singular() && 'summary' === get_theme_mod( 'blog_content', 'full' ) ) {
             the_excerpt();
           } elseif ( $is_gpaslo_page_template ) {
-            ?>
-            <ul class="gpa-social-list">
+						$all_settings = get_option( 'gpalab_slo_settings_option_name' );;
+						$display_as = $all_settings['display_gpalab_slo_as_a_0'];
+						$layout = ( isset( $display_as ) && $display_as !== '' )
+							? $display_as
+							: 'grid';
+						?>
+
+            <ul class="gpa-social-list <?php echo $layout; ?>">
               <?php
 
               $args      = array( 'post_type' => 'social_link' );
