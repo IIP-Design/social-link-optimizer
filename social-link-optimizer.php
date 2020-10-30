@@ -380,3 +380,8 @@ class GPASocialLinkOptimizerTemplate {
 
 }
 add_action( 'plugins_loaded', array( 'GPASocialLinkOptimizerTemplate', 'get_instance' ) );
+
+/**
+ * 7. Add settings subpage
+ */
+require 'includes/gpalab-slo-settings.php';
