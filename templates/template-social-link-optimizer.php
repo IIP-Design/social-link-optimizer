@@ -52,20 +52,23 @@ get_header();
               <?php
 
               $args      = array( 'post_type' => 'social_link' );
-              $the_query = new WP_Query( $args );
+							$the_query = new WP_Query( $args );
 
               if ( $the_query->have_posts() ) {
                 while ( $the_query->have_posts() ) {
-                  $the_query->the_post();
-                  echo '<li>';
-                  echo '<h2 class="gpa-social-title">';
-                  echo '<a href="' . esc_url( get_permalink() ) . '">';
-                  the_title();
-                  echo '</a>';
-                  echo '</h2>';
-                  echo '<div class="gpa-social-thumbnail">';
-                  the_post_thumbnail();
-                  echo '</div>';
+									$the_query->the_post();
+									$anchor_tag_open = '<a href="' . esc_url( get_permalink() ) . '">';
+									$anchor_tag_close = '</a>';
+							
+									echo '<li>';
+									echo '<h2 class="gpa-social-title">';
+									echo $layout == 'list' ? $anchor_tag_open : null;
+									the_title();
+									echo $layout == 'list' ? $anchor_tag_close : null;
+									echo '</h2>';
+                  echo $layout == 'grid' ? $anchor_tag_open : null;
+                  $layout == 'grid' ? the_post_thumbnail( 'post-thumbnail', ['class' => 'gpa-social-thumbnail'] ) : null;
+                  echo $layout == 'grid' ? $anchor_tag_close : null;
                   echo '</li>';
                 }
               } else {
