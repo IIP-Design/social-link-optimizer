@@ -35,10 +35,12 @@ get_header();
     
         <div class="entry-content gpa-social-link-optimizer">
     
-          <?php
+					<?php
+					$is_gpaslo_page_template = is_page_template( '/templates/template-social-link-optimizer.php' );
+
           if ( is_search() || ! is_singular() && 'summary' === get_theme_mod( 'blog_content', 'full' ) ) {
             the_excerpt();
-          } elseif ( is_page( 'social-bio' ) ) {
+          } elseif ( $is_gpaslo_page_template ) {
             ?>
             <ul class="gpa-social-list">
               <?php
