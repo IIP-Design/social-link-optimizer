@@ -129,7 +129,7 @@ function gpalab_slo_meta_callback( $post ) {
       name="gpa-lab-social-links-meta-text" 
       id="gpa-lab-social-links-meta-text"
       style="flex-grow: 1;"
-      value="<?php isset( $slo_meta ) ? $slo_meta[0] : ''; ?>" 
+      value="<?php echo isset( $slo_meta ) ? $slo_meta[0] : ''; ?>" 
     />
   </p>
 
