@@ -91,6 +91,14 @@ class GPALabSLOSettings {
 			'gpalab-slo-settings-admin', // page
 			'gpalab_slo_settings_setting_section' // section
 		);
+
+		add_settings_field(
+			'instagram_feed_5', // id
+			'Instagram feed:', // title
+			array( $this, 'instagram_feed_5_callback' ), // callback
+			'gpalab-slo-settings-admin', // page
+			'gpalab_slo_settings_setting_section' // section
+		);
 	}
 
 	public function gpalab_slo_settings_sanitize($input) {
@@ -113,6 +121,10 @@ class GPALabSLOSettings {
 
 		if ( isset( $input['youtube_channel_4'] ) ) {
 			$sanitary_values['youtube_channel_4'] = sanitize_text_field( $input['youtube_channel_4'] );
+		}
+
+		if ( isset( $input['instagram_feed_5'] ) ) {
+			$sanitary_values['instagram_feed_5'] = sanitize_text_field( $input['instagram_feed_5'] );
 		}
 
 		return $sanitary_values;
@@ -154,6 +166,13 @@ class GPALabSLOSettings {
 		printf(
 			'<input class="regular-text" type="text" name="gpalab_slo_settings_option_name[youtube_channel_4]" id="youtube_channel_4" value="%s">',
 			isset( $this->gpalab_slo_settings_options['youtube_channel_4'] ) ? esc_attr( $this->gpalab_slo_settings_options['youtube_channel_4']) : ''
+		);
+	}
+
+	public function instagram_feed_5_callback() {
+		printf(
+			'<input class="regular-text" type="text" name="gpalab_slo_settings_option_name[instagram_feed_5]" id="instagram_feed_5" value="%s">',
+			isset( $this->gpalab_slo_settings_options['instagram_feed_5'] ) ? esc_attr( $this->gpalab_slo_settings_options['instagram_feed_5']) : ''
 		);
 	}
 
