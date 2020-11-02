@@ -46,7 +46,36 @@ get_header();
 						$layout = ( isset( $display_as ) && $display_as !== '' )
 							? $display_as
 							: 'grid';
-						?>
+
+						$social_accts = array(
+							'twitter'  => $all_settings['twitter_feed_3'],
+							'facebook' => $all_settings['facebook_page_1'],
+							'youtube'  => $all_settings['youtube_channel_4'],
+							'linkedin' => $all_settings['linkedin_profile_2'],
+						);
+
+						$assets_dir = plugins_url( 'social-link-optimizer' ) . '/assets/';
+					?>
+
+						<aside>
+							<h2 id="social-accts" class="hide-visually">
+								social media accounts
+							</h2>
+							<ul class="social-media-accts" aria-describedby="social-accts">
+							<?php
+								foreach ( $social_accts as $key => $value ) {
+									if ( isset( $value ) && $value !== '' ) {
+										echo '<li>';
+										echo '<a href="' . $value . '">';
+										echo '<img src="' . $assets_dir . $key . '.svg" alt="" height="24" width="24">';
+										echo '<span class="hide-visually">' . $key . '</span>';
+										echo '</a>';
+										echo '</li>';
+									}
+								}
+							?>
+							</ul>
+						</aside>
 
             <ul class="gpa-social-list <?php echo $layout; ?>">
               <?php
