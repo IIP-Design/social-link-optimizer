@@ -50,6 +50,7 @@ get_header();
 						$social_accts = array(
 							'twitter'  => $all_settings['twitter_feed_3'],
 							'facebook' => $all_settings['facebook_page_1'],
+							'instagram' => $all_settings['instagram_feed_5'],
 							'youtube'  => $all_settings['youtube_channel_4'],
 							'linkedin' => $all_settings['linkedin_profile_2'],
 						);
