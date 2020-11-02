@@ -65,7 +65,8 @@ class GPALabSLOSettings {
 			'Facebook page:', // title
 			array( $this, 'facebook_page_1_callback' ), // callback
 			'gpalab-slo-settings-admin', // page
-			'gpalab_slo_settings_setting_section' // section
+			'gpalab_slo_settings_setting_section', // section
+			array( 'label_for' => 'facebook_page_1' ) // args
 		);
 
 		add_settings_field(
@@ -73,7 +74,8 @@ class GPALabSLOSettings {
 			'LinkedIn profile:', // title
 			array( $this, 'linkedin_profile_2_callback' ), // callback
 			'gpalab-slo-settings-admin', // page
-			'gpalab_slo_settings_setting_section' // section
+			'gpalab_slo_settings_setting_section', // section
+			array( 'label_for' => 'linkedin_profile_2' ) // args
 		);
 
 		add_settings_field(
@@ -81,7 +83,8 @@ class GPALabSLOSettings {
 			'Twitter feed:', // title
 			array( $this, 'twitter_feed_3_callback' ), // callback
 			'gpalab-slo-settings-admin', // page
-			'gpalab_slo_settings_setting_section' // section
+			'gpalab_slo_settings_setting_section', // section
+			array( 'label_for' => 'twitter_feed_3' ) // args
 		);
 
 		add_settings_field(
@@ -89,7 +92,8 @@ class GPALabSLOSettings {
 			'YouTube channel:', // title
 			array( $this, 'youtube_channel_4_callback' ), // callback
 			'gpalab-slo-settings-admin', // page
-			'gpalab_slo_settings_setting_section' // section
+			'gpalab_slo_settings_setting_section', // section
+			array( 'label_for' => 'youtube_channel_4' ) // args
 		);
 
 		add_settings_field(
@@ -97,7 +101,8 @@ class GPALabSLOSettings {
 			'Instagram feed:', // title
 			array( $this, 'instagram_feed_5_callback' ), // callback
 			'gpalab-slo-settings-admin', // page
-			'gpalab_slo_settings_setting_section' // section
+			'gpalab_slo_settings_setting_section', // section
+			array( 'label_for' => 'instagram_feed_5' ) // args
 		);
 	}
 
