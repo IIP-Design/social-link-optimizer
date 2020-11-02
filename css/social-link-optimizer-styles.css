@@ -1,52 +1,89 @@
-/**
- * All of the CSS for your public-facing functionality should be
- * included in this file.
- */
+.gpa-social-link-optimizer {
+  /* match instagram */
+  --gap-wide: 28px;
+  --gap-tiny: 3px;
+  --max-width: 935px;
+  --background: #fafafa;
+}
 
+.social-media-accts {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+  text-align: center;
+}
+
+.social-media-accts > li {
+  margin: 0;
+  padding: 0;
+}
+
+.social-media-accts > li > a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.social-media-accts > li img {
+  display: block;
+}
+
+.social-media-accts,
 .gpa-social-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(32rem, 1fr));
-  grid-column-gap: 2rem;
-  grid-row-gap: 8rem;
+  list-style: none;
   margin: 0 auto;
   padding: 0;
-  max-width: 120rem !important; /* override twenty-twenty */
-  list-style: none;
 }
 
-.gpa-social-list > li {
-  position: relative;
-  display: flex;
-  flex-direction: column;
+.gpa-social-list > li,
+.gpa-social-list.list > li .gpa-social-title {
+  margin: 0;
 }
 
-.gpa-social-list > li > .gpa-social-title {
-  order: 1;
-  margin: 2rem auto;
+.gpa-social-list.list > li .gpa-social-title {
+  padding: var(--gap-wide) calc(var(--gap-wide) * 0.5);
+  font-size: var(--gap-wide);
+  text-align: center;
 }
 
-.gpa-social-list > li > .gpa-social-title > a::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  display: block;
-  cursor: pointer;
+.gpa-social-list.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap-tiny);
+  max-width: var(--max-width) !important; /* override twenty-twenty */
 }
 
-.gpa-social-list > li > .gpa-social-thumbnail {
-  height: 20rem;
-  overflow: hidden;
-}
-
-@media (max-width: 739px) {
-  .gpa-social-list > li > .gpa-social-thumbnail {
-    height: auto;
+@media (min-width: 736px) {
+  .gpa-social-list.grid {
+    gap: var(--gap-wide);
   }
 }
 
-.gpa-social-list > li > .gpa-social-thumbnail > img {
-  object-fit: scale-down;
+.gpa-social-list.grid > li {
+  position: relative;
+  padding-bottom: 100%;
+  overflow: hidden;
+  background-color: var(--background);
+}
+
+.gpa-social-list.grid > li .gpa-social-thumbnail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.gpa-social-list.grid > li .gpa-social-title,
+.hide-visually:not(:focus):not(:active) {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(100%);
+  white-space: nowrap;
 }
