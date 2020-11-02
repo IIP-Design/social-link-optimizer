@@ -59,9 +59,9 @@ get_header();
 					?>
 
 						<aside>
-							<h2 id="social-accts" class="hide-visually">
+							<h3 id="social-accts" class="hide-visually">
 								social media accounts
-							</h2>
+							</h3>
 							<ul class="social-media-accts" aria-describedby="social-accts">
 							<?php
 								foreach ( $social_accts as $key => $value ) {
@@ -78,37 +78,42 @@ get_header();
 							</ul>
 						</aside>
 
-            <ul class="gpa-social-list <?php echo $layout; ?>">
-              <?php
+						<h2 id="instagram-posts" class="hide-visually">
+							Instagram posts
+						</h2>
+						<ul class="gpa-social-list <?php echo $layout; ?>" aria-describedby="instagram-posts">
+							<?php
 
-              $args      = array( 'post_type' => 'social_link' );
+							$args      = array( 'post_type' => 'social_link' );
 							$the_query = new WP_Query( $args );
 
-              if ( $the_query->have_posts() ) {
-                while ( $the_query->have_posts() ) {
+							if ( $the_query->have_posts() ) {
+								while ( $the_query->have_posts() ) {
 									$the_query->the_post();
 									$anchor_tag_open = '<a href="' . esc_url( get_permalink() ) . '">';
 									$anchor_tag_close = '</a>';
 							
 									echo '<li>';
-									echo '<h2 class="gpa-social-title">';
+									echo '<article>';
+									echo '<h3 class="gpa-social-title">';
 									echo $layout == 'list' ? $anchor_tag_open : null;
 									the_title();
 									echo $layout == 'list' ? $anchor_tag_close : null;
-									echo '</h2>';
-                  echo $layout == 'grid' ? $anchor_tag_open : null;
-                  $layout == 'grid' ? the_post_thumbnail( 'post-thumbnail', ['class' => 'gpa-social-thumbnail'] ) : null;
-                  echo $layout == 'grid' ? $anchor_tag_close : null;
-                  echo '</li>';
-                }
-              } else {
-                echo '<p>No Social Bio Links</p>';
-              }
+									echo '</h3>';
+									echo $layout == 'grid' ? $anchor_tag_open : null;
+									$layout == 'grid' ? the_post_thumbnail( 'post-thumbnail', ['class' => 'gpa-social-thumbnail'] ) : null;
+									echo $layout == 'grid' ? $anchor_tag_close : null;
+									echo '</article>';
+									echo '</li>';
+								}
+							} else {
+								echo '<p>No Social Bio Links</p>';
+							}
 
-              wp_reset_postdata();
+							wp_reset_postdata();
 
-              ?>
-            </ul>
+							?>
+						</ul>
             <?php
           } else {
             the_content( __( 'Continue reading', 'gpalab-slo' ) );
