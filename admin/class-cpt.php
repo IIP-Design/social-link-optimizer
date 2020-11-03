@@ -52,7 +52,7 @@ class CPT {
     );
 
     $rewrite = array(
-      'slug'       => 'gpa-lab-social-link',
+      'slug'       => 'gpalab-social-link',
       'with_front' => true,
       'pages'      => true,
       'feeds'      => true,
@@ -81,7 +81,7 @@ class CPT {
       'show_in_rest'        => true,
     );
 
-    register_post_type( 'social_link', $args );
+    register_post_type( 'gpalab-social-link', $args );
   }
 
   /**
@@ -91,8 +91,10 @@ class CPT {
     add_meta_box(
       'gpa_lab_meta',
       __( 'Link this social post to', 'gpalab-slo' ),
-      'gpalab_slo_meta_callback',
-      'social_link',
+      function() {
+        return $this->gpalab_slo_meta_callback( $post );
+      },
+      'gpalab-social-link',
       'normal',
       'high'
     );
@@ -160,7 +162,7 @@ class CPT {
   public function gpalab_slo_filter_permalink( $url, $post ) {
     $custom_link = get_post_field( 'gpa-lab-social-links-meta-text', $post->ID );
 
-    if ( $custom_link && 'social_link' === get_post_type( $post->ID ) ) {
+    if ( $custom_link && 'gpalab-social-link' === get_post_type( $post->ID ) ) {
       $url = $custom_link;
     }
 
@@ -171,12 +173,12 @@ class CPT {
    * 4. Relocate featured image meta box
    */
   public function gpalab_slo_image_meta_box() {
-    remove_meta_box( 'postimagediv', 'social_link', 'side' );
+    remove_meta_box( 'postimagediv', 'gpalab-social-link', 'side' );
     add_meta_box(
       'postimagediv',
       __( 'Featured Image' ),
       'post_thumbnail_meta_box',
-      'social_link',
+      'gpalab-social-link',
       'normal', // move to normal from side.
       'low'
     );
