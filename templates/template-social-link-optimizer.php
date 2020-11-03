@@ -86,6 +86,12 @@ get_header();
                   $the_query->the_post();
                   $anchor_tag_open = '<a href="' . esc_url( get_permalink() ) . '">';
                   $anchor_tag_close = '</a>';
+                  $is_archive = get_post_meta( get_the_ID(), 'gpalab-slo-archive-meta', true );
+
+                  // skip archived items
+                  if ( 'true' === $is_archive ) {
+                    continue;
+                  }
 
                   echo '<li>';
                   echo '<article>';
