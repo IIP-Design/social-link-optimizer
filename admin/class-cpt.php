@@ -199,7 +199,6 @@ class CPT {
         name="gpalab-slo-archive-meta" 
         id="gpalab-slo-archive-meta"
         value="true"
-        
         <?php checked( $checkbox_value, 'true' ); ?>
       />
     </p>
@@ -258,6 +257,27 @@ class CPT {
       'normal', // move to normal from side.
       'low'
     );
+  }
+
+  /**
+   * Add sortable Archived admin column
+   */
+  public function gpalab_slo_archive_admin_column( $defaults ) {
+    $defaults['gpalab_slo_archive'] = __( 'Archived', 'gpalab-slo' );
+    return $defaults;
+  }
+
+  public function gpalab_slo_archive_sortable_admin_column( $columns ) {
+    $columns['gpalab_slo_archive'] = __( 'Archived', 'gpalab-slo' );
+    return $columns;
+  }
+
+  public function gpalab_slo_archive_admin_column_content( $column_name, $post_id ) {
+    if ( 'gpalab_slo_archive' === $column_name ) {
+      $is_archive = get_post_meta( $post_id, 'gpalab-slo-archive-meta', true );
+      $human_friendly_value = 'true' === $is_archive ? 'yes' : 'no';
+      echo '<p>' . $human_friendly_value . '</p>';
+    }
   }
 
 }

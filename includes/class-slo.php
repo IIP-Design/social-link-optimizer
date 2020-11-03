@@ -107,6 +107,9 @@ class SLO {
     $this->loader->add_action( 'save_post', $plugin_cpt, 'gpalab_slo_archive_meta_save' );
     $this->loader->add_action( 'do_meta_boxes', $plugin_cpt, 'gpalab_slo_image_meta_box' );
     $this->loader->add_filter( 'post_type_link', $plugin_cpt, 'gpalab_slo_filter_permalink', 10, 2 );
+    $this->loader->add_filter( 'manage_edit-gpalab-social-link_columns', $plugin_cpt, 'gpalab_slo_archive_admin_column' );
+    $this->loader->add_filter( 'manage_edit-gpalab-social-link_sortable_columns', $plugin_cpt, 'gpalab_slo_archive_sortable_admin_column' );
+    $this->loader->add_action( 'manage_gpalab-social-link_posts_custom_column', $plugin_cpt, 'gpalab_slo_archive_admin_column_content', 10, 2 );
 
     // Settings page hooks.
     $this->loader->add_action( 'admin_menu', $plugin_settings, 'gpalab_slo_settings_add_plugin_page' );
