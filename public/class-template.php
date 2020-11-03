@@ -36,7 +36,7 @@ class Template {
     $this->plugin    = $plugin;
     $this->version   = $version;
     $this->templates = array(
-      'template-social-link-optimizer.php' => 'Social Link Optimizer',
+      'archive-gpalab-social-link.php' => 'Social Link Optimizer',
     );
   }
 

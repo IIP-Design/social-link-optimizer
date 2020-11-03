@@ -30,14 +30,15 @@ get_header();
         <div class="entry-content gpa-social-link-optimizer">
     
           <?php
-          $is_gpaslo_page_template = is_page_template( 'template-social-link-optimizer.php' );
+          $is_gpaslo_archive = is_page_template( 'archive-gpalab-social-link.php' );
 
           if ( is_search() || ! is_singular() && 'summary' === get_theme_mod( 'blog_content', 'full' ) ) {
             the_excerpt();
-          } elseif ( $is_gpaslo_page_template ) {
+          } elseif ( $is_gpaslo_archive ) {
             $all_settings = get_option( 'gpalab_slo_settings_option_name' );
             $display_as   = $all_settings['display_gpalab_slo_as_a_0'];
-            $layout       = ( isset( $display_as ) && '' !== $display_as )
+
+            $layout = ( isset( $display_as ) && '' !== $display_as )
               ? $display_as
               : 'grid';
 
@@ -49,7 +50,7 @@ get_header();
               'linkedin'  => $all_settings['linkedin_profile_2'],
             );
 
-            $assets_dir = plugins_url( 'social-link-optimizer' ) . '/assets/';
+            $assets_dir = GPALAB_SLO_URL . '/assets/';
             ?>
 
             <aside>
@@ -78,27 +79,52 @@ get_header();
             <ul class="gpa-social-list <?php echo $layout; ?>" aria-describedby="instagram-posts">
               <?php
 
-              $args      = array( 'post_type' => 'social_link' );
+              $args      = array( 'post_type' => 'gpalab-social-link' );
               $the_query = new WP_Query( $args );
 
               if ( $the_query->have_posts() ) {
                 while ( $the_query->have_posts() ) {
                   $the_query->the_post();
-                  $anchor_tag_open  = '<a href="' . esc_url( get_permalink() ) . '">';
-                  $anchor_tag_close = '</a>';
 
-                  echo '<li>';
-                  echo '<article>';
-                  echo '<h3 class="gpa-social-title">';
-                  echo $layout == 'list' ? $anchor_tag_open : null;
-                  the_title();
-                  echo $layout == 'list' ? $anchor_tag_close : null;
-                  echo '</h3>';
-                  echo $layout == 'grid' ? $anchor_tag_open : null;
-                  $layout == 'grid' ? the_post_thumbnail( 'post-thumbnail', array( 'class' => 'gpa-social-thumbnail' ) ) : null;
-                  echo $layout == 'grid' ? $anchor_tag_close : null;
-                  echo '</article>';
-                  echo '</li>';
+                  // Retrieve the current link post id.
+                  $current = get_the_ID();
+
+                  // Check if function already exists to prevent re-declaration in the loop.
+                  if ( ! function_exists( 'linkify' ) ) {
+                    /**
+                     * Wrap some string or HTML element in a link.
+                     *
+                     * @param string $element   The element to be placed within a link.
+                     * @param string $url       The wrapping url.
+                     */
+                    function linkify( $element, $url ) {
+                      return '<a href="' . esc_url( $url ) . '">' . $element . '</a>';
+                    }
+                  }
+
+                  // Retrieve the item title.
+                  $item_title = 'list' === $layout
+                    ? linkify( get_the_title( $current ), get_permalink() )
+                    : get_the_title( $current );
+
+                  // Retrieve the item photo.
+                  $thumbnail = get_the_post_thumbnail(
+                    $current,
+                    'post-thumbnail',
+                    array( 'class' => 'gpa-social-thumbnail' )
+                  );
+
+                  $item_photo = linkify( $thumbnail, get_permalink() );
+
+                  // Cobble together the HTML for a link item.
+                  $item  = '<li>';
+                  $item .= '<article>';
+                  $item .= '<h3 class="gpa-social-title">' . wp_kses( $item_title, 'post' ) . '</h3>';
+                  $item .= 'grid' === $layout ? wp_kses( $item_photo, 'post' ) : '';
+                  $item .= '</article>';
+                  $item .= '</li>';
+
+                  echo wp_kses( $item, 'post' );
                 }
               } else {
                 echo '<p>No Social Bio Links</p>';
