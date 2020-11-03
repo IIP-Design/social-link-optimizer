@@ -1,16 +1,27 @@
 <?php
+/**
+ * Registers the Settings class.
+ *
+ * @package SLO\Settings
+ * @since 0.0.1
+ */
 
-class GPALabSLOSettings {
+namespace SLO;
+
+/**
+ * Add plugin settings.
+ *
+ * The Settings class adds a settings page allowing site admins to configure the plugin.
+ *
+ * @package SLO\Settings
+ * @since 0.0.1
+ */
+class Settings {
   private $gpalab_slo_settings_options;
-
-  public function __construct() {
-    add_action( 'admin_menu', array( $this, 'gpalab_slo_settings_add_plugin_page' ) );
-    add_action( 'admin_init', array( $this, 'gpalab_slo_settings_page_init' ) );
-  }
 
   public function gpalab_slo_settings_add_plugin_page() {
     add_submenu_page(
-      'edit.php?post_type=social_link',
+      'edit.php?post_type=gpalab-social-link',
       'Social Links settings', // page_title
       'Settings', // menu_title
       'manage_options', // capability
@@ -106,7 +117,9 @@ class GPALabSLOSettings {
     );
   }
 
-  public function gpalab_slo_settings_sanitize($input) {
+  public function gpalab_slo_settings_section_info() {}
+
+  public function gpalab_slo_settings_sanitize( $input ) {
     $sanitary_values = array();
     if ( isset( $input['display_gpalab_slo_as_a_0'] ) ) {
       $sanitary_values['display_gpalab_slo_as_a_0'] = $input['display_gpalab_slo_as_a_0'];
@@ -133,10 +146,6 @@ class GPALabSLOSettings {
     }
 
     return $sanitary_values;
-  }
-
-  public function gpalab_slo_settings_section_info() {
-    
   }
 
   public function display_gpalab_slo_as_a_0_callback() {
@@ -177,10 +186,7 @@ class GPALabSLOSettings {
   public function instagram_feed_5_callback() {
     printf(
       '<input class="regular-text" type="text" name="gpalab_slo_settings_option_name[instagram_feed_5]" id="instagram_feed_5" value="%s">',
-      isset( $this->gpalab_slo_settings_options['instagram_feed_5'] ) ? esc_attr( $this->gpalab_slo_settings_options['instagram_feed_5']) : ''
+      isset( $this->gpalab_slo_settings_options['instagram_feed_5'] ) ? esc_attr( $this->gpalab_slo_settings_options['instagram_feed_5'] ) : ''
     );
   }
-
 }
-if ( is_admin() )
-  $gpalab_slo_settings = new GPALabSLOSettings();
