@@ -24,11 +24,11 @@ get_header();
       <?php
       get_template_part( 'template-parts/entry-header' );
       ?>
-    
+
       <div class="post-inner">
     
         <div class="entry-content gpa-social-link-optimizer">
-    
+
           <?php
           $is_gpaslo_page_template = is_page_template( '/templates/template-social-link-optimizer.php' );
 
@@ -86,7 +86,7 @@ get_header();
                   $the_query->the_post();
                   $anchor_tag_open = '<a href="' . esc_url( get_permalink() ) . '">';
                   $anchor_tag_close = '</a>';
-              
+
                   echo '<li>';
                   echo '<article>';
                   echo '<h3 class="gpa-social-title">';
@@ -113,11 +113,11 @@ get_header();
             the_content( __( 'Continue reading', 'gpalab-slo' ) );
           }
           ?>
-    
+
         </div><!-- .entry-content -->
-    
+
       </div><!-- .post-inner -->
-    
+
       <div class="section-inner">
         <?php
         wp_link_pages(
@@ -131,9 +131,9 @@ get_header();
 
         edit_post_link();
         ?>
-    
+
       </div><!-- .section-inner -->
-    
+
       </article><!-- .post -->
 
       <?php
