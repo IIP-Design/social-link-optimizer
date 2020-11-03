@@ -21,7 +21,7 @@ class Settings {
 
   public function gpalab_slo_settings_add_plugin_page() {
     add_submenu_page(
-      'edit.php?post_type=social_link',
+      'edit.php?post_type=gpalab-social-link',
       'Social Links settings', // page_title
       'Settings', // menu_title
       'manage_options', // capability
