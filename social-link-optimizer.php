@@ -385,3 +385,80 @@ add_action( 'plugins_loaded', array( 'GPASocialLinkOptimizerTemplate', 'get_inst
  * 7. Add settings subpage
  */
 require 'includes/gpalab-slo-settings.php';
+
+
+/**
+ * 8. Add archive metabox
+ */
+function gpalab_slo_archive_meta() {
+  add_meta_box(
+    'gpalab_slo_archive_meta',
+    __( 'Archive', 'gpalab-slo' ),
+    'gpalab_slo_archive_meta_callback',
+    'social_link',
+    'side',
+    'high'
+  );
+}
+add_action( 'add_meta_boxes', 'gpalab_slo_archive_meta' );
+
+/**
+ * 8.1 Display the meta box
+ *
+ * @param object $post    WordPress post Object.
+ */
+function gpalab_slo_archive_meta_callback( $post ) {
+  wp_nonce_field( basename( __FILE__ ), 'gpalab_slo_archive_nonce' );
+
+  $post_meta = get_post_meta( $post->ID );
+  $slo_meta  = $post_meta['gpalab-slo-archive-meta'];
+  $is_set = isset( $slo_meta[0] );
+  $is_checked = 'true' === $slo_meta[0];
+  $checkbox_value = ( $is_set && $is_checked ) ? 'true' : 'false';
+  ?>
+
+  <p>Archive this item if you do <strong>not</strong> want it displayed on the social bio page.</p>
+
+  <p style="display: flex; align-items: center;">
+    <label
+      for="gpalab-slo-archive-meta"
+      class="gpalab-slo-archive-meta-title"
+      style="margin-right: 0.5rem;"
+    >
+      <?php esc_html_e( 'Set as archive:', 'gpalab-slo' ); ?>
+    </label>
+    <input
+      type="checkbox"
+      name="gpalab-slo-archive-meta" 
+      id="gpalab-slo-archive-meta"
+      value="true"
+      
+      <?php checked( $checkbox_value, 'true' ); ?>
+    />
+  </p>
+
+  <?php
+}
+
+/**
+ * 8.2 Save the custom meta data
+ *
+ * @param int $post_id   WordPress post id.
+ */
+function gpalab_slo_archive_meta_save( $post_id ) {
+  // Save status.
+  $is_autosave    = wp_is_post_autosave( $post_id );
+  $is_revision    = wp_is_post_revision( $post_id );
+  $is_valid_nonce = ( isset( $_POST['gpalab_slo_archive_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['gpalab_slo_archive_nonce'] ) ), basename( __FILE__ ) ) ) ? 'true' : 'false';
+
+  if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {
+    return;
+  }
+
+  // Save.
+  $is_set = isset( $_POST['gpalab-slo-archive-meta'] );
+  $is_checked = 'true' === $_POST['gpalab-slo-archive-meta'];
+  $checkbox_value = ( $is_set && $is_checked ) ? 'true' : 'false';
+  update_post_meta( $post_id, 'gpalab-slo-archive-meta', $checkbox_value );
+}
+add_action( 'save_post', 'gpalab_slo_archive_meta_save' );
