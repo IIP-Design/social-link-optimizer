@@ -1,0 +1,20 @@
+.gpalab-slo-tab {
+  background-color: #ffffff;
+  border: 1px solid black;
+  border-bottom: none;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  margin: 0 2px;
+  padding: 1rem;
+}
+
+.gpalab-slo-tab-container {
+  display: flex;
+  margin: 1rem 0 0;
+}
+
+.gpalab-slo-tabpanel {
+  border: 1px solid black;
+  border-top: none;
+  margin-bottom: 1rem;
+}

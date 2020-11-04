@@ -80,6 +80,8 @@ class SLO {
     require_once GPALAB_SLO_DIR . 'includes/class-loader.php';
 
     // The class responsible for defining all actions that occur in the admin area.
+    require_once GPALAB_SLO_DIR . 'admin/class-admin.php';
+    require_once GPALAB_SLO_DIR . 'admin/class-ajax.php';
     require_once GPALAB_SLO_DIR . 'admin/class-cpt.php';
     require_once GPALAB_SLO_DIR . 'admin/class-settings.php';
 
@@ -107,8 +109,9 @@ class SLO {
     $this->loader->add_filter( 'post_type_link', $plugin_cpt, 'gpalab_slo_filter_permalink', 10, 2 );
 
     // Settings page hooks.
-    $this->loader->add_action( 'admin_menu', $plugin_settings, 'gpalab_slo_settings_add_plugin_page' );
-    $this->loader->add_action( 'admin_init', $plugin_settings, 'gpalab_slo_settings_page_init' );
+    $this->loader->add_action( 'admin_menu', $plugin_settings, 'add_settings_page' );
+    $this->loader->add_action( 'admin_init', $plugin_settings, 'populate_settings_page' );
+    $this->loader->add_action( 'admin_enqueue_scripts', $plugin_settings, 'enqueue_slo_admin' );
   }
 
   /**
