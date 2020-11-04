@@ -57,9 +57,16 @@ class Settings {
     );
 
     add_settings_section(
-      'gpalab_slo_settings_setting_section', // id
-      'Settings', // title
-      array( $this, 'gpalab_slo_settings_section_info' ), // callback
+      'gpalab_slo_settings_layout_section', // id
+      'Layout', // title
+      array( $this, 'gpalab_slo_layout_settings_section_info' ), // callback
+      'gpalab-slo-settings-admin' // page
+    );
+
+    add_settings_section(
+      'gpalab_slo_settings_social_accts_section', // id
+      'Social Media', // title
+      array( $this, 'gpalab_slo_social_accts_settings_section_info' ), // callback
       'gpalab-slo-settings-admin' // page
     );
 
@@ -68,7 +75,7 @@ class Settings {
       'Display social links as a:', // title
       array( $this, 'display_gpalab_slo_as_a_0_callback' ), // callback
       'gpalab-slo-settings-admin', // page
-      'gpalab_slo_settings_setting_section' // section
+      'gpalab_slo_settings_layout_section' // section
     );
 
     add_settings_field(
@@ -76,7 +83,7 @@ class Settings {
       'Facebook page:', // title
       array( $this, 'facebook_page_1_callback' ), // callback
       'gpalab-slo-settings-admin', // page
-      'gpalab_slo_settings_setting_section', // section
+      'gpalab_slo_settings_social_accts_section', // section
       array( 'label_for' => 'facebook_page_1' ) // args
     );
 
@@ -85,7 +92,7 @@ class Settings {
       'LinkedIn profile:', // title
       array( $this, 'linkedin_profile_2_callback' ), // callback
       'gpalab-slo-settings-admin', // page
-      'gpalab_slo_settings_setting_section', // section
+      'gpalab_slo_settings_social_accts_section', // section
       array( 'label_for' => 'linkedin_profile_2' ) // args
     );
 
@@ -94,7 +101,7 @@ class Settings {
       'Twitter feed:', // title
       array( $this, 'twitter_feed_3_callback' ), // callback
       'gpalab-slo-settings-admin', // page
-      'gpalab_slo_settings_setting_section', // section
+      'gpalab_slo_settings_social_accts_section', // section
       array( 'label_for' => 'twitter_feed_3' ) // args
     );
 
@@ -103,7 +110,7 @@ class Settings {
       'YouTube channel:', // title
       array( $this, 'youtube_channel_4_callback' ), // callback
       'gpalab-slo-settings-admin', // page
-      'gpalab_slo_settings_setting_section', // section
+      'gpalab_slo_settings_social_accts_section', // section
       array( 'label_for' => 'youtube_channel_4' ) // args
     );
 
@@ -112,12 +119,15 @@ class Settings {
       'Instagram feed:', // title
       array( $this, 'instagram_feed_5_callback' ), // callback
       'gpalab-slo-settings-admin', // page
-      'gpalab_slo_settings_setting_section', // section
+      'gpalab_slo_settings_social_accts_section', // section
       array( 'label_for' => 'instagram_feed_5' ) // args
     );
   }
 
-  public function gpalab_slo_settings_section_info() {}
+  public function gpalab_slo_layout_settings_section_info() {}
+  public function gpalab_slo_social_accts_settings_section_info() {
+    echo '<p>Enter URLs below to display social media icons on the social links page.</p>';
+  }
 
   public function gpalab_slo_settings_sanitize( $input ) {
     $sanitary_values = array();
