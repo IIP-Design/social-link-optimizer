@@ -17,10 +17,10 @@ namespace SLO;
  * @since 0.0.1
  */
 class Settings {
-  // private $gpalab_slo_settings_options;
-
   /**
    * Adds a settings page to social links sub-menu where the plugin can be configured.
+   *
+   * @since 0.0.1
    */
   public function add_settings_page() {
     add_submenu_page(
@@ -29,22 +29,33 @@ class Settings {
       'Settings',
       'manage_options',
       'gpalab-slo-settings',
-      array( $this, 'gpalab_slo_settings_create_admin_page' ),
+      function() {
+        return $this->create_admin_page();
+      },
       null
     );
   }
 
-  public function gpalab_slo_settings_create_admin_page() {
-    $this->gpalab_slo_settings_options = get_option( 'gpalab_slo_settings_option_name' ); ?>
-
+  /**
+   * Generates the markup for the plugin's settings page.
+   *
+   * @since 0.0.1
+   */
+  private function create_admin_page() {
+    ?>
     <div class="wrap">
       <h2><?php esc_html_e( 'Social Link Settings', 'gpalab-slo' ); ?></h2>
       <?php settings_errors(); ?>
 
       <form method="post" action="options.php">
         <?php
-          settings_fields( 'gpalab_slo_settings_option_group' );
-          do_settings_sections( 'gpalab-slo-settings-admin' );
+          settings_fields( 'gpalab-slo' );
+          do_settings_sections( 'gpalab-slo' );
+        ?>
+        <button class="button button-secondary" id="slo-add-mission" type="button" >
+          Add Mission
+        </button>
+        <?php
           submit_button();
         ?>
       </form>
@@ -54,27 +65,37 @@ class Settings {
 
   /**
    * Adds the mission settings.
+   *
+   * @since 0.0.1
    */
   public function populate_settings_page() {
+    register_setting(
+      'gpalab-slo',
+      'gpalab-slo-settings'
+    );
+
     add_settings_section(
       'gpalab-slo-settings',
       __( 'Manage Mission Social Link Pages:', 'gpalab-slo' ),
       function() {
         return $this->populate_tabbed_container();
       },
-      'gpalab-slo-settings-admin'
+      'gpalab-slo'
     );
   }
 
   /**
    * Adds a tabbed interface to the mission settings section.
+   *
+   * @since 0.0.1
    */
-  public function populate_tabbed_container() {
+  private function populate_tabbed_container() {
     $missions = get_option( 'gpalab-slo-settings' );
 
-    echo '<ul class="gpalab-slo-tab-container">';
-
+    // Create the tabs for the tabbed container.
     if ( isset( $missions ) ) {
+      echo '<ul class="gpalab-slo-tab-container">';
+
       foreach ( $missions as $mission ) {
         $tab  = '<li class="gpalab-slo-tab" ';
         $tab .= 'role="presentation" >';
@@ -83,24 +104,141 @@ class Settings {
 
         echo wp_kses( $tab, 'post' );
       }
+
+      echo '</ul>';
     }
 
-    echo '</ul>';
-
+    // Create the contents of the tabbed container.
     if ( isset( $missions ) ) {
-      foreach ( $missions as $mission ) {
-        echo '<section class="gpalab-slo-tabpanel" role="tabpanel">' . esc_html( $mission['title'] ) . '</section>';
+      foreach ( $missions as $key => $mission ) {
+
+        add_settings_field(
+          'title_' . $key,
+          __( 'Mission name:', 'gpalab-slo' ),
+          array( $this, 'add_input' ),
+          'gpalab-slo',
+          'gpalab-slo-settings',
+          array(
+            'label_for' => 'title_' . $key,
+            'key'       => $key,
+            'field'     => 'title',
+            'option'    => $mission,
+          )
+        );
+
+        //   add_settings_field(
+        //     'display_gpalab_slo_as_a_0', // id
+        //     'Display social links as a:', // title
+        //     array( $this, 'display_gpalab_slo_as_a_0_callback' ), // callback
+        //     'gpalab-slo-settings-admin', // page
+        //     'gpalab_slo_settings_setting_section' // section
+        //   );
+
+        add_settings_field(
+          'facebook_' . $key,
+          __( 'Facebook profile:', 'gpalab-slo' ),
+          array( $this, 'add_input' ),
+          'gpalab-slo',
+          'gpalab-slo-settings',
+          array(
+            'label_for' => 'facebook_' . $key,
+            'key'       => $key,
+            'field'     => 'facebook',
+            'option'    => $mission,
+          )
+        );
+
+        add_settings_field(
+          'instagram_' . $key,
+          __( 'Instagram profile:', 'gpalab-slo' ),
+          array( $this, 'add_input' ),
+          'gpalab-slo',
+          'gpalab-slo-settings',
+          array(
+            'label_for' => 'instagram_' . $key,
+            'key'       => $key,
+            'field'     => 'instagram',
+            'option'    => $mission,
+          )
+        );
+
+        add_settings_field(
+          'linkedin_' . $key,
+          __( 'LinkedIn profile:', 'gpalab-slo' ),
+          array( $this, 'add_input' ),
+          'gpalab-slo',
+          'gpalab-slo-settings',
+          array(
+            'label_for' => 'linkedin_' . $key,
+            'key'       => $key,
+            'field'     => 'linkedin',
+            'option'    => $mission,
+          )
+        );
+
+        add_settings_field(
+          'twitter_' . $key,
+          __( 'Twitter profile:', 'gpalab-slo' ),
+          array( $this, 'add_input' ),
+          'gpalab-slo',
+          'gpalab-slo-settings',
+          array(
+            'label_for' => 'twitter_' . $key,
+            'key'       => $key,
+            'field'     => 'twitter',
+            'option'    => $mission,
+          )
+        );
+
+        add_settings_field(
+          'youtube_' . $key,
+          __( 'YouTube profile:', 'gpalab-slo' ),
+          array( $this, 'add_input' ),
+          'gpalab-slo',
+          'gpalab-slo-settings',
+          array(
+            'label_for' => 'youtube_' . $key,
+            'key'       => $key,
+            'field'     => 'youtube',
+            'option'    => $mission,
+          )
+        );
       }
     }
+  }
 
-    $button  = '<button ';
-    $button .= 'class="button button-secondary" ';
-    $button .= 'id="slo-add-mission" ';
-    $button .= 'type="button" >';
-    $button .= 'Add Mission';
-    $button .= '</button>';
+  /**
+   * Generate an input field for tabbed container.
+   *
+   * @param array $args   Data used to individualize input fields and get input value.
+   *
+   * @since 0.0.1
+   */
+  public function add_input( $args ) {
+    $field  = $args['field'];
+    $key    = $args['key'];
+    $option = $args['option'];
+    $value  = isset( $option[ $field ] ) ? $option[ $field ] : '';
 
-    echo wp_kses( $button, 'post' );
+    // Generate the markup for the input field.
+    $input .= '<input class="regular-text" type="text" ';
+    $input .= 'name="gpalab-slo-settings[' . $key . '][' . $field . ']" ';
+    $input .= 'id="' . $field . '_' . $key . '" ';
+    $input .= 'value="' . $value . '" >';
+
+    // Identify which HTML elements to allow.
+    $elements = array(
+      'input' => array(
+        'class' => array(),
+        'id'    => array(),
+        'name'  => array(),
+        'type'  => array(),
+        'value' => array(),
+      ),
+    );
+
+    // Sanitize the input field before rendering on the settings page.
+    echo wp_kses( $input, $elements );
   }
 
   /**
@@ -117,77 +255,7 @@ class Settings {
     wp_enqueue_style( 'gpalab-slo-admin-css' );
   }
 
-  // public function gpalab_slo_settings_page_init() {
-  //   register_setting(
-  //     'gpalab_slo_settings_option_group', // option_group
-  //     'gpalab_slo_settings_option_name', // option_name
-  //     array( $this, 'gpalab_slo_settings_sanitize' ) // sanitize_callback
-  //   );
-
-  //   add_settings_section(
-  //     'gpalab_slo_settings_setting_section', // id
-  //     'Settings', // title
-  //     array( $this, 'gpalab_slo_settings_section_info' ), // callback
-  //     'gpalab-slo-settings-admin' // page
-  //   );
-
-  //   add_settings_field(
-  //     'display_gpalab_slo_as_a_0', // id
-  //     'Display social links as a:', // title
-  //     array( $this, 'display_gpalab_slo_as_a_0_callback' ), // callback
-  //     'gpalab-slo-settings-admin', // page
-  //     'gpalab_slo_settings_setting_section' // section
-  //   );
-
-  //   add_settings_field(
-  //     'facebook_page_1', // id
-  //     'Facebook page:', // title
-  //     array( $this, 'facebook_page_1_callback' ), // callback
-  //     'gpalab-slo-settings-admin', // page
-  //     'gpalab_slo_settings_setting_section', // section
-  //     array( 'label_for' => 'facebook_page_1' ) // args
-  //   );
-
-  //   add_settings_field(
-  //     'linkedin_profile_2', // id
-  //     'LinkedIn profile:', // title
-  //     array( $this, 'linkedin_profile_2_callback' ), // callback
-  //     'gpalab-slo-settings-admin', // page
-  //     'gpalab_slo_settings_setting_section', // section
-  //     array( 'label_for' => 'linkedin_profile_2' ) // args
-  //   );
-
-  //   add_settings_field(
-  //     'twitter_feed_3', // id
-  //     'Twitter feed:', // title
-  //     array( $this, 'twitter_feed_3_callback' ), // callback
-  //     'gpalab-slo-settings-admin', // page
-  //     'gpalab_slo_settings_setting_section', // section
-  //     array( 'label_for' => 'twitter_feed_3' ) // args
-  //   );
-
-  //   add_settings_field(
-  //     'youtube_channel_4', // id
-  //     'YouTube channel:', // title
-  //     array( $this, 'youtube_channel_4_callback' ), // callback
-  //     'gpalab-slo-settings-admin', // page
-  //     'gpalab_slo_settings_setting_section', // section
-  //     array( 'label_for' => 'youtube_channel_4' ) // args
-  //   );
-
-  //   add_settings_field(
-  //     'instagram_feed_5', // id
-  //     'Instagram feed:', // title
-  //     array( $this, 'instagram_feed_5_callback' ), // callback
-  //     'gpalab-slo-settings-admin', // page
-  //     'gpalab_slo_settings_setting_section', // section
-  //     array( 'label_for' => 'instagram_feed_5' ) // args
-  //   );
-  // }
-
-  // public function gpalab_slo_settings_section_info() {}
-
-  // public function gpalab_slo_settings_sanitize( $input ) {
+  public function gpalab_slo_settings_sanitize( $input ) {
   //   $sanitary_values = array();
   //   if ( isset( $input['display_gpalab_slo_as_a_0'] ) ) {
   //     $sanitary_values['display_gpalab_slo_as_a_0'] = $input['display_gpalab_slo_as_a_0'];
@@ -213,8 +281,8 @@ class Settings {
   //     $sanitary_values['instagram_feed_5'] = sanitize_text_field( $input['instagram_feed_5'] );
   //   }
 
-  //   return $sanitary_values;
-  // }
+    return $input;
+  }
 
   public function display_gpalab_slo_as_a_0_callback() {
     ?> <fieldset><?php $checked = ( isset( $this->gpalab_slo_settings_options['display_gpalab_slo_as_a_0'] ) && $this->gpalab_slo_settings_options['display_gpalab_slo_as_a_0'] === 'grid' ) ? 'checked' : '' ; ?>
@@ -222,39 +290,4 @@ class Settings {
     <?php $checked = ( isset( $this->gpalab_slo_settings_options['display_gpalab_slo_as_a_0'] ) && $this->gpalab_slo_settings_options['display_gpalab_slo_as_a_0'] === 'list' ) ? 'checked' : '' ; ?>
     <label for="display_gpalab_slo_as_a_0-1"><input type="radio" name="gpalab_slo_settings_option_name[display_gpalab_slo_as_a_0]" id="display_gpalab_slo_as_a_0-1" value="list" <?php echo $checked; ?>> Vertical list</label></fieldset> <?php
   }
-
-  // public function facebook_page_1_callback() {
-  //   printf(
-  //     '<input class="regular-text" type="text" name="gpalab_slo_settings_option_name[facebook_page_1]" id="facebook_page_1" value="%s">',
-  //     isset( $this->gpalab_slo_settings_options['facebook_page_1'] ) ? esc_attr( $this->gpalab_slo_settings_options['facebook_page_1']) : ''
-  //   );
-  // }
-
-  // public function linkedin_profile_2_callback() {
-  //   printf(
-  //     '<input class="regular-text" type="text" name="gpalab_slo_settings_option_name[linkedin_profile_2]" id="linkedin_profile_2" value="%s">',
-  //     isset( $this->gpalab_slo_settings_options['linkedin_profile_2'] ) ? esc_attr( $this->gpalab_slo_settings_options['linkedin_profile_2']) : ''
-  //   );
-  // }
-
-  // public function twitter_feed_3_callback() {
-  //   printf(
-  //     '<input class="regular-text" type="text" name="gpalab_slo_settings_option_name[twitter_feed_3]" id="twitter_feed_3" value="%s">',
-  //     isset( $this->gpalab_slo_settings_options['twitter_feed_3'] ) ? esc_attr( $this->gpalab_slo_settings_options['twitter_feed_3']) : ''
-  //   );
-  // }
-
-  // public function youtube_channel_4_callback() {
-  //   printf(
-  //     '<input class="regular-text" type="text" name="gpalab_slo_settings_option_name[youtube_channel_4]" id="youtube_channel_4" value="%s">',
-  //     isset( $this->gpalab_slo_settings_options['youtube_channel_4'] ) ? esc_attr( $this->gpalab_slo_settings_options['youtube_channel_4']) : ''
-  //   );
-  // }
-
-  // public function instagram_feed_5_callback() {
-  //   printf(
-  //     '<input class="regular-text" type="text" name="gpalab_slo_settings_option_name[instagram_feed_5]" id="instagram_feed_5" value="%s">',
-  //     isset( $this->gpalab_slo_settings_options['instagram_feed_5'] ) ? esc_attr( $this->gpalab_slo_settings_options['instagram_feed_5'] ) : ''
-  //   );
-  // }
 }
