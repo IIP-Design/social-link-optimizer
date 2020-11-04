@@ -98,8 +98,17 @@ class SLO {
    * @since 0.0.1
    */
   private function define_admin_hooks() {
+    $plugin_admin    = new SLO\Admin( $this->get_plugin_name(), $this->get_version() );
+    $plugin_ajax     = new SLO\Ajax( $this->get_plugin_name(), $this->get_version() );
     $plugin_cpt      = new SLO\CPT( $this->get_plugin_name(), $this->get_version() );
     $plugin_settings = new SLO\Settings( $this->get_plugin_name(), $this->get_version() );
+
+    // Admin hooks.
+    $this->loader->add_action( 'init', $plugin_admin, 'register_admin_scripts_styles' );
+    $this->loader->add_action( 'admin_notices', $plugin_admin, 'localize_admin_script_globals' );
+
+    // Ajax hooks.
+    $this->loader->add_action( 'wp_ajax_gpalab_add_slo_mission', $plugin_ajax, 'handle_mission_addition' );
 
     // Custom post type hooks.
     $this->loader->add_action( 'init', $plugin_cpt, 'gpalab_slo_cpt', 0 );
