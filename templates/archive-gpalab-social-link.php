@@ -62,9 +62,9 @@ get_header();
               foreach ( $social_accts as $key => $value ) {
                 if ( isset( $value ) && '' !== $value ) {
                   echo '<li>';
-                  echo '<a href="' . $value . '">';
-                  echo '<img src="' . $assets_dir . $key . '.svg" alt="" height="24" width="24">';
-                  echo '<span class="hide-visually">' . $key . '</span>';
+                  echo '<a href=' . esc_attr( $value ) . '>';
+                  echo '<img src=' . esc_attr( $assets_dir . $key . '.svg' ) . ' alt="" height="24" width="24">';
+                  echo '<span class="hide-visually">' . esc_html( $key ) . '</span>';
                   echo '</a>';
                   echo '</li>';
                 }
@@ -76,7 +76,7 @@ get_header();
             <h2 id="instagram-posts" class="hide-visually">
               Instagram posts
             </h2>
-            <ul class="gpa-social-list <?php echo $layout; ?>" aria-describedby="instagram-posts">
+            <ul class="gpa-social-list <?php echo esc_html( $layout ); ?>" aria-describedby="instagram-posts">
               <?php
 
               $args      = array( 'post_type' => 'gpalab-social-link' );
