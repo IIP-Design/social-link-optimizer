@@ -56,6 +56,16 @@ class Settings {
       array( $this, 'gpalab_slo_settings_sanitize' ) // sanitize_callback
     );
 
+    /**
+     * Sections
+     */
+    add_settings_section(
+      'gpalab_slo_settings_identity_section', // id
+      'Header Information', // title
+      array( $this, 'gpalab_slo_identity_settings_section_info' ), // callback
+      'gpalab-slo-settings-admin' // page
+    );
+
     add_settings_section(
       'gpalab_slo_settings_layout_section', // id
       'Layout', // title
@@ -68,6 +78,35 @@ class Settings {
       'Social Media', // title
       array( $this, 'gpalab_slo_social_accts_settings_section_info' ), // callback
       'gpalab-slo-settings-admin' // page
+    );
+
+    /**
+     * Fields
+     */
+    add_settings_field(
+      'gpalab_slo_logo', // id
+      'Logo:', // title
+      array( $this, 'mission_identity_logo_callback' ), // callback
+      'gpalab-slo-settings-admin', // page
+      'gpalab_slo_settings_identity_section' // section
+    );
+
+    add_settings_field(
+      'gpalab_slo_mission_title', // id
+      'Name:', // title
+      array( $this, 'mission_identity_name_callback' ), // callback
+      'gpalab-slo-settings-admin', // page
+      'gpalab_slo_settings_identity_section', // section
+      array( 'label_for' => 'gpalab_slo_mission_title' )
+    );
+
+    add_settings_field(
+      'gpalab_slo_mission_website', // id
+      'Website URL:', // title
+      array( $this, 'mission_identity_web_url_callback' ), // callback
+      'gpalab-slo-settings-admin', // page
+      'gpalab_slo_settings_identity_section', // section
+      array( 'label_for' => 'gpalab_slo_mission_website' )
     );
 
     add_settings_field(
@@ -124,6 +163,9 @@ class Settings {
     );
   }
 
+  public function gpalab_slo_identity_settings_section_info() {
+    echo '<p>The following information will be displayed in the social links page header.</p>';
+  }
   public function gpalab_slo_layout_settings_section_info() {}
   public function gpalab_slo_social_accts_settings_section_info() {
     echo '<p>Enter URLs below to display social media icons on the social links page.</p>';
@@ -131,6 +173,18 @@ class Settings {
 
   public function gpalab_slo_settings_sanitize( $input ) {
     $sanitary_values = array();
+    if ( isset( $input['gpalab_slo_logo'] ) ) {
+      $sanitary_values['gpalab_slo_logo'] = $input['gpalab_slo_logo'];
+    }
+
+    if ( isset( $input['gpalab_slo_mission_title'] ) ) {
+      $sanitary_values['gpalab_slo_mission_title'] = $input['gpalab_slo_mission_title'];
+    }
+
+    if ( isset( $input['gpalab_slo_mission_website'] ) ) {
+      $sanitary_values['gpalab_slo_mission_website'] = $input['gpalab_slo_mission_website'];
+    }
+
     if ( isset( $input['display_gpalab_slo_as_a_0'] ) ) {
       $sanitary_values['display_gpalab_slo_as_a_0'] = $input['display_gpalab_slo_as_a_0'];
     }
@@ -156,6 +210,46 @@ class Settings {
     }
 
     return $sanitary_values;
+  }
+
+  public function mission_identity_logo_callback() {
+    ?>
+      <?php
+        $image_url = ( isset( $this->gpalab_slo_settings_options['gpalab_slo_logo'] ) )
+          ? esc_attr( $this->gpalab_slo_settings_options['gpalab_slo_logo'] )
+          : '' ;
+        $mission_title = isset( $this->gpalab_slo_settings_options['gpalab_slo_mission_title'] )
+          ? esc_attr( $this->gpalab_slo_settings_options['gpalab_slo_mission_title'] ) . ' logo'
+          : 'mission logo';
+      ?>
+      <div class="gpalab-slo-identify-logo-wrapper" style="display: grid; place-content: center; height: 150px; width: 150px; margin-bottom: 16px; padding: 16px; overflow: hidden; background-color: #e6e6e6;">
+        <img src="<?php echo $image_url ?>" id="gpalab-slo-identity-logo" alt="<?php echo $mission_title; ?>" style="display: block; height: auto; max-width: 100%; margin: auto;">
+      </div>
+
+      <input type="hidden" id="gpalab-slo-identity-input" name="gpalab_slo_settings_option_name[gpalab_slo_logo]" value="<?php echo $image_url; ?>">
+
+      <button type="button" id="gpalab-slo-identity-logo-btn" class="button-primary">Select logo</button>
+
+      <?php
+      if ( '' !== $image_url ) {
+      ?>
+        <button type="button" id="gpalab-slo-identity-remove-logo-btn" class="button-secondary">Remove logo</button>
+      <?php
+      }
+  }
+
+  public function mission_identity_name_callback() {
+    printf(
+      '<input class="regular-text" type="text" name="gpalab_slo_settings_option_name[gpalab_slo_mission_title]" id="gpalab_slo_mission_title" value="%s">',
+      isset( $this->gpalab_slo_settings_options['gpalab_slo_mission_title'] ) ? esc_attr( $this->gpalab_slo_settings_options['gpalab_slo_mission_title']) : ''
+    );
+  }
+
+  public function mission_identity_web_url_callback() {
+    printf(
+      '<input class="regular-text" type="text" name="gpalab_slo_settings_option_name[gpalab_slo_mission_website]" id="gpalab_slo_mission_website" value="%s">',
+      isset( $this->gpalab_slo_settings_options['gpalab_slo_mission_website'] ) ? esc_attr( $this->gpalab_slo_settings_options['gpalab_slo_mission_website']) : ''
+    );
   }
 
   public function display_gpalab_slo_as_a_0_callback() {
@@ -198,5 +292,21 @@ class Settings {
       '<input class="regular-text" type="text" name="gpalab_slo_settings_option_name[instagram_feed_5]" id="instagram_feed_5" value="%s">',
       isset( $this->gpalab_slo_settings_options['instagram_feed_5'] ) ? esc_attr( $this->gpalab_slo_settings_options['instagram_feed_5'] ) : ''
     );
+  }
+
+  /**
+   * Enqueue media uploader script.
+   *
+   * @since 0.0.1
+   */
+  public function gpalab_slo_media_uploader_scripts() {
+    wp_enqueue_media();
+    wp_register_script(
+      'social-bio-links',
+      GPALAB_SLO_URL . 'admin/js/gpalab-slo-media-uploader.js',
+      array( 'jquery' ),
+      $version
+    );
+    wp_enqueue_script( 'social-bio-links' );
   }
 }

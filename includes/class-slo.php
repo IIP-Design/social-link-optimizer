@@ -114,6 +114,7 @@ class SLO {
     // Settings page hooks.
     $this->loader->add_action( 'admin_menu', $plugin_settings, 'gpalab_slo_settings_add_plugin_page' );
     $this->loader->add_action( 'admin_init', $plugin_settings, 'gpalab_slo_settings_page_init' );
+    $this->loader->add_action( 'admin_enqueue_scripts', $plugin_settings, 'gpalab_slo_media_uploader_scripts' );
   }
 
   /**
