@@ -33,6 +33,7 @@ class Ajax {
     // Initialize an empty array to populate with placeholder values.
     $new_mission = array();
 
+    $new_mission['id']        = wp_generate_uuid4();
     $new_mission['title']     = 'New';
     $new_mission['type']      = 'grid';
     $new_mission['facebook']  = '';
@@ -45,6 +46,44 @@ class Ajax {
     array_push( $missions, $new_mission );
 
     update_option( 'gpalab-slo-settings', $missions );
+  }
+
+  /**
+   * Removes a specified mission from the list of missions in the plugin settings.
+   */
+  public function handle_mission_removal() {
+    // The following rules are handled by the slo_verify_nonce function and hence can be safely ignored.
+    // phpcs:disable WordPress.Security.NonceVerification.Missing
+    // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+    // phpcs:disable WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+    // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+    $this->slo_verify_nonce( $_POST['security'] );
+
+    $id;
+
+    if ( isset( $_POST['mission_id'] ) ) {
+      $id = sanitize_text_field( wp_unslash( $_POST['mission_id'] ) );
+    }
+    // phpcs:enable
+
+    $slo_settings = get_option( 'gpalab-slo-settings' );
+
+    if ( empty( $slo_settings ) ) {
+      return;
+    }
+
+    $index;
+
+    foreach ( $slo_settings as $key => $setting ) {
+      if ( $setting['id'] === $id ) {
+        $index = $key;
+        break;
+      }
+    }
+
+    unset( $slo_settings[ $index ] );
+
+    update_option( 'gpalab-slo-settings', $slo_settings );
   }
 
   /**

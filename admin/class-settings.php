@@ -74,7 +74,7 @@ class Settings {
 
       // Create the tabs for the tabbed container.
       if ( isset( $missions ) ) {
-        echo '<h2>' . $title . '</h2>';
+        echo '<h2>' . esc_html( $title ) . '</h2>';
         echo '<ul class="gpalab-slo-tab-container" role="tablist">';
 
         foreach ( $missions as $key => $mission ) {
@@ -150,7 +150,7 @@ class Settings {
     if ( isset( $missions ) ) {
       foreach ( $missions as $key => $mission ) {
 
-        $title_id = 'title' . $key;
+        $title_id = 'title_' . $key;
 
         add_settings_field(
           $title_id,
@@ -166,12 +166,12 @@ class Settings {
           )
         );
 
-        $type_id = 'type' . $key;
+        $type_id = 'type_' . $key;
 
         add_settings_field(
           $type_id,
           __( 'Display links as a:', 'gpalab-slo' ),
-          array( $this, 'add_type_toggle' ), // callback
+          array( $this, 'add_type_toggle' ),
           'gpalab-slo',
           'gpalab-slo-settings-' . $key,
           array(
@@ -401,7 +401,7 @@ class Settings {
     }
 
     foreach ( (array) $wp_settings_sections[ $page ] as $key => $section ) {
-      echo '<section class="gpalab-slo-tabpanel" id="' . $key . '" role="tabpanel">';
+      echo '<section class="gpalab-slo-tabpanel" id=' . esc_attr( $key ) . ' role="tabpanel">';
 
       if ( $section['callback'] ) {
         call_user_func( $section['callback'], $section );
@@ -411,9 +411,20 @@ class Settings {
           continue;
       }
 
+      $missions = get_option( 'gpalab-slo-settings' );
+
+      // Extract the mission index and id from the section id.
+      $index = str_replace( 'gpalab-slo-settings-', '', $key );
+      $id    = $missions[ $index ]['id'];
+
+      // Hidden input field to store the mission id.
+      echo '<input type="hidden" name=' . esc_attr( 'gpalab-slo-settings[' . $index . '][id]' ) . ' value=' . esc_attr( $id ) . '>';
+
+      // Render out all the input fields.
       $this->custom_do_settings_fields( $page, $section['id'] );
 
-      echo '<button class="button button-secondary" id="slo-remove-mission" type="button">Remove This Mission</button>';
+      // Button to remove the current section from the settings array.
+      echo '<button class="button button-secondary slo-remove-mission" data-id=' . esc_attr( $id ) . ' type="button">Remove This Mission</button>';
 
       echo '</section>';
     }
@@ -436,15 +447,13 @@ class Settings {
     }
 
     foreach ( (array) $wp_settings_fields[ $page ][ $section ] as $field ) {
-      $class = '';
+      $class = 'gpalab-slo-label';
 
       if ( ! empty( $field['args']['class'] ) ) {
-        $class = ' class="gpalab-slo-label ' . esc_attr( $field['args']['class'] ) . '"';
-      } else {
-        $class = ' class="gpalab-slo-label"';
+        $class = 'gpalab-slo-label ' . esc_attr( $field['args']['class'] );
       }
 
-      echo '<label ' . $class . ' for="' . esc_attr( $field['args']['label_for'] ) . '" >';
+      echo '<label class=' . esc_attr( $class ) . ' for="' . esc_attr( $field['args']['label_for'] ) . '" >';
       echo esc_attr( $field['title'] );
       call_user_func( $field['callback'], $field['args'] );
       echo '</label>';

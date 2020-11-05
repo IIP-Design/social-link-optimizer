@@ -1,4 +1,7 @@
-const addSLOMissionBtn = async () => {
+/**
+ * Send an Ajax request to add a new mission to the plugin settings.
+ */
+const addSLOMission = async () => {
   // Get values provided to the client by the server
   const fromPHP = window?.gpalabSloAdmin || {};
 
@@ -16,19 +19,58 @@ const addSLOMissionBtn = async () => {
     const result = await response.json();
 
     console.log( result );
+    window.location.reload();
   } catch ( err ) {
     console.error( err );
   }
 };
 
-const showFirstMission = () => {
-  const btn = document.getElementById( 'gpalab-slo-tab-0' );
-  const panel = document.getElementById( 'gpalab-slo-settings-0' );
+/**
+ * Remove a mission from the settings page.
+ *
+ * @param {Event} e  A JavaScript event object.
+ */
+const removeSLOMission = async e => {
+  const { id } = e.target.dataset;
 
-  btn.setAttribute( 'aria-selected', 'true' );
-  panel.style.display = 'flex';
+  // Get values provided to the client by the server
+  const fromPHP = window?.gpalabSloAdmin || {};
+
+  const formData = new FormData();
+
+  formData.append( 'action', 'gpalab_remove_slo_mission' );
+  formData.append( 'security', fromPHP.sloNonce );
+  formData.append( 'mission_id', id );
+
+  try {
+    const response = await fetch( fromPHP.ajaxUrl, {
+      method: 'POST',
+      body: formData,
+    } );
+
+    const result = await response.json();
+
+    console.log( result );
+    window.location.reload();
+  } catch ( err ) {
+    console.error( err );
+  }
 };
 
+// Focus on the first tab.
+const showFirstMission = () => {
+  const btns = document.querySelectorAll( '.gpalab-slo-tab-button' );
+  const panels = document.querySelectorAll( '.gpalab-slo-tabpanel' );
+
+  if ( !btns || !panels ) {
+    return;
+  }
+
+  btns[0].setAttribute( 'aria-selected', 'true' );
+  panels[0].style.display = 'flex';
+};
+
+// Move between tabs.
 const switchTab = e => {
   const { id } = e.target.dataset;
 
@@ -53,6 +95,12 @@ const switchTab = e => {
   } );
 };
 
+const addMissionBtn = document.getElementById( 'slo-add-mission' );
+
+addMissionBtn.addEventListener( 'click', () => {
+  addSLOMission();
+} );
+
 const tabBtns = document.querySelectorAll( '.gpalab-slo-tab-button' );
 
 tabBtns.forEach( btn => {
@@ -61,10 +109,12 @@ tabBtns.forEach( btn => {
   } );
 } );
 
-const addMissionBtn = document.getElementById( 'slo-add-mission' );
+const removeMissionBtns = document.querySelectorAll( '.slo-remove-mission' );
 
-addMissionBtn.addEventListener( 'click', () => {
-  addSLOMissionBtn();
+removeMissionBtns.forEach( btn => {
+  btn.addEventListener( 'click', e => {
+    removeSLOMission( e );
+  } );
 } );
 
 window.onload = showFirstMission;

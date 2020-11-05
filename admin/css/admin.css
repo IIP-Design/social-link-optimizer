@@ -61,7 +61,7 @@
   margin: 0.5rem 0;
 }
 
-button#slo-remove-mission {
+.slo-remove-mission {
   align-self: flex-start;
   margin: 0.5rem 0;
 }
