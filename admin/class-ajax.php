@@ -19,22 +19,13 @@ class Ajax {
    * Adds a blank mission to the list of missions in the plugin settings.
    */
   public function handle_mission_addition() {
-    $nonce;
-
-    // Make sure nonce is set.
-    if ( ! isset( $_POST['security'] ) ) {
-      return;
-    } else {
-      $nonce = sanitize_text_field( wp_unslash( $_POST['security'] ) );
-    }
-
-    // Verify the nonce.
-    if (
-      wp_verify_nonce( $nonce, 'gpalab-slo-nonce' ) === false ||
-      check_ajax_referer( 'gpalab-slo-nonce', 'security', false ) === false
-    ) {
-      return;
-    }
+    // The following rules are handled by the slo_verify_nonce function and hence can be safely ignored.
+    // phpcs:disable WordPress.Security.NonceVerification.Missing
+    // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+    // phpcs:disable WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+    // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+    $this->slo_verify_nonce( $_POST['security'] );
+    // phpcs:enable
 
     $slo_settings = get_option( 'gpalab-slo-settings' );
     $missions     = ! empty( $slo_settings ) ? $slo_settings : array();
@@ -54,5 +45,31 @@ class Ajax {
     array_push( $missions, $new_mission );
 
     update_option( 'gpalab-slo-settings', $missions );
+  }
+
+  /**
+   * Checks that a security nonce is set, valid, and from a permitted referrer.
+   *
+   * @param string $security   A nonce provided in the Ajax call.
+   *
+   * @since 0.0.1
+   */
+  private function slo_verify_nonce( $security ) {
+    $nonce;
+
+    // Make sure nonce is set.
+    if ( ! isset( $security ) ) {
+      return;
+    } else {
+      $nonce = sanitize_text_field( wp_unslash( $security ) );
+    }
+
+    // Verify the nonce.
+    if (
+      wp_verify_nonce( $nonce, 'gpalab-slo-nonce' ) === false ||
+      check_ajax_referer( 'gpalab-slo-nonce', 'security', false ) === false
+    ) {
+      return;
+    }
   }
 }
