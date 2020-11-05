@@ -21,8 +21,50 @@ const addSLOMissionBtn = async () => {
   }
 };
 
+const showFirstMission = () => {
+  const btn = document.getElementById( 'gpalab-slo-tab-0' );
+  const panel = document.getElementById( 'gpalab-slo-settings-0' );
+
+  btn.setAttribute( 'aria-selected', 'true' );
+  panel.style.display = 'flex';
+};
+
+const switchTab = e => {
+  const { id } = e.target.dataset;
+
+  const tabs = document.querySelectorAll( '.gpalab-slo-tab-button' );
+
+  tabs.forEach( tab => {
+    if ( tab.id === `gpalab-slo-tab-${id}` ) {
+      tab.setAttribute( 'aria-selected', 'true' );
+    } else {
+      tab.removeAttribute( 'aria-selected' );
+    }
+  } );
+
+  const panels = document.querySelectorAll( '.gpalab-slo-tabpanel' );
+
+  panels.forEach( panel => {
+    if ( panel.id === `gpalab-slo-settings-${id}` ) {
+      panel.style.display = 'flex';
+    } else {
+      panel.style.display = 'none';
+    }
+  } );
+};
+
+const tabBtns = document.querySelectorAll( '.gpalab-slo-tab-button' );
+
+tabBtns.forEach( btn => {
+  btn.addEventListener( 'click', e => {
+    switchTab( e );
+  } );
+} );
+
 const addMissionBtn = document.getElementById( 'slo-add-mission' );
 
 addMissionBtn.addEventListener( 'click', () => {
   addSLOMissionBtn();
 } );
+
+window.onload = showFirstMission;

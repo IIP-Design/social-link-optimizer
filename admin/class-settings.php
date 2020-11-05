@@ -25,14 +25,19 @@ class Settings {
   public function add_settings_page() {
     add_submenu_page(
       'edit.php?post_type=gpalab-social-link',
-      'Social Links Settings',
-      'Settings',
+      __( 'Social Links Settings', 'gpalab-slo' ),
+      __( 'Settings', 'gpalab-slo' ),
       'manage_options',
       'gpalab-slo-settings',
       function() {
         return $this->create_admin_page();
       },
       null
+    );
+
+    register_setting(
+      'gpalab-slo',
+      'gpalab-slo-settings'
     );
   }
 
@@ -44,10 +49,32 @@ class Settings {
   private function create_admin_page() {
     ?>
     <div class="wrap">
-      <h2><?php esc_html_e( 'Social Link Settings', 'gpalab-slo' ); ?></h2>
-      <?php settings_errors(); ?>
+      <h1><?php esc_html_e( 'Social Link Settings', 'gpalab-slo' ); ?></h1>
+      <?php
+      settings_errors();
 
-      <form method="post" action="options.php">
+      $missions = get_option( 'gpalab-slo-settings' );
+
+      // Create the tabs for the tabbed container.
+      if ( isset( $missions ) ) {
+        echo '<ul class="gpalab-slo-tab-container" role="tablist">';
+
+        foreach ( $missions as $key => $mission ) {
+          $tab  = '<li class="gpalab-slo-tab" ';
+          $tab .= 'role="presentation" >';
+          $tab .= '<button class="gpalab-slo-tab-button" ';
+          $tab .= 'id="gpalab-slo-tab-' . $key . '" ';
+          $tab .= 'data-id="' . $key . '" ';
+          $tab .= 'role="tab">' . esc_html( $mission['title'] ) . '</button>';
+          $tab .= '</li>';
+
+          echo wp_kses( $tab, 'post' );
+        }
+
+        echo '</ul>';
+      }
+      ?>
+    <form method="post" action="options.php">
         <?php
           settings_fields( 'gpalab-slo' );
           $this->custom_do_settings_sections( 'gpalab-slo' );
@@ -69,19 +96,28 @@ class Settings {
    * @since 0.0.1
    */
   public function populate_settings_page() {
-    register_setting(
-      'gpalab-slo',
-      'gpalab-slo-settings'
-    );
+    $missions = get_option( 'gpalab-slo-settings' );
 
-    add_settings_section(
-      'gpalab-slo-settings',
-      __( 'Manage Mission Social Link Pages:', 'gpalab-slo' ),
-      function() {
-        return $this->populate_tabbed_container();
-      },
-      'gpalab-slo'
-    );
+    $populate = $this->generate_tab_panels();
+
+    if ( isset( $missions ) ) {
+
+      foreach ( $missions as $key => $mission ) {
+        register_setting(
+          'gpalab-slo',
+          'gpalab-slo-settings-' . $key
+        );
+
+        add_settings_section(
+          'gpalab-slo-settings-' . $key,
+          __( 'Manage Mission Social Link Pages:', 'gpalab-slo' ),
+          function() {
+            return $populate;
+          },
+          'gpalab-slo'
+        );
+      }
+    }
   }
 
   /**
@@ -89,24 +125,8 @@ class Settings {
    *
    * @since 0.0.1
    */
-  private function populate_tabbed_container() {
+  private function generate_tab_panels() {
     $missions = get_option( 'gpalab-slo-settings' );
-
-    // Create the tabs for the tabbed container.
-    if ( isset( $missions ) ) {
-      echo '<ul class="gpalab-slo-tab-container">';
-
-      foreach ( $missions as $mission ) {
-        $tab  = '<li class="gpalab-slo-tab" ';
-        $tab .= 'role="presentation" >';
-        $tab .= '<a role="tab">' . esc_html( $mission['title'] ) . '</a>';
-        $tab .= '</li>';
-
-        echo wp_kses( $tab, 'post' );
-      }
-
-      echo '</ul>';
-    }
 
     // Create the contents of the tabbed container.
     if ( isset( $missions ) ) {
@@ -119,7 +139,7 @@ class Settings {
           __( 'Mission name:', 'gpalab-slo' ),
           array( $this, 'add_input' ),
           'gpalab-slo',
-          'gpalab-slo-settings',
+          'gpalab-slo-settings-' . $key,
           array(
             'class'     => 'mission_' . $key,
             'label_for' => $title_id,
@@ -144,7 +164,7 @@ class Settings {
           __( 'Facebook profile:', 'gpalab-slo' ),
           array( $this, 'add_input' ),
           'gpalab-slo',
-          'gpalab-slo-settings',
+          'gpalab-slo-settings-' . $key,
           array(
             'class'     => 'mission_' . $key,
             'label_for' => $facebook_id,
@@ -161,7 +181,7 @@ class Settings {
           __( 'Instagram profile:', 'gpalab-slo' ),
           array( $this, 'add_input' ),
           'gpalab-slo',
-          'gpalab-slo-settings',
+          'gpalab-slo-settings-' . $key,
           array(
             'class'     => 'mission_' . $key,
             'label_for' => $instagram_id,
@@ -178,7 +198,7 @@ class Settings {
           __( 'LinkedIn profile:', 'gpalab-slo' ),
           array( $this, 'add_input' ),
           'gpalab-slo',
-          'gpalab-slo-settings',
+          'gpalab-slo-settings-' . $key,
           array(
             'class'     => 'mission_' . $key,
             'label_for' => $linkedin_id,
@@ -195,7 +215,7 @@ class Settings {
           __( 'Twitter profile:', 'gpalab-slo' ),
           array( $this, 'add_input' ),
           'gpalab-slo',
-          'gpalab-slo-settings',
+          'gpalab-slo-settings-' . $key,
           array(
             'class'     => 'mission_' . $key,
             'label_for' => $twitter_id,
@@ -212,7 +232,7 @@ class Settings {
           __( 'YouTube profile:', 'gpalab-slo' ),
           array( $this, 'add_input' ),
           'gpalab-slo',
-          'gpalab-slo-settings',
+          'gpalab-slo-settings-' . $key,
           array(
             'class'     => 'mission_' . $key,
             'label_for' => $youtube_id,
@@ -316,10 +336,12 @@ class Settings {
     global $wp_settings_sections, $wp_settings_fields;
 
     if ( ! isset( $wp_settings_sections[ $page ] ) ) {
-        return;
+      return;
     }
 
-    foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
+    foreach ( (array) $wp_settings_sections[ $page ] as $key => $section ) {
+      echo '<section class="gpalab-slo-tabpanel" id="' . $key . '" role="tabpanel">';
+
       if ( $section['title'] ) {
         echo '<h2>' . $section['title'] . '</h2>';
       }
@@ -332,8 +354,10 @@ class Settings {
           continue;
       }
 
-      echo '<section class="gpalab-slo-tabpanel" role="presentation">';
       $this->custom_do_settings_fields( $page, $section['id'] );
+
+      echo '<button class="button button-secondary" id="slo-remove-mission" type="button">Remove This Mission</button>';
+
       echo '</section>';
     }
   }
@@ -355,7 +379,7 @@ class Settings {
     }
 
     foreach ( (array) $wp_settings_fields[ $page ][ $section ] as $field ) {
-        $class = '';
+      $class = '';
 
       if ( ! empty( $field['args']['class'] ) ) {
         $class = ' class="gpalab-slo-label ' . esc_attr( $field['args']['class'] ) . '"';
@@ -363,7 +387,7 @@ class Settings {
         $class = ' class="gpalab-slo-label"';
       }
 
-      echo '<label ' . $class . ' for="' . esc_attr( $field['args']['label_for'] ) . '">';
+      echo '<label ' . $class . ' for="' . esc_attr( $field['args']['label_for'] ) . '" >';
       echo esc_attr( $field['title'] );
       call_user_func( $field['callback'], $field['args'] );
       echo '</label>';

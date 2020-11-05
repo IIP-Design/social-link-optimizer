@@ -42,7 +42,7 @@ class Ajax {
     // Initialize an empty array to populate with placeholder values.
     $new_mission = array();
 
-    $new_mission['title']     = '';
+    $new_mission['title']     = 'New';
     $new_mission['facebook']  = '';
     $new_mission['instagram'] = '';
     $new_mission['linkedin']  = '';
