@@ -123,7 +123,10 @@ class Settings {
       foreach ( $missions as $key => $mission ) {
         register_setting(
           'gpalab-slo',
-          'gpalab-slo-settings-' . $key
+          'gpalab-slo-settings-' . $key,
+          array(
+            'sanitize_callback' => 'sanitize_text_field',
+          )
         );
 
         add_settings_section(
@@ -354,35 +357,6 @@ class Settings {
 
     // Sanitize the input field before rendering on the settings page.
     echo wp_kses( $input, $elements );
-  }
-
-  public function gpalab_slo_settings_sanitize( $input ) {
-  //   $sanitary_values = array();
-  //   if ( isset( $input['display_gpalab_slo_as_a_0'] ) ) {
-  //     $sanitary_values['display_gpalab_slo_as_a_0'] = $input['display_gpalab_slo_as_a_0'];
-  //   }
-
-  //   if ( isset( $input['facebook_page_1'] ) ) {
-  //     $sanitary_values['facebook_page_1'] = sanitize_text_field( $input['facebook_page_1'] );
-  //   }
-
-  //   if ( isset( $input['linkedin_profile_2'] ) ) {
-  //     $sanitary_values['linkedin_profile_2'] = sanitize_text_field( $input['linkedin_profile_2'] );
-  //   }
-
-  //   if ( isset( $input['twitter_feed_3'] ) ) {
-  //     $sanitary_values['twitter_feed_3'] = sanitize_text_field( $input['twitter_feed_3'] );
-  //   }
-
-  //   if ( isset( $input['youtube_channel_4'] ) ) {
-  //     $sanitary_values['youtube_channel_4'] = sanitize_text_field( $input['youtube_channel_4'] );
-  //   }
-
-  //   if ( isset( $input['instagram_feed_5'] ) ) {
-  //     $sanitary_values['instagram_feed_5'] = sanitize_text_field( $input['instagram_feed_5'] );
-  //   }
-
-    return $input;
   }
 
   /**
