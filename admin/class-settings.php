@@ -50,7 +50,7 @@ class Settings {
       <form method="post" action="options.php">
         <?php
           settings_fields( 'gpalab-slo' );
-          do_settings_sections( 'gpalab-slo' );
+          $this->custom_do_settings_sections( 'gpalab-slo' );
         ?>
         <button class="button button-secondary" id="slo-add-mission" type="button" >
           Add Mission
@@ -112,14 +112,17 @@ class Settings {
     if ( isset( $missions ) ) {
       foreach ( $missions as $key => $mission ) {
 
+        $title_id = 'title' . $key;
+
         add_settings_field(
-          'title_' . $key,
+          $title_id,
           __( 'Mission name:', 'gpalab-slo' ),
           array( $this, 'add_input' ),
           'gpalab-slo',
           'gpalab-slo-settings',
           array(
-            'label_for' => 'title_' . $key,
+            'class'     => 'mission_' . $key,
+            'label_for' => $title_id,
             'key'       => $key,
             'field'     => 'title',
             'option'    => $mission,
@@ -134,70 +137,85 @@ class Settings {
         //     'gpalab_slo_settings_setting_section' // section
         //   );
 
+        $facebook_id = 'facebook_' . $key;
+
         add_settings_field(
-          'facebook_' . $key,
+          $facebook_id,
           __( 'Facebook profile:', 'gpalab-slo' ),
           array( $this, 'add_input' ),
           'gpalab-slo',
           'gpalab-slo-settings',
           array(
-            'label_for' => 'facebook_' . $key,
+            'class'     => 'mission_' . $key,
+            'label_for' => $facebook_id,
             'key'       => $key,
             'field'     => 'facebook',
             'option'    => $mission,
           )
         );
 
+        $instagram_id = 'instagram_' . $key;
+
         add_settings_field(
-          'instagram_' . $key,
+          $instagram_id,
           __( 'Instagram profile:', 'gpalab-slo' ),
           array( $this, 'add_input' ),
           'gpalab-slo',
           'gpalab-slo-settings',
           array(
-            'label_for' => 'instagram_' . $key,
+            'class'     => 'mission_' . $key,
+            'label_for' => $instagram_id,
             'key'       => $key,
             'field'     => 'instagram',
             'option'    => $mission,
           )
         );
 
+        $linkedin_id = 'linkedin_' . $key;
+
         add_settings_field(
-          'linkedin_' . $key,
+          $linkedin_id,
           __( 'LinkedIn profile:', 'gpalab-slo' ),
           array( $this, 'add_input' ),
           'gpalab-slo',
           'gpalab-slo-settings',
           array(
-            'label_for' => 'linkedin_' . $key,
+            'class'     => 'mission_' . $key,
+            'label_for' => $linkedin_id,
             'key'       => $key,
             'field'     => 'linkedin',
             'option'    => $mission,
           )
         );
 
+        $twitter_id = 'twitter_' . $key;
+
         add_settings_field(
-          'twitter_' . $key,
+          $twitter_id,
           __( 'Twitter profile:', 'gpalab-slo' ),
           array( $this, 'add_input' ),
           'gpalab-slo',
           'gpalab-slo-settings',
           array(
-            'label_for' => 'twitter_' . $key,
+            'class'     => 'mission_' . $key,
+            'label_for' => $twitter_id,
             'key'       => $key,
             'field'     => 'twitter',
             'option'    => $mission,
           )
         );
 
+        $youtube_id = 'youtube_' . $key;
+
         add_settings_field(
-          'youtube_' . $key,
+          $youtube_id,
           __( 'YouTube profile:', 'gpalab-slo' ),
           array( $this, 'add_input' ),
           'gpalab-slo',
           'gpalab-slo-settings',
           array(
-            'label_for' => 'youtube_' . $key,
+            'class'     => 'mission_' . $key,
+            'label_for' => $youtube_id,
             'key'       => $key,
             'field'     => 'youtube',
             'option'    => $mission,
@@ -218,12 +236,14 @@ class Settings {
     $field  = $args['field'];
     $key    = $args['key'];
     $option = $args['option'];
-    $value  = isset( $option[ $field ] ) ? $option[ $field ] : '';
+
+    $id    = $field . '_' . $key;
+    $value = isset( $option[ $field ] ) ? $option[ $field ] : '';
 
     // Generate the markup for the input field.
     $input .= '<input class="regular-text" type="text" ';
     $input .= 'name="gpalab-slo-settings[' . $key . '][' . $field . ']" ';
-    $input .= 'id="' . $field . '_' . $key . '" ';
+    $input .= 'id="' . $id . '" ';
     $input .= 'value="' . $value . '" >';
 
     // Identify which HTML elements to allow.
@@ -282,6 +302,72 @@ class Settings {
   //   }
 
     return $input;
+  }
+
+  /**
+   * Adaptation of the WordPress native do_settings_sections function.
+   * Renders the sections wrapped in a section element with the appropriate classes.
+   *
+   * @param string $page  Slug title of the admin page whose settings fields you want to show.
+   *
+   * @since 0.0.1
+   */
+  private function custom_do_settings_sections( $page ) {
+    global $wp_settings_sections, $wp_settings_fields;
+
+    if ( ! isset( $wp_settings_sections[ $page ] ) ) {
+        return;
+    }
+
+    foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
+      if ( $section['title'] ) {
+        echo '<h2>' . $section['title'] . '</h2>';
+      }
+
+      if ( $section['callback'] ) {
+        call_user_func( $section['callback'], $section );
+      }
+
+      if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ) {
+          continue;
+      }
+
+      echo '<section class="gpalab-slo-tabpanel" role="presentation">';
+      $this->custom_do_settings_fields( $page, $section['id'] );
+      echo '</section>';
+    }
+  }
+
+  /**
+   * Adaptation of the WordPress native do_settings_fields function.
+   * Renders the fields wrapped in a label with the appropriate classes.
+   *
+   * @param string $page     Slug title of the admin page whose settings fields you want to show.
+   * @param string $section  Slug title of the settings section whose fields you want to show.
+   *
+   * @since 0.0.1
+   */
+  private function custom_do_settings_fields( $page, $section ) {
+    global $wp_settings_fields;
+
+    if ( ! isset( $wp_settings_fields[ $page ][ $section ] ) ) {
+        return;
+    }
+
+    foreach ( (array) $wp_settings_fields[ $page ][ $section ] as $field ) {
+        $class = '';
+
+      if ( ! empty( $field['args']['class'] ) ) {
+        $class = ' class="gpalab-slo-label ' . esc_attr( $field['args']['class'] ) . '"';
+      } else {
+        $class = ' class="gpalab-slo-label"';
+      }
+
+      echo '<label ' . $class . ' for="' . esc_attr( $field['args']['label_for'] ) . '">';
+      echo esc_attr( $field['title'] );
+      call_user_func( $field['callback'], $field['args'] );
+      echo '</label>';
+    }
   }
 
   public function display_gpalab_slo_as_a_0_callback() {

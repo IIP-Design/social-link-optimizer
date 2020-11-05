@@ -1,11 +1,11 @@
 .gpalab-slo-tab {
   background-color: #ffffff;
-  border: 1px solid black;
+  border: 1px solid #7e8993;
   border-bottom: none;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
   margin: 0 2px;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
 }
 
 .gpalab-slo-tab-container {
@@ -13,8 +13,22 @@
   margin: 1rem 0 0;
 }
 
+.gpalab-slo-tab-container > li:first-of-type {
+  margin-left: 0.5rem;
+}
+
 .gpalab-slo-tabpanel {
-  border: 1px solid black;
-  border-top: none;
+  border: 1px solid #7e8993;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
   margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.gpalab-slo-label {
+  align-items: center;
+  display: grid;
+  grid-template-columns: 20% 1fr;
+  margin: 0.5rem 0;
 }
