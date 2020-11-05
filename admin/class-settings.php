@@ -42,6 +42,22 @@ class Settings {
   }
 
   /**
+   * Enqueue the admin scripts if on the SLO settings page.
+   *
+   * @param string $hook   Name of the current page.
+   *
+   * @since 0.0.1
+   */
+  public function enqueue_slo_admin( $hook ) {
+    if ( 'gpalab-social-link_page_gpalab-slo-settings' !== $hook ) {
+      return;
+    }
+
+    wp_enqueue_script( 'gpalab-slo-admin-js' );
+    wp_enqueue_style( 'gpalab-slo-admin-css' );
+  }
+
+  /**
    * Generates the markup for the plugin's settings page.
    *
    * @since 0.0.1
@@ -54,9 +70,11 @@ class Settings {
       settings_errors();
 
       $missions = get_option( 'gpalab-slo-settings' );
+      $title    = __( 'Manage Mission Social Link Pages:', 'gpalab-slo' );
 
       // Create the tabs for the tabbed container.
       if ( isset( $missions ) ) {
+        echo '<h2>' . $title . '</h2>';
         echo '<ul class="gpalab-slo-tab-container" role="tablist">';
 
         foreach ( $missions as $key => $mission ) {
@@ -141,7 +159,6 @@ class Settings {
           'gpalab-slo',
           'gpalab-slo-settings-' . $key,
           array(
-            'class'     => 'mission_' . $key,
             'label_for' => $title_id,
             'key'       => $key,
             'field'     => 'title',
@@ -149,13 +166,21 @@ class Settings {
           )
         );
 
-        //   add_settings_field(
-        //     'display_gpalab_slo_as_a_0', // id
-        //     'Display social links as a:', // title
-        //     array( $this, 'display_gpalab_slo_as_a_0_callback' ), // callback
-        //     'gpalab-slo-settings-admin', // page
-        //     'gpalab_slo_settings_setting_section' // section
-        //   );
+        $type_id = 'type' . $key;
+
+        add_settings_field(
+          $type_id,
+          __( 'Display links as a:', 'gpalab-slo' ),
+          array( $this, 'add_type_toggle' ), // callback
+          'gpalab-slo',
+          'gpalab-slo-settings-' . $key,
+          array(
+            'label_for' => $type_id,
+            'key'       => $key,
+            'field'     => 'type',
+            'option'    => $mission,
+          )
+        );
 
         $facebook_id = 'facebook_' . $key;
 
@@ -166,7 +191,6 @@ class Settings {
           'gpalab-slo',
           'gpalab-slo-settings-' . $key,
           array(
-            'class'     => 'mission_' . $key,
             'label_for' => $facebook_id,
             'key'       => $key,
             'field'     => 'facebook',
@@ -183,7 +207,6 @@ class Settings {
           'gpalab-slo',
           'gpalab-slo-settings-' . $key,
           array(
-            'class'     => 'mission_' . $key,
             'label_for' => $instagram_id,
             'key'       => $key,
             'field'     => 'instagram',
@@ -200,7 +223,6 @@ class Settings {
           'gpalab-slo',
           'gpalab-slo-settings-' . $key,
           array(
-            'class'     => 'mission_' . $key,
             'label_for' => $linkedin_id,
             'key'       => $key,
             'field'     => 'linkedin',
@@ -217,7 +239,6 @@ class Settings {
           'gpalab-slo',
           'gpalab-slo-settings-' . $key,
           array(
-            'class'     => 'mission_' . $key,
             'label_for' => $twitter_id,
             'key'       => $key,
             'field'     => 'twitter',
@@ -234,7 +255,6 @@ class Settings {
           'gpalab-slo',
           'gpalab-slo-settings-' . $key,
           array(
-            'class'     => 'mission_' . $key,
             'label_for' => $youtube_id,
             'key'       => $key,
             'field'     => 'youtube',
@@ -282,17 +302,58 @@ class Settings {
   }
 
   /**
-   * Enqueue the admin scripts if on the SLO settings page.
+   * Generate a set of radio buttons to toggle the links display type.
    *
-   * @param string $hook   Name of the current page.
+   * @param array $args   Data used to individualize input fields and get input value.
+   *
+   * @since 0.0.1
    */
-  public function enqueue_slo_admin( $hook ) {
-    if ( 'gpalab-social-link_page_gpalab-slo-settings' !== $hook ) {
-      return;
-    }
+  public function add_type_toggle( $args ) {
+    $field  = $args['field'];
+    $key    = $args['key'];
+    $option = $args['option'];
 
-    wp_enqueue_script( 'gpalab-slo-admin-js' );
-    wp_enqueue_style( 'gpalab-slo-admin-css' );
+    $id      = $field . '_' . $key;
+    $checked = isset( $option[ $field ] ) ? $option[ $field ] : 'grid';
+
+    // Generate the markup for the type toggle field.
+    $input  = '<div class="gpalab-slo-type-toggle">';
+    $input .= '<label for="' . $id . '_grid">';
+    $input .= '<input type="radio" ';
+    $input .= 'name="gpalab-slo-settings[' . $key . '][' . $field . ']" ';
+    $input .= 'id="' . $id . '_grid" ';
+    $input .= ( 'grid' === $checked ) ? 'checked ' : '';
+    $input .= 'value="grid" >';
+    $input .= 'Three column grid</label>';
+    $input .= '<label for="' . $id . '_list">';
+    $input .= '<input type="radio" ';
+    $input .= 'name="gpalab-slo-settings[' . $key . '][' . $field . ']" ';
+    $input .= 'id="' . $id . '_list" ';
+    $input .= ( 'list' === $checked ) ? 'checked ' : '';
+    $input .= 'value="list" >';
+    $input .= 'Vertical list</label>';
+    $input .= '</div>';
+
+    // Identify which HTML elements to allow.
+    $elements = array(
+      'div'   => array(
+        'class' => array(),
+      ),
+      'input' => array(
+        'checked' => array(),
+        'class'   => array(),
+        'id'      => array(),
+        'name'    => array(),
+        'type'    => array(),
+        'value'   => array(),
+      ),
+      'label' => array(
+        'for' => array(),
+      ),
+    );
+
+    // Sanitize the input field before rendering on the settings page.
+    echo wp_kses( $input, $elements );
   }
 
   public function gpalab_slo_settings_sanitize( $input ) {
@@ -342,10 +403,6 @@ class Settings {
     foreach ( (array) $wp_settings_sections[ $page ] as $key => $section ) {
       echo '<section class="gpalab-slo-tabpanel" id="' . $key . '" role="tabpanel">';
 
-      if ( $section['title'] ) {
-        echo '<h2>' . $section['title'] . '</h2>';
-      }
-
       if ( $section['callback'] ) {
         call_user_func( $section['callback'], $section );
       }
@@ -392,12 +449,5 @@ class Settings {
       call_user_func( $field['callback'], $field['args'] );
       echo '</label>';
     }
-  }
-
-  public function display_gpalab_slo_as_a_0_callback() {
-    ?> <fieldset><?php $checked = ( isset( $this->gpalab_slo_settings_options['display_gpalab_slo_as_a_0'] ) && $this->gpalab_slo_settings_options['display_gpalab_slo_as_a_0'] === 'grid' ) ? 'checked' : '' ; ?>
-    <label for="display_gpalab_slo_as_a_0-0"><input type="radio" name="gpalab_slo_settings_option_name[display_gpalab_slo_as_a_0]" id="display_gpalab_slo_as_a_0-0" value="grid" <?php echo $checked; ?>> Three column grid</label><br>
-    <?php $checked = ( isset( $this->gpalab_slo_settings_options['display_gpalab_slo_as_a_0'] ) && $this->gpalab_slo_settings_options['display_gpalab_slo_as_a_0'] === 'list' ) ? 'checked' : '' ; ?>
-    <label for="display_gpalab_slo_as_a_0-1"><input type="radio" name="gpalab_slo_settings_option_name[display_gpalab_slo_as_a_0]" id="display_gpalab_slo_as_a_0-1" value="list" <?php echo $checked; ?>> Vertical list</label></fieldset> <?php
   }
 }

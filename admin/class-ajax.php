@@ -43,6 +43,7 @@ class Ajax {
     $new_mission = array();
 
     $new_mission['title']     = 'New';
+    $new_mission['type']      = 'grid';
     $new_mission['facebook']  = '';
     $new_mission['instagram'] = '';
     $new_mission['linkedin']  = '';

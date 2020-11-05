@@ -29,6 +29,15 @@
   width: 100%;
 }
 
+.gpalab-slo-type-toggle {
+  display: flex;
+  flex-direction: column;
+}
+
+.gpalab-slo-type-toggle > label {
+  margin: 0.2em 0;
+}
+
 .gpalab-slo-tab-button[aria-selected] {
   background-color: #ffffff;
   border-bottom: none;
