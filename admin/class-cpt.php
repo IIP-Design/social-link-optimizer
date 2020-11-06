@@ -19,6 +19,8 @@ namespace SLO;
 class CPT {
   /**
    * Register social links custom post type.
+   *
+   * @since 0.0.1
    */
   public function gpalab_slo_cpt() {
     $labels = array(
@@ -63,7 +65,7 @@ class CPT {
       'description'         => __( 'Post Type Description', 'gpalab-slo' ),
       'labels'              => $labels,
       'supports'            => array( 'title', 'thumbnail', 'custom-fields' ),
-      'taxonomies'          => array( 'category', 'post_tag' ),
+      'taxonomies'          => array(),
       'hierarchical'        => false,
       'public'              => true,
       'show_ui'             => true,
@@ -170,10 +172,13 @@ class CPT {
   }
 
   /**
-   * 4. Relocate featured image meta box
+   * Relocate featured image metabox to the principal section.
+   *
+   * @since 0.0.1
    */
   public function gpalab_slo_image_meta_box() {
     remove_meta_box( 'postimagediv', 'gpalab-social-link', 'side' );
+
     add_meta_box(
       'postimagediv',
       __( 'Featured Image' ),
