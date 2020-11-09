@@ -14,7 +14,7 @@ const MissionSelect = compose(
     },
   } ) ),
   withSelect( ( select, { label, metaKey, missions } ) => {
-    const noSelection = [{ value: '', label: __( '- Select -', 'gpalab-slo' ) }];
+    const noSelection = [{ value: '', label: __( 'All Posts', 'gpalab-slo' ) }];
     const options = [...noSelection, ...missions];
 
     return {
