@@ -1,0 +1,6 @@
+{
+  "ignorePatterns": [ "node_modules/", "admin/build/", "vendor/" ],
+  "rules": {
+    "react/jsx-pascal-case": ["error", { "allowAllCaps": true }]
+  }
+}

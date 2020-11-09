@@ -19,6 +19,8 @@ namespace SLO;
 class CPT {
   /**
    * Register social links custom post type.
+   *
+   * @since 0.0.1
    */
   public function gpalab_slo_cpt() {
     $labels = array(
@@ -63,7 +65,7 @@ class CPT {
       'description'         => __( 'Post Type Description', 'gpalab-slo' ),
       'labels'              => $labels,
       'supports'            => array( 'title', 'thumbnail', 'custom-fields' ),
-      'taxonomies'          => array( 'category', 'post_tag' ),
+      'taxonomies'          => array(),
       'hierarchical'        => false,
       'public'              => true,
       'show_ui'             => true,
@@ -86,35 +88,46 @@ class CPT {
 
   /**
    * Add custom meta box.
+   *
+   * @since 0.0.1
    */
   public function gpalab_slo_custom_meta() {
     add_meta_box(
-      'gpa_lab_meta',
+      'gpalab_slo_link',
       __( 'Link this social post to', 'gpalab-slo' ),
-      function( $post ) {
-        return $this->gpalab_slo_meta_callback( $post );
-      },
+      array( $this, 'gpalab_slo_meta_callback' ),
       'gpalab-social-link',
       'normal',
       'high'
     );
+
+    add_meta_box(
+      'gpalab_slo_mission',
+      __( 'Select Mission', 'gpalab-slo' ),
+      array( $this, 'add_mission_select' ),
+      'gpalab-social-link',
+      'side',
+      'low'
+    );
   }
 
   /**
-   * Display the meta box.
+   * Renders the custom metabox used to save the post redirect.
    *
-   * @param object $post    WordPress post Object.
+   * @param object $post  WordPress post Object.
+   *
+   * @since 0.0.1
    */
   public function gpalab_slo_meta_callback( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'gpalab_slo_nonce' );
 
-    $post_meta = get_post_meta( $post->ID );
-    $slo_meta  = $post_meta['gpa-lab-social-links-meta-text'];
+    $link = get_post_meta( $post->ID, 'gpalab_slo_link', true );
+
     ?>
 
     <p style="display: flex; align-items: center;">
       <label
-        for="gpa-lab-social-links-meta-text"
+        for="gpalab_slo_link"
         class="gpa-lab-social-links-row-title"
         style="margin-right: 0.5rem;"
       >
@@ -122,12 +135,60 @@ class CPT {
       </label>
       <input
         type="text"
-        name="gpa-lab-social-links-meta-text" 
-        id="gpa-lab-social-links-meta-text"
+        name="gpalab_slo_link" 
+        id="gpalab_slo_link"
         style="flex-grow: 1;"
-        value="<?php echo isset( $slo_meta ) ? $slo_meta[0] : ''; ?>" 
+        value="<?php echo esc_url( $link, array( 'http', 'https' ) ); ?>"
       />
     </p>
+
+    <?php
+  }
+
+  /**
+   * Renders the custom metabox used to save associate post with a given mission.
+   *
+   * @param object $post  WordPress post Object.
+   *
+   * @since 0.0.1
+   */
+  public function add_mission_select( $post ) {
+    wp_nonce_field( basename( __FILE__ ), 'gpalab_slo_nonce' );
+
+    $selected = get_post_meta( $post->ID, 'gpalab-slo-mission', true );
+    $missions = get_option( 'gpalab-slo-settings' );
+
+    ?>
+
+    <label
+      for="gpalab-slo-mission"
+      style="margin-right: 0.5rem;"
+    >
+      <?php esc_html_e( 'Select a mission:', 'gpalab-slo' ); ?>
+      <select
+        id="gpalab-slo-mission"
+        name="gpalab-slo-mission"
+      >
+        <option value="" <?php selected( $selected, $mission['id'] ); ?>></option>
+        <?php
+        foreach ( $missions as $mission ) {
+
+          $option  = '<option value=' . esc_attr( $mission['id'] );
+          $option .= ' ' . selected( $selected, $mission['id'] ) . '>';
+          $option .= esc_html( $mission['title'] ) . '</option>';
+
+          $elements = array(
+            'option' => array(
+              'selected' => array(),
+              'value'    => array(),
+            ),
+          );
+
+          echo wp_kses( $option, $elements );
+        }
+        ?>
+      </select>
+    </label>
 
     <?php
   }
@@ -136,20 +197,43 @@ class CPT {
    * Save the custom meta data.
    *
    * @param int $post_id   WordPress post id.
+   *
+   * @since 0.0.1
    */
   public function gpalab_slo_meta_save( $post_id ) {
+    global $post;
+
+    if ( 'gpalab-social-link' !== $post->post_type ) {
+      return;
+    }
+
     // Save status.
     $is_autosave    = wp_is_post_autosave( $post_id );
     $is_revision    = wp_is_post_revision( $post_id );
-    $is_valid_nonce = ( isset( $_POST['gpalab_slo_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['gpalab_slo_nonce'] ) ), basename( __FILE__ ) ) ) ? 'true' : 'false';
+    $is_valid_nonce =
+      isset( $_POST['gpalab_slo_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['gpalab_slo_nonce'] ) ), basename( __FILE__ ) )
+      ? 'true'
+      : 'false';
 
     if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {
       return;
     }
 
     // Sanitize/save.
-    if ( isset( $_POST['gpa-lab-social-links-meta-text'] ) ) {
-      update_post_meta( $post_id, 'gpa-lab-social-links-meta-text', sanitize_text_field( wp_unslash( $_POST['gpa-lab-social-links-meta-text'] ) ) );
+    if ( isset( $_POST['gpalab_slo_link'] ) ) {
+      update_post_meta(
+        $post_id,
+        'gpalab_slo_link',
+        sanitize_text_field( wp_unslash( $_POST['gpalab_slo_link'] ) )
+      );
+    }
+
+    if ( isset( $_POST['gpalab-slo-mission'] ) ) {
+      update_post_meta(
+        $post_id,
+        'gpalab-slo-mission',
+        sanitize_text_field( wp_unslash( $_POST['gpalab-slo-mission'] ) )
+      );
     }
   }
 
@@ -233,9 +317,11 @@ class CPT {
    *
    * @param string $url     Social media link.
    * @param object $post    WordPress post Object.
+   *
+   * @since 0.0.1
    */
   public function gpalab_slo_filter_permalink( $url, $post ) {
-    $custom_link = get_post_field( 'gpa-lab-social-links-meta-text', $post->ID );
+    $custom_link = get_post_field( 'gpalab_slo_link', $post->ID );
 
     if ( $custom_link && 'gpalab-social-link' === get_post_type( $post->ID ) ) {
       $url = $custom_link;
@@ -245,10 +331,13 @@ class CPT {
   }
 
   /**
-   * 4. Relocate featured image meta box
+   * Relocate featured image metabox to the principal section.
+   *
+   * @since 0.0.1
    */
   public function gpalab_slo_image_meta_box() {
     remove_meta_box( 'postimagediv', 'gpalab-social-link', 'side' );
+
     add_meta_box(
       'postimagediv',
       __( 'Featured Image' ),
