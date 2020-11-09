@@ -1,0 +1,26 @@
+{
+  "name": "@gpa-lab/social-link-optimizer",
+  "version": "0.0.1",
+  "description": "Plugin to add a Social Link custom post type, custom meta box, and Social Link Optimizer page template",
+  "scripts": {
+    "build": "wp-scripts build admin/js/*.js --output-path=admin/build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IIP-Design/social-link-optimizer.git"
+  },
+  "author": "U.S. Department of State, Bureau of Global Public Affairs Digital Lab <gpa-lab@america.gov>",
+  "license": "GPL-2.0-or-later",
+  "bugs": {
+    "url": "https://github.com/IIP-Design/social-link-optimizer/issues"
+  },
+  "homepage": "https://github.com/IIP-Design/social-link-optimizer#readme",
+  "dependencies": {
+    "@wordpress/data": "^4.25.0",
+    "@wordpress/edit-post": "^3.25.2",
+    "@wordpress/plugins": "^2.23.0"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^12.5.0"
+  }
+}

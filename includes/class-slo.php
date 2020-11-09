@@ -82,6 +82,7 @@ class SLO {
     // The class responsible for defining all actions that occur in the admin area.
     require_once GPALAB_SLO_DIR . 'admin/class-admin.php';
     require_once GPALAB_SLO_DIR . 'admin/class-ajax.php';
+    require_once GPALAB_SLO_DIR . 'admin/class-archive.php';
     require_once GPALAB_SLO_DIR . 'admin/class-cpt.php';
     require_once GPALAB_SLO_DIR . 'admin/class-settings.php';
 
@@ -100,6 +101,7 @@ class SLO {
   private function define_admin_hooks() {
     $plugin_admin    = new SLO\Admin( $this->get_plugin_name(), $this->get_version() );
     $plugin_ajax     = new SLO\Ajax( $this->get_plugin_name(), $this->get_version() );
+    $plugin_archive  = new SLO\Archive( $this->get_plugin_name(), $this->get_version() );
     $plugin_cpt      = new SLO\CPT( $this->get_plugin_name(), $this->get_version() );
     $plugin_settings = new SLO\Settings( $this->get_plugin_name(), $this->get_version() );
 
@@ -110,6 +112,10 @@ class SLO {
     // Ajax hooks.
     $this->loader->add_action( 'wp_ajax_gpalab_add_slo_mission', $plugin_ajax, 'handle_mission_addition' );
     $this->loader->add_action( 'wp_ajax_gpalab_remove_slo_mission', $plugin_ajax, 'handle_mission_removal' );
+
+    // Custom post type archive page hooks.
+    $this->loader->add_action( 'init', $plugin_archive, 'register_slo_gutenberg_plugins' );
+    $this->loader->add_action( 'admin_enqueue_scripts', $plugin_archive, 'enqueue_slo_missions_plugin' );
 
     // Custom post type hooks.
     $this->loader->add_action( 'init', $plugin_cpt, 'gpalab_slo_cpt', 0 );
