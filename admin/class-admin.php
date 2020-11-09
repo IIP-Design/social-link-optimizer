@@ -21,6 +21,8 @@ class Admin {
    *
    * @param string $plugin     The plugin name.
    * @param string $version    The plugin version number.
+   *
+   * @since 0.0.1
    */
   public function __construct( $plugin, $version ) {
     $this->plugin  = $plugin;
@@ -29,6 +31,8 @@ class Admin {
 
   /**
    * Register the scripts for the plugin's admin interface.
+   *
+   * @since 0.0.1
    */
   public function register_admin_scripts_styles() {
     $script_asset = require GPALAB_SLO_DIR . 'admin/build/gpalab-slo-admin.asset.php';
@@ -51,6 +55,8 @@ class Admin {
 
   /**
    * Pass required PHP values as variables to admin JS.
+   *
+   * @since 0.0.1
    */
   public function localize_admin_script_globals() {
     wp_localize_script(
@@ -59,6 +65,23 @@ class Admin {
       array(
         'ajaxUrl'  => admin_url( 'admin-ajax.php' ),
         'sloNonce' => wp_create_nonce( 'gpalab-slo-nonce' ),
+      )
+    );
+  }
+
+  /**
+   * Register the metadata fields for the plugin.
+   *
+   * @since 0.0.1
+   */
+  public function register_slo_mission_meta() {
+    register_post_meta(
+      '', // Empty string indicated this meta-field is available on all post-types.
+      'gpalab-slo-mission-select',
+      array(
+        'show_in_rest' => true,
+        'single'       => true,
+        'type'         => 'string',
       )
     );
   }

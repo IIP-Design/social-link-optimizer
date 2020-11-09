@@ -1,22 +1,36 @@
 /** @jsx */
 
-import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
-import { useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
+import { compose } from '@wordpress/compose';
+import { SelectControl } from '@wordpress/components';
+import { withSelect, withDispatch } from '@wordpress/data';
 
-const MissionSelect = () => {
-  const template = useSelect( select => select('core/editor').getEditedPostAttribute('template') );
+const MissionSelect = compose(
+  withDispatch( ( dispatch, { metaKey } ) => ( {
+    setMissionValue( val ) {
+      dispatch( 'core/editor' ).editPost(
+        { meta: { [metaKey]: val } },
+      );
+    },
+  } ) ),
+  withSelect( ( select, { label, metaKey, missions } ) => {
+    const noSelection = [{ value: '', label: __( '- Select -', 'gpalab-slo' ) }];
+    const options = [...noSelection, ...missions];
 
-  if ( template !== 'archive-gpalab-social-link.php' ) {
-    return null;
-  }
-
-  return(
-    <PluginDocumentSettingPanel
-      className="gpalab-slo-mission-select"
-      name="gpalab-slo-mission-select"
-      title="Select a Mission"
-    />
-  );
-};
+    return {
+      label,
+      options,
+      selected: select( 'core/editor' ).getEditedPostAttribute( 'meta' )[metaKey],
+    };
+  } ),
+)( ( { label, options, selected, setMissionValue } ) => (
+  <SelectControl
+    label={ label }
+    options={ options }
+    value={ selected }
+    onBlur={ e => setMissionValue( e.target.value ) }
+    onChange={ setMissionValue }
+  />
+) );
 
 export default MissionSelect;

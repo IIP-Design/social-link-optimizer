@@ -39,5 +39,15 @@ class Archive {
    */
   public function enqueue_slo_missions_plugin() {
     wp_enqueue_script( 'gpalab-slo-mission-plugin' );
+
+    $missions = get_option( 'gpalab-slo-settings', array() );
+
+    wp_localize_script(
+      'gpalab-slo-mission-plugin',
+      'gpalabSloPlugin',
+      array(
+        'missions' => $missions,
+      )
+    );
   }
 }

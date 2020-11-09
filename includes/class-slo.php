@@ -107,6 +107,7 @@ class SLO {
 
     // Admin hooks.
     $this->loader->add_action( 'init', $plugin_admin, 'register_admin_scripts_styles' );
+    $this->loader->add_action( 'init', $plugin_admin, 'register_slo_mission_meta' );
     $this->loader->add_action( 'admin_notices', $plugin_admin, 'localize_admin_script_globals' );
 
     // Ajax hooks.
