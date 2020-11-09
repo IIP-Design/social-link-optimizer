@@ -24,11 +24,11 @@ get_header();
       <?php
       get_template_part( 'template-parts/entry-header' );
       ?>
-    
+
       <div class="post-inner">
     
         <div class="entry-content gpa-social-link-optimizer">
-    
+
           <?php
           $is_gpaslo_archive = is_page_template( 'archive-gpalab-social-link.php' );
 
@@ -89,6 +89,13 @@ get_header();
                   // Retrieve the current link post id.
                   $current = get_the_ID();
 
+                  $is_archive = get_post_meta( $current, 'gpalab-slo-archive-meta', true );
+
+                  // skip archived items
+                  if ( 'true' === $is_archive ) {
+                    continue;
+                  }
+
                   // Check if function already exists to prevent re-declaration in the loop.
                   if ( ! function_exists( 'linkify' ) ) {
                     /**
@@ -139,11 +146,11 @@ get_header();
             the_content( __( 'Continue reading', 'gpalab-slo' ) );
           }
           ?>
-    
+
         </div><!-- .entry-content -->
-    
+
       </div><!-- .post-inner -->
-    
+
       <div class="section-inner">
         <?php
         wp_link_pages(
@@ -157,9 +164,9 @@ get_header();
 
         edit_post_link();
         ?>
-    
+
       </div><!-- .section-inner -->
-    
+
       </article><!-- .post -->
 
       <?php

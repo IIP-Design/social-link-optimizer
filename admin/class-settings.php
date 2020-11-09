@@ -169,6 +169,22 @@ class Settings {
           )
         );
 
+        $website_id = 'website_' . $key;
+
+        add_settings_field(
+          $website_id,
+          __( 'Mission website:', 'gpalab-slo' ),
+          array( $this, 'add_input' ),
+          'gpalab-slo',
+          'gpalab-slo-settings-' . $key,
+          array(
+            'label_for' => $website_id,
+            'key'       => $key,
+            'field'     => 'website',
+            'option'    => $mission,
+          )
+        );
+
         $type_id = 'type_' . $key;
 
         add_settings_field(
@@ -261,6 +277,38 @@ class Settings {
             'label_for' => $youtube_id,
             'key'       => $key,
             'field'     => 'youtube',
+            'option'    => $mission,
+          )
+        );
+
+        $flickr_id = 'flickr_' . $key;
+
+        add_settings_field(
+          $flickr_id,
+          __( 'Flickr profile:', 'gpalab-slo' ),
+          array( $this, 'add_input' ),
+          'gpalab-slo',
+          'gpalab-slo-settings-' . $key,
+          array(
+            'label_for' => $flickr_id,
+            'key'       => $key,
+            'field'     => 'flickr',
+            'option'    => $mission,
+          )
+        );
+
+        $wechat_id = 'wechat_' . $key;
+
+        add_settings_field(
+          $wechat_id,
+          __( 'WeChat profile:', 'gpalab-slo' ),
+          array( $this, 'add_input' ),
+          'gpalab-slo',
+          'gpalab-slo-settings-' . $key,
+          array(
+            'label_for' => $wechat_id,
+            'key'       => $key,
+            'field'     => 'wechat',
             'option'    => $mission,
           )
         );
