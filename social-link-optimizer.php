@@ -22,6 +22,16 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'GPALAB_SLO_DIR', plugin_dir_path( dirname( __FILE__ ) ) . 'social-link-optimizer/' );
 define( 'GPALAB_SLO_URL', plugin_dir_url( dirname( __FILE__ ) ) . 'social-link-optimizer/' );
 
+/**
+ * Run functions needed at startup when plugin is installed.
+ */
+function gpalab_social_link_optimizer_activate() {
+  require_once plugin_dir_path( __FILE__ ) . 'includes/class-activator.php';
+
+  SLO\Activator::activate();
+}
+register_activation_hook( __FILE__, 'gpalab_social_link_optimizer_activate' );
+
 // Imports SLO class.
 require plugin_dir_path( __FILE__ ) . 'includes/class-slo.php';
 

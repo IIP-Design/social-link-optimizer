@@ -80,6 +80,8 @@ class SLO {
     require_once GPALAB_SLO_DIR . 'includes/class-loader.php';
 
     // The class responsible for defining all actions that occur in the admin area.
+    require_once GPALAB_SLO_DIR . 'admin/class-admin.php';
+    require_once GPALAB_SLO_DIR . 'admin/class-ajax.php';
     require_once GPALAB_SLO_DIR . 'admin/class-cpt.php';
     require_once GPALAB_SLO_DIR . 'admin/class-settings.php';
 
@@ -96,8 +98,18 @@ class SLO {
    * @since 0.0.1
    */
   private function define_admin_hooks() {
+    $plugin_admin    = new SLO\Admin( $this->get_plugin_name(), $this->get_version() );
+    $plugin_ajax     = new SLO\Ajax( $this->get_plugin_name(), $this->get_version() );
     $plugin_cpt      = new SLO\CPT( $this->get_plugin_name(), $this->get_version() );
     $plugin_settings = new SLO\Settings( $this->get_plugin_name(), $this->get_version() );
+
+    // Admin hooks.
+    $this->loader->add_action( 'init', $plugin_admin, 'register_admin_scripts_styles' );
+    $this->loader->add_action( 'admin_notices', $plugin_admin, 'localize_admin_script_globals' );
+
+    // Ajax hooks.
+    $this->loader->add_action( 'wp_ajax_gpalab_add_slo_mission', $plugin_ajax, 'handle_mission_addition' );
+    $this->loader->add_action( 'wp_ajax_gpalab_remove_slo_mission', $plugin_ajax, 'handle_mission_removal' );
 
     // Custom post type hooks.
     $this->loader->add_action( 'init', $plugin_cpt, 'gpalab_slo_cpt', 0 );
@@ -112,9 +124,9 @@ class SLO {
     $this->loader->add_action( 'manage_gpalab-social-link_posts_custom_column', $plugin_cpt, 'gpalab_slo_archive_admin_column_content', 10, 2 );
 
     // Settings page hooks.
-    $this->loader->add_action( 'admin_menu', $plugin_settings, 'gpalab_slo_settings_add_plugin_page' );
-    $this->loader->add_action( 'admin_init', $plugin_settings, 'gpalab_slo_settings_page_init' );
-    $this->loader->add_action( 'admin_enqueue_scripts', $plugin_settings, 'gpalab_slo_media_uploader_scripts' );
+    $this->loader->add_action( 'admin_menu', $plugin_settings, 'add_settings_page' );
+    $this->loader->add_action( 'admin_init', $plugin_settings, 'populate_settings_page' );
+    $this->loader->add_action( 'admin_enqueue_scripts', $plugin_settings, 'enqueue_slo_admin' );
   }
 
   /**
