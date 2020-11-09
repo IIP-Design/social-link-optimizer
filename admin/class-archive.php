@@ -21,11 +21,11 @@ class Archive {
    * @since 0.0.1
    */
   public function register_slo_gutenberg_plugins() {
-    $script_asset = require GPALAB_SLO_DIR . 'admin/build/plugin-mission-select.asset.php';
+    $script_asset = require GPALAB_SLO_DIR . 'admin/build/gpalab-slo-mission-plugin.asset.php';
 
     wp_register_script(
-      'gpalab-slo-mission-archive',
-      GPALAB_SLO_URL . 'admin/build/plugin-mission-select.js',
+      'gpalab-slo-mission-plugin',
+      GPALAB_SLO_URL . 'admin/build/gpalab-slo-mission-plugin.js',
       $script_asset['dependencies'],
       $script_asset['version'],
       true
@@ -38,6 +38,6 @@ class Archive {
    * @since 0.0.1
    */
   public function enqueue_slo_missions_plugin() {
-    wp_enqueue_script( 'gpalab-slo-mission-archive' );
+    wp_enqueue_script( 'gpalab-slo-mission-plugin' );
   }
 }

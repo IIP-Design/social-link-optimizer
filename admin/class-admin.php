@@ -31,11 +31,13 @@ class Admin {
    * Register the scripts for the plugin's admin interface.
    */
   public function register_admin_scripts_styles() {
+    $script_asset = require GPALAB_SLO_DIR . 'admin/build/gpalab-slo-admin.asset.php';
+
     wp_register_script(
       'gpalab-slo-admin-js',
-      GPALAB_SLO_URL . 'admin/js/admin.js',
-      array(),
-      $this->version,
+      GPALAB_SLO_URL . 'admin/build/gpalab-slo-admin.js',
+      $script_asset['dependencies'],
+      $script_asset['version'],
       true
     );
 
