@@ -124,9 +124,9 @@ class SLO {
     $this->loader->add_action( 'save_post', $plugin_cpt, 'gpalab_slo_meta_save' );
     $this->loader->add_action( 'do_meta_boxes', $plugin_cpt, 'gpalab_slo_image_meta_box' );
     $this->loader->add_filter( 'post_type_link', $plugin_cpt, 'gpalab_slo_filter_permalink', 10, 2 );
-    $this->loader->add_filter( 'manage_edit-gpalab-social-link_columns', $plugin_cpt, 'gpalab_slo_archive_admin_column' );
-    $this->loader->add_filter( 'manage_edit-gpalab-social-link_sortable_columns', $plugin_cpt, 'gpalab_slo_archive_sortable_admin_column' );
-    $this->loader->add_action( 'manage_gpalab-social-link_posts_custom_column', $plugin_cpt, 'gpalab_slo_archive_admin_column_content', 10, 2 );
+    $this->loader->add_filter( 'manage_edit-gpalab-social-link_columns', $plugin_cpt, 'add_custom_columns' );
+    $this->loader->add_filter( 'manage_edit-gpalab-social-link_sortable_columns', $plugin_cpt, 'make_custom_columns_sortable' );
+    $this->loader->add_action( 'manage_gpalab-social-link_posts_custom_column', $plugin_cpt, 'populate_custom_columns', 10, 2 );
 
     // Settings page hooks.
     $this->loader->add_action( 'admin_menu', $plugin_settings, 'add_settings_page' );

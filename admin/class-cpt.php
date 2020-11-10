@@ -328,23 +328,63 @@ class CPT {
   }
 
   /**
-   * Add sortable Archived admin column
+   * Add custom columns to the list of social links posts.
+   *
+   * @param array $defaults  List of default columns.
+   *
+   * @since 0.0.1
    */
-  public function gpalab_slo_archive_admin_column( $defaults ) {
+  public function add_custom_columns( $defaults ) {
     $defaults['gpalab_slo_archive'] = __( 'Archived', 'gpalab-slo' );
+    $defaults['gpalab_slo_mission'] = __( 'Mission', 'gpalab-slo' );
+
     return $defaults;
   }
 
-  public function gpalab_slo_archive_sortable_admin_column( $columns ) {
+  /**
+   * Make the social links custom post type's columns sortable.
+   *
+   * @param array $columns  List of default columns.
+   *
+   * @since 0.0.1
+   */
+  public function make_custom_columns_sortable( $columns ) {
     $columns['gpalab_slo_archive'] = __( 'Archived', 'gpalab-slo' );
+    $columns['gpalab_slo_mission'] = __( 'Mission', 'gpalab-slo' );
+
     return $columns;
   }
 
-  public function gpalab_slo_archive_admin_column_content( $column_name, $post_id ) {
+  /**
+   * Populate the content of the missions column.
+   *
+   * @param string $column_name   Name of the given column.
+   * @param int    $post_id       List of default columns.
+   *
+   * @since 0.0.1
+   */
+  public function populate_custom_columns( $column_name, $post_id ) {
+    // Populate the Archived column.
     if ( 'gpalab_slo_archive' === $column_name ) {
-      $is_archive = get_post_meta( $post_id, 'gpalab_slo_archive', true );
-      $human_friendly_value = 'true' === $is_archive ? 'yes' : 'no';
-      echo '<p>' . $human_friendly_value . '</p>';
+      $is_archive     = get_post_meta( $post_id, 'gpalab_slo_archive', true );
+      $human_friendly = 'true' === $is_archive ? 'yes' : 'no';
+
+      echo esc_html( $human_friendly );
+    }
+
+    // Populate the Mission column.
+    if ( 'gpalab_slo_mission' === $column_name ) {
+      // Get all missions.
+      $slo_settings = get_option( 'gpalab-slo-settings' );
+
+      // Get the id of the mission associated with the current post.
+      $mission_id = get_post_meta( $post_id, 'gpalab_slo_mission', true );
+
+      // Search for selected mission among the mission sessions and return it's data.
+      $settings_key   = array_search( $mission_id, array_column( $slo_settings, 'id' ), true );
+      $human_friendly = $slo_settings[ $settings_key ]['title'];
+
+      echo esc_html( $human_friendly );
     }
   }
 

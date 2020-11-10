@@ -96,12 +96,15 @@ get_header();
             <ul class="gpa-social-list <?php echo esc_html( $layout ); ?>" aria-describedby="instagram-posts">
               <?php
 
+              // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+              // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_value
               $args = array(
                 'post_type'    => 'gpalab-social-link',
                 'meta_key'     => 'gpalab_slo_mission',
                 'meta_value'   => $selected_mission,
                 'meta_compare' => '=',
               );
+              // phpcs:enable
 
               $the_query = new WP_Query( $args );
 
