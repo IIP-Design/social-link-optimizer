@@ -17,6 +17,8 @@ namespace SLO;
 class Ajax {
   /**
    * Adds a blank mission to the list of missions in the plugin settings.
+   *
+   * @since 0.0.1
    */
   public function handle_mission_addition() {
     // The following rules are handled by the slo_verify_nonce function and hence can be safely ignored.
@@ -52,6 +54,8 @@ class Ajax {
 
   /**
    * Removes a specified mission from the list of missions in the plugin settings.
+   *
+   * @since 0.0.1
    */
   public function handle_mission_removal() {
     // The following rules are handled by the slo_verify_nonce function and hence can be safely ignored.
@@ -74,8 +78,10 @@ class Ajax {
       return;
     }
 
+    // Initialize the index of the selected mission.
     $index;
 
+    // Retrieve the index value of the selected mission.
     foreach ( $slo_settings as $key => $setting ) {
       if ( $setting['id'] === $id ) {
         $index = $key;
@@ -83,9 +89,13 @@ class Ajax {
       }
     }
 
+    // Remove the selected mission from missions array.
     unset( $slo_settings[ $index ] );
 
-    update_option( 'gpalab-slo-settings', $slo_settings );
+    // Re-index the array.
+    $reindexed = array_values( $slo_settings );
+
+    update_option( 'gpalab-slo-settings', $reindexed );
   }
 
   /**
