@@ -45,7 +45,7 @@ get_header();
 
             // Search for selected mission among the mission sessions and return it's data.
             $settings_key  = array_search( $selected_mission, array_column( $slo_settings, 'id' ), true );
-            $page_settings = $settings_key ? $slo_settings[ $settings_key ] : array();
+            $page_settings = is_numeric( $settings_key ) ? $slo_settings[ $settings_key ] : array();
 
             // Determine the page layout (ie. grid or list).
             $layout = ( isset( $page_settings['type'] ) && '' !== $page_settings['type'] )
