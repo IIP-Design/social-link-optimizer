@@ -95,7 +95,7 @@ class CPT {
     add_meta_box(
       'gpalab_slo_link',
       __( 'Link this social post to', 'gpalab-slo' ),
-      array( $this, 'gpalab_slo_meta_callback' ),
+      array( $this, 'add_link_input' ),
       'gpalab-social-link',
       'normal',
       'high'
@@ -109,6 +109,15 @@ class CPT {
       'side',
       'low'
     );
+
+    add_meta_box(
+      'gpalab_slo_archive',
+      __( 'Archive', 'gpalab-slo' ),
+      array( $this, 'add_archive_checkbox' ),
+      'gpalab-social-link',
+      'side',
+      'high'
+    );
   }
 
   /**
@@ -118,7 +127,7 @@ class CPT {
    *
    * @since 0.0.1
    */
-  public function gpalab_slo_meta_callback( $post ) {
+  public function add_link_input( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'gpalab_slo_nonce' );
 
     $link = get_post_meta( $post->ID, 'gpalab_slo_link', true );
@@ -155,19 +164,19 @@ class CPT {
   public function add_mission_select( $post ) {
     wp_nonce_field( basename( __FILE__ ), 'gpalab_slo_nonce' );
 
-    $selected = get_post_meta( $post->ID, 'gpalab-slo-mission', true );
+    $selected = get_post_meta( $post->ID, 'gpalab_slo_mission', true );
     $missions = get_option( 'gpalab-slo-settings' );
 
     ?>
 
     <label
-      for="gpalab-slo-mission"
+      for="gpalab_slo_mission"
       style="margin-right: 0.5rem;"
     >
       <?php esc_html_e( 'Select a mission:', 'gpalab-slo' ); ?>
       <select
-        id="gpalab-slo-mission"
-        name="gpalab-slo-mission"
+        id="gpalab_slo_mission"
+        name="gpalab_slo_mission"
       >
         <option value="" <?php selected( $selected, $mission['id'] ); ?>></option>
         <?php
@@ -189,6 +198,43 @@ class CPT {
         ?>
       </select>
     </label>
+
+    <?php
+  }
+
+  /**
+   * Renders the custom metabox used to indicate that a link should be archived.
+   *
+   * @param object $post  WordPress post Object.
+   *
+   * @since 0.0.1
+   */
+  public function add_archive_checkbox( $post ) {
+    wp_nonce_field( basename( __FILE__ ), 'gpalab_slo_nonce' );
+
+    $is_archived    = get_post_meta( $post->ID, 'gpalab_slo_archive', true );
+    $checkbox_value = ( isset( $is_archived ) && 'true' === $is_archived ) ? 'true' : 'false';
+
+    ?>
+
+    <p>Archive this item if you do <strong>not</strong> want it displayed on the social bio page.</p>
+
+    <p style="display: flex; align-items: center;">
+      <label
+        for="gpalab_slo_archive"
+        class="gpalab-slo-archive-meta-title"
+        style="margin-right: 0.5rem;"
+      >
+        <?php esc_html_e( 'Set as archive:', 'gpalab-slo' ); ?>
+      </label>
+      <input
+        type="checkbox"
+        name="gpalab_slo_archive"
+        id="gpalab_slo_archive"
+        value="true"
+        <?php checked( $checkbox_value, 'true' ); ?>
+      />
+    </p>
 
     <?php
   }
@@ -228,88 +274,21 @@ class CPT {
       );
     }
 
-    if ( isset( $_POST['gpalab-slo-mission'] ) ) {
+    if ( isset( $_POST['gpalab_slo_mission'] ) ) {
       update_post_meta(
         $post_id,
-        'gpalab-slo-mission',
-        sanitize_text_field( wp_unslash( $_POST['gpalab-slo-mission'] ) )
+        'gpalab_slo_mission',
+        sanitize_text_field( wp_unslash( $_POST['gpalab_slo_mission'] ) )
       );
     }
-  }
 
-  /**
-   * Add archive metabox
-   */
-  public function gpalab_slo_archive_meta() {
-    add_meta_box(
-      'gpalab_slo_archive_meta',
-      __( 'Archive', 'gpalab-slo' ),
-      function( $post ) {
-        return $this->gpalab_slo_archive_meta_callback( $post );
-      },
-      'gpalab-social-link',
-      'side',
-      'high'
-    );
-  }
-
-  /**
-   * Display the archive meta box
-   *
-   * @param object $post    WordPress post Object.
-   */
-  public function gpalab_slo_archive_meta_callback( $post ) {
-    wp_nonce_field( basename( __FILE__ ), 'gpalab_slo_archive_nonce' );
-
-    $post_meta = get_post_meta( $post->ID );
-    $slo_meta  = $post_meta['gpalab-slo-archive-meta'];
-    $is_set = isset( $slo_meta[0] );
-    $is_checked = 'true' === $slo_meta[0];
-    $checkbox_value = ( $is_set && $is_checked ) ? 'true' : 'false';
-    ?>
-
-    <p>Archive this item if you do <strong>not</strong> want it displayed on the social bio page.</p>
-
-    <p style="display: flex; align-items: center;">
-      <label
-        for="gpalab-slo-archive-meta"
-        class="gpalab-slo-archive-meta-title"
-        style="margin-right: 0.5rem;"
-      >
-        <?php esc_html_e( 'Set as archive:', 'gpalab-slo' ); ?>
-      </label>
-      <input
-        type="checkbox"
-        name="gpalab-slo-archive-meta" 
-        id="gpalab-slo-archive-meta"
-        value="true"
-        <?php checked( $checkbox_value, 'true' ); ?>
-      />
-    </p>
-
-    <?php
-  }
-
-  /**
-   * Save the archive meta data
-   *
-   * @param int $post_id   WordPress post id.
-   */
-  public function gpalab_slo_archive_meta_save( $post_id ) {
-    // Save status.
-    $is_autosave    = wp_is_post_autosave( $post_id );
-    $is_revision    = wp_is_post_revision( $post_id );
-    $is_valid_nonce = ( isset( $_POST['gpalab_slo_archive_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['gpalab_slo_archive_nonce'] ) ), basename( __FILE__ ) ) ) ? 'true' : 'false';
-
-    if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {
-      return;
+    if ( isset( $_POST['gpalab_slo_archive'] ) ) {
+      update_post_meta(
+        $post_id,
+        'gpalab_slo_archive',
+        sanitize_text_field( wp_unslash( $_POST['gpalab_slo_archive'] ) )
+      );
     }
-
-    // Save.
-    $is_set = isset( $_POST['gpalab-slo-archive-meta'] );
-    $is_checked = 'true' === $_POST['gpalab-slo-archive-meta'];
-    $checkbox_value = ( $is_set && $is_checked ) ? 'true' : 'false';
-    update_post_meta( $post_id, 'gpalab-slo-archive-meta', $checkbox_value );
   }
 
   /**
@@ -363,7 +342,7 @@ class CPT {
 
   public function gpalab_slo_archive_admin_column_content( $column_name, $post_id ) {
     if ( 'gpalab_slo_archive' === $column_name ) {
-      $is_archive = get_post_meta( $post_id, 'gpalab-slo-archive-meta', true );
+      $is_archive = get_post_meta( $post_id, 'gpalab_slo_archive', true );
       $human_friendly_value = 'true' === $is_archive ? 'yes' : 'no';
       echo '<p>' . $human_friendly_value . '</p>';
     }
