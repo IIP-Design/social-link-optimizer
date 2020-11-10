@@ -388,4 +388,87 @@ class CPT {
     }
   }
 
+  /**
+   * Filters the social links query by mission.
+   *
+   * @param array $query  WordPress query arguments.
+   *
+   * @since 0.0.1
+   */
+  public function filter_social_links_by_mission( $query ) {
+    global $pagenow;
+
+    // Get the post type.
+    $post_type = isset( $_GET['post_type'] ) ? sanitize_text_field( wp_unslash( $_GET['post_type'] ) ) : '';
+
+    if (
+      is_admin()
+      && 'edit.php' === $pagenow
+      && 'gpalab-social-link' === $post_type
+      && isset( $_GET['mission'] )
+      && 'all' !== $_GET['mission']
+    ) {
+      // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+      // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+      $query->query_vars['meta_key']     = 'gpalab_slo_mission';
+      $query->query_vars['meta_value']   = sanitize_text_field( wp_unslash( $_GET['mission'] ) );
+      $query->query_vars['meta_compare'] = '=';
+      // phpcs:enable
+    }
+  }
+
+  /**
+   * Adds a post filter dropdown to the social links custom post type listing page.
+   *
+   * @since 0.0.1
+   */
+  public function add_mission_filter_dropdown() {
+    global $typenow;
+
+    if ( 'gpalab-social-link' === $typenow ) {
+      // Get all missions.
+      $missions     = array();
+      $slo_settings = get_option( 'gpalab-slo-settings' );
+
+      // Get title and id for each mission.
+      foreach ( $slo_settings as $setting ) {
+        $mission = array();
+
+        $mission['label'] = $setting['title'];
+        $mission['value'] = $setting['id'];
+
+        array_push( $missions, $mission );
+      }
+
+      // Initialize the selected mission as empty (ie. all missions).
+      $current_mission = '';
+
+      // Update $current_mission if filter option has been selected.
+      if ( isset( $_GET['mission'] ) ) {
+        $current_mission = sanitize_text_field( wp_unslash( $_GET['mission'] ) ); // Check if option has been selected.
+      }
+
+      // Render out the filter dropdown.
+      ?>
+        <select name="mission" id="mission">
+          <option value="all" <?php selected( 'all', $current_mission ); ?>>
+            <?php esc_html_e( 'All Missions', 'gpalab-slo' ); ?>
+          </option>
+
+          <?php
+          foreach ( $missions as $mission ) {
+            $value = $mission['value'];
+
+            ?>
+            <option value="<?php echo esc_attr( $value ); ?>" <?php selected( $value, $current_mission ); ?>>
+              <?php echo esc_attr( $mission['label'] ); ?>
+            </option>
+
+            <?php
+          }
+          ?>
+        </select>
+      <?php
+    }
+  }
 }
