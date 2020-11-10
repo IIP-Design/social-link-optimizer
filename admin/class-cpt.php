@@ -382,7 +382,7 @@ class CPT {
 
       // Search for selected mission among the mission sessions and return it's data.
       $settings_key   = array_search( $mission_id, array_column( $slo_settings, 'id' ), true );
-      $human_friendly = $slo_settings[ $settings_key ]['title'];
+      $human_friendly = is_numeric( $settings_key ) ? $slo_settings[ $settings_key ]['title'] : '';
 
       echo esc_html( $human_friendly );
     }
