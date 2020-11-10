@@ -217,6 +217,22 @@ class Settings {
           )
         );
 
+        $flickr_id = 'flickr_' . $key;
+
+        add_settings_field(
+          $flickr_id,
+          __( 'Flickr profile:', 'gpalab-slo' ),
+          array( $this, 'add_input' ),
+          'gpalab-slo',
+          'gpalab-slo-settings-' . $key,
+          array(
+            'label_for' => $flickr_id,
+            'key'       => $key,
+            'field'     => 'flickr',
+            'option'    => $mission,
+          )
+        );
+
         $instagram_id = 'instagram_' . $key;
 
         add_settings_field(
@@ -265,38 +281,6 @@ class Settings {
           )
         );
 
-        $youtube_id = 'youtube_' . $key;
-
-        add_settings_field(
-          $youtube_id,
-          __( 'YouTube profile:', 'gpalab-slo' ),
-          array( $this, 'add_input' ),
-          'gpalab-slo',
-          'gpalab-slo-settings-' . $key,
-          array(
-            'label_for' => $youtube_id,
-            'key'       => $key,
-            'field'     => 'youtube',
-            'option'    => $mission,
-          )
-        );
-
-        $flickr_id = 'flickr_' . $key;
-
-        add_settings_field(
-          $flickr_id,
-          __( 'Flickr profile:', 'gpalab-slo' ),
-          array( $this, 'add_input' ),
-          'gpalab-slo',
-          'gpalab-slo-settings-' . $key,
-          array(
-            'label_for' => $flickr_id,
-            'key'       => $key,
-            'field'     => 'flickr',
-            'option'    => $mission,
-          )
-        );
-
         $wechat_id = 'wechat_' . $key;
 
         add_settings_field(
@@ -309,6 +293,22 @@ class Settings {
             'label_for' => $wechat_id,
             'key'       => $key,
             'field'     => 'wechat',
+            'option'    => $mission,
+          )
+        );
+
+        $youtube_id = 'youtube_' . $key;
+
+        add_settings_field(
+          $youtube_id,
+          __( 'YouTube profile:', 'gpalab-slo' ),
+          array( $this, 'add_input' ),
+          'gpalab-slo',
+          'gpalab-slo-settings-' . $key,
+          array(
+            'label_for' => $youtube_id,
+            'key'       => $key,
+            'field'     => 'youtube',
             'option'    => $mission,
           )
         );
