@@ -41,7 +41,7 @@ get_header();
             $slo_settings = get_option( 'gpalab-slo-settings' );
 
             // Get the id of the selected mission for the current page.
-            $selected_mission = get_post_meta( get_the_ID(), 'gpalab-slo-mission-select', true );
+            $selected_mission = get_post_meta( get_the_ID(), 'gpalab_slo_mission_select', true );
 
             // Search for selected mission among the mission sessions and return it's data.
             $settings_key  = array_search( $selected_mission, array_column( $slo_settings, 'id' ), true );
@@ -96,7 +96,7 @@ get_header();
 
               $args = array(
                 'post_type'    => 'gpalab-social-link',
-                'meta_key'     => 'gpalab-slo-mission',
+                'meta_key'     => 'gpalab_slo_mission',
                 'meta_value'   => $selected_mission,
                 'meta_compare' => '=',
               );
@@ -111,10 +111,8 @@ get_header();
                   // Retrieve the current link post id.
                   $current_post = get_the_ID();
 
-                  $is_archive = get_post_meta( $current, 'gpalab-slo-archive-meta', true );
-
-                  // skip archived items
-                  if ( 'true' === $is_archive ) {
+                  // Skip archived items.
+                  if ( 'true' === get_post_meta( $current_post, 'gpalab_slo_archive', true ) ) {
                     continue;
                   }
 

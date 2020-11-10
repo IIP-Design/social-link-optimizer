@@ -24,7 +24,7 @@ const MissionPanel = () => {
     >
       <MissionSelect
         label={ __( 'Select from Available Missions:', 'gpalab-slo' ) }
-        metaKey="gpalab-slo-mission-select"
+        metaKey="gpalab_slo_mission_select"
         missions={ normalizedMissions }
       />
     </PluginDocumentSettingPanel>
