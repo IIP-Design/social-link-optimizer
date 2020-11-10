@@ -82,6 +82,7 @@ class SLO {
     // The class responsible for defining all actions that occur in the admin area.
     require_once GPALAB_SLO_DIR . 'admin/class-admin.php';
     require_once GPALAB_SLO_DIR . 'admin/class-ajax.php';
+    require_once GPALAB_SLO_DIR . 'admin/class-archive.php';
     require_once GPALAB_SLO_DIR . 'admin/class-cpt.php';
     require_once GPALAB_SLO_DIR . 'admin/class-settings.php';
 
@@ -100,28 +101,34 @@ class SLO {
   private function define_admin_hooks() {
     $plugin_admin    = new SLO\Admin( $this->get_plugin_name(), $this->get_version() );
     $plugin_ajax     = new SLO\Ajax( $this->get_plugin_name(), $this->get_version() );
+    $plugin_archive  = new SLO\Archive( $this->get_plugin_name(), $this->get_version() );
     $plugin_cpt      = new SLO\CPT( $this->get_plugin_name(), $this->get_version() );
     $plugin_settings = new SLO\Settings( $this->get_plugin_name(), $this->get_version() );
 
     // Admin hooks.
     $this->loader->add_action( 'init', $plugin_admin, 'register_admin_scripts_styles' );
+    $this->loader->add_action( 'init', $plugin_admin, 'register_slo_mission_meta' );
     $this->loader->add_action( 'admin_notices', $plugin_admin, 'localize_admin_script_globals' );
 
     // Ajax hooks.
     $this->loader->add_action( 'wp_ajax_gpalab_add_slo_mission', $plugin_ajax, 'handle_mission_addition' );
     $this->loader->add_action( 'wp_ajax_gpalab_remove_slo_mission', $plugin_ajax, 'handle_mission_removal' );
 
+    // Custom post type archive page hooks.
+    $this->loader->add_action( 'init', $plugin_archive, 'register_slo_gutenberg_plugins' );
+    $this->loader->add_action( 'admin_enqueue_scripts', $plugin_archive, 'enqueue_slo_missions_plugin' );
+
     // Custom post type hooks.
     $this->loader->add_action( 'init', $plugin_cpt, 'gpalab_slo_cpt', 0 );
     $this->loader->add_action( 'add_meta_boxes', $plugin_cpt, 'gpalab_slo_custom_meta' );
-    $this->loader->add_action( 'add_meta_boxes', $plugin_cpt, 'gpalab_slo_archive_meta' );
     $this->loader->add_action( 'save_post', $plugin_cpt, 'gpalab_slo_meta_save' );
-    $this->loader->add_action( 'save_post', $plugin_cpt, 'gpalab_slo_archive_meta_save' );
     $this->loader->add_action( 'do_meta_boxes', $plugin_cpt, 'gpalab_slo_image_meta_box' );
+    $this->loader->add_action( 'manage_gpalab-social-link_posts_custom_column', $plugin_cpt, 'populate_custom_columns', 10, 2 );
+    $this->loader->add_filter( 'manage_edit-gpalab-social-link_columns', $plugin_cpt, 'add_custom_columns' );
+    $this->loader->add_filter( 'manage_edit-gpalab-social-link_sortable_columns', $plugin_cpt, 'make_custom_columns_sortable' );
+    $this->loader->add_action( 'restrict_manage_posts', $plugin_cpt, 'add_mission_filter_dropdown' );
+    $this->loader->add_filter( 'parse_query', $plugin_cpt, 'filter_social_links_by_mission' );
     $this->loader->add_filter( 'post_type_link', $plugin_cpt, 'gpalab_slo_filter_permalink', 10, 2 );
-    $this->loader->add_filter( 'manage_edit-gpalab-social-link_columns', $plugin_cpt, 'gpalab_slo_archive_admin_column' );
-    $this->loader->add_filter( 'manage_edit-gpalab-social-link_sortable_columns', $plugin_cpt, 'gpalab_slo_archive_sortable_admin_column' );
-    $this->loader->add_action( 'manage_gpalab-social-link_posts_custom_column', $plugin_cpt, 'gpalab_slo_archive_admin_column_content', 10, 2 );
 
     // Settings page hooks.
     $this->loader->add_action( 'admin_menu', $plugin_settings, 'add_settings_page' );
