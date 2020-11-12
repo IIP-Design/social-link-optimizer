@@ -19,7 +19,7 @@ require 'template-parts/header-slo.php';
       the_post();
       ?>
 
-      <article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
+    <section <?php post_class(); ?> id="post-<?php the_ID(); ?>">
 
       <?php
       get_template_part( 'template-parts/entry-header' );
@@ -194,7 +194,7 @@ require 'template-parts/header-slo.php';
 
       </div><!-- .section-inner -->
 
-      </article><!-- .post -->
+    </section><!-- .post -->
 
       <?php
     }
