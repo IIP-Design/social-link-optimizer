@@ -6,7 +6,7 @@
  * @package GPALAB_SLO
  */
 
-get_header();
+require 'template-parts/header-slo.php';
 ?>
 
 <main id="site-content" role="main">
@@ -203,6 +203,4 @@ get_header();
 
 </main><!-- #site-content -->
 
-<?php get_template_part( 'template-parts/footer-menus-widgets' ); ?>
-
-<?php get_footer(); ?>
+<?php require 'template-parts/footer-slo.php'; ?>
