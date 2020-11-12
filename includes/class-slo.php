@@ -146,7 +146,7 @@ class SLO {
     $plugin_template = new SLO\Template( $this->get_plugin_name(), $this->get_version() );
 
     // Frontend hooks.
-    $this->loader->add_action( 'wp_enqueue_scripts', $plugin_frontend, 'gpalab_slo_stylesheets' );
+    $this->loader->add_action( 'wp_enqueue_scripts', $plugin_frontend, 'gpalab_slo_stylesheets', 100 );
 
     // Add a filter to the attributes metabox to inject template into the cache.
     if ( version_compare( floatval( get_bloginfo( 'version' ) ), '4.7', '<' ) ) {

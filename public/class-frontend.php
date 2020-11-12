@@ -35,6 +35,23 @@ class Frontend {
    * @since 0.0.1
    */
   public function gpalab_slo_stylesheets() {
+    $wp_styles  = wp_styles();
+    $is_gpalab_slo_template = is_page_template( 'archive-gpalab-social-link.php' );
+
+    if ( $is_gpalab_slo_template ) {  
+      foreach ( $wp_styles->registered as $wp_style ) {
+        $handle = $wp_style->handle;
+        $src = $wp_style->src;
+        $is_theme_stylesheet = is_int( strpos( $src, '/themes/' ) );
+
+        if ( ! $is_theme_stylesheet ) {
+          continue;
+        }
+
+        wp_dequeue_style( $handle );
+      }
+    }
+
     wp_enqueue_style(
       'social-bio-links',
       GPALAB_SLO_URL . 'css/social-link-optimizer-styles.css',
