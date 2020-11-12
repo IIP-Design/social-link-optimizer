@@ -9,7 +9,7 @@
 require 'template-parts/header-slo.php';
 ?>
 
-<main id="site-content" role="main">
+<main id="gpalab-slo-main-content" role="main">
 
   <?php
 
