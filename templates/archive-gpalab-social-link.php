@@ -60,8 +60,8 @@ require 'template-parts/header-slo.php';
             'instagram' => $page_settings ['instagram'],
             'youtube'   => $page_settings ['youtube'],
             'linkedin'  => $page_settings ['linkedin'],
-            'flicker'   => $page_settings ['flicker'],
-            'whatsapp'    => $page_settings ['whatsapp'],
+            'flickr'    => $page_settings ['flickr'],
+            'whatsapp'  => $page_settings ['whatsapp'],
           );
 
           // Get the path the the plugin's assets.
