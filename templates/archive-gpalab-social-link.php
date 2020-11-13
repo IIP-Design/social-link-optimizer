@@ -19,7 +19,7 @@ require 'template-parts/header-slo.php';
       the_post();
       ?>
 
-    <section <?php post_class(); ?> id="post-<?php the_ID(); ?>">
+    <section <?php post_class( 'stack' ); ?> id="post-<?php the_ID(); ?>">
 
       <header class="content-header stack">
         <?php the_post_thumbnail() ?>
@@ -98,7 +98,7 @@ require 'template-parts/header-slo.php';
           the_excerpt();
         } elseif ( $is_gpa_slo_archive ) {
 
-          // Determine the page layout (ie. grid or list).
+          // Determine the page layout (i.e., grid or list).
           $layout = ( isset( $page_settings['type'] ) && '' !== $page_settings['type'] )
             ? $page_settings['type']
             : 'grid';
@@ -203,7 +203,7 @@ require 'template-parts/header-slo.php';
 
       </div><!-- .gpalab-slo-content -->
 
-      <div class="section-inner">
+      <div class="section-inner stack">
         <?php
         wp_link_pages(
           array(
