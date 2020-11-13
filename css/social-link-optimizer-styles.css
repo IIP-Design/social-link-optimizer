@@ -225,13 +225,16 @@ a:active {
 .gpalab-slo-content-list.grid > li {
   position: relative;
   padding-bottom: 100%;
-  overflow: hidden;
 }
 
+.gpalab-slo-content-list.grid > li a,
 .gpalab-slo-content-list.grid > li img {
+  content: '';
   position: absolute;
   top: 0;
+  right: 0;
   left: 0;
+  bottom: 0;
   object-fit: cover;
 }
 
