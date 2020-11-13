@@ -102,21 +102,21 @@ require 'template-parts/header-slo.php';
           $layout = ( isset( $page_settings['type'] ) && '' !== $page_settings['type'] )
             ? $page_settings['type']
             : 'grid';
-
-          if ( 'grid' === $layout ) {
-          ?>
-          <p class="instructions">
-            Select an image to see more
-          </p>
-          <?php
-          }
           ?>
 
           <!-- Set up list/grid of social links -->
-          <h2 id="instagram-posts" class="hide-visually">
-            Instagram posts
-          </h2>
-          <ul class="gpalab-slo-content-list list-reset <?php echo esc_html( $layout ); ?>" aria-describedby="instagram-posts">
+          <div id="instructions">
+            <h2 id="instagram-posts" class="hide-visually">
+              Instagram posts
+            </h2>
+            <p class="instructions <?php echo 'grid' !== $layout ? 'hide-visually' : '' ?>">
+              <?php
+                $item = 'grid' === $layout ? 'image' : 'item';
+                echo 'Select an ' . $item . ' to see more';
+              ?>
+            </p>
+          </div>
+          <ul class="gpalab-slo-content-list list-reset <?php echo esc_html( $layout ); ?>" aria-describedby="instructions">
             <?php
 
             // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key
