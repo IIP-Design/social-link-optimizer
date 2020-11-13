@@ -108,10 +108,10 @@ require 'template-parts/header-slo.php';
           ?>
 
           <!-- Set up list/grid of social links -->
+          <h2 id="instagram-posts" class="hide-visually">
+            Instagram posts
+          </h2>
           <div id="instructions">
-            <h2 id="instagram-posts" class="hide-visually">
-              Instagram posts
-            </h2>
             <p class="instructions <?php echo 'grid' !== $layout ? 'hide-visually' : '' ?>">
               <?php
                 $item = 'grid' === $layout ? 'image' : 'item';
