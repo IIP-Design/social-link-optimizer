@@ -1,4 +1,6 @@
 html {
+  --font-primary: 'Lucida Grande', Helvetica, Arial, sans-serif;
+  --font-secondary: 'Arial Black', Helvetica, Arial, sans-serif;
   --font-size: 100%;
 
   --length-0-125: calc(var(--length-1) * 0.125);
@@ -114,7 +116,7 @@ a:active {
   min-height: 100vh;
   flex-direction: column;
   color: var(--white);
-  font-family: 'Lucida Grande', Helvetica, Arial, sans-serif;
+  font-family: var(--font-primary);
   line-height: 1.5;
   text-rendering: optimizeSpeed;
   background:
@@ -177,13 +179,13 @@ a:active {
 }
 
 .gpalab-slo-page-title {
-  font-family: 'Lucida Grande', Helvetica, Arial, sans-serif;
+  font-family: var(--font-primary);
   font-size: var(--length-1-5);
   font-weight: bold;
 }
 
 .mission-website {
-  font-family: 'Arial Black', Helvetica, Arial, sans-serif;
+  font-family: var(--font-secondary);
   font-size: var(--length-1-125);
 }
 
@@ -229,12 +231,14 @@ a:active {
 
 .gpalab-slo-content-list.grid > li a,
 .gpalab-slo-content-list.grid > li img {
-  content: '';
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
   bottom: 0;
+}
+
+.gpalab-slo-content-list.grid > li img {
   object-fit: cover;
 }
 
