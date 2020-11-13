@@ -61,7 +61,7 @@ require 'template-parts/header-slo.php';
             'youtube'   => $page_settings ['youtube'],
             'linkedin'  => $page_settings ['linkedin'],
             'flicker'   => $page_settings ['flicker'],
-            'wechat'    => $page_settings ['wechat'],
+            'whatsapp'    => $page_settings ['whatsapp'],
           );
 
           // Get the path the the plugin's assets.

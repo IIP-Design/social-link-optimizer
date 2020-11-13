@@ -44,7 +44,7 @@ class Ajax {
     $new_mission['twitter']   = '';
     $new_mission['youtube']   = '';
     $new_mission['flick']     = '';
-    $new_mission['wechat']    = '';
+    $new_mission['whatsapp']    = '';
 
     // Add new mission into array of existing missions.
     array_push( $missions, $new_mission );
