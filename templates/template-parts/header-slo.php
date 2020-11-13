@@ -21,8 +21,8 @@
   </head>
 
   <body <?php body_class(); ?>>
-    <a class="skip-to-content" href="#gpalab-slo-main-content">
-      Skip to content
+    <a class="skip-to-content" href="#instagram-posts">
+      Skip to Instagram content
     </a>
 
     <header id="gpalab-slo-site-header" role="banner">
