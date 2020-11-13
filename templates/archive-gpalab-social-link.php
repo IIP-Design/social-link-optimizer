@@ -79,7 +79,7 @@ require 'template-parts/header-slo.php';
 
             if ( isset( $value ) && '' !== $value ) {
               $acct  = '<li><a href=' . esc_attr( $value ) . '>';
-              $acct .= '<img src=' . esc_attr( $assets_dir . $key . '.svg' ) . ' alt="" height="24" width="24">';
+              $acct .= '<img src=' . esc_attr( $assets_dir . $key . '.svg' ) . ' alt="" height="24" width="24" class="social-icon">';
               $acct .= '<span class="hide-visually">' . esc_html( $key ) . '</span>';
               $acct .= '</a></li>';
 
