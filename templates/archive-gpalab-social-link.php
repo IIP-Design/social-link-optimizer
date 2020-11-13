@@ -62,7 +62,7 @@ require 'template-parts/header-slo.php';
           );
 
           // Get the path the the plugin's assets.
-          $assets_dir = GPALAB_SLO_URL . '/assets/';
+          $assets_dir = GPALAB_SLO_URL . 'assets/';
         ?>
 
         <!-- Set up links to social media icons -->
