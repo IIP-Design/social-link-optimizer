@@ -22,9 +22,12 @@ require 'template-parts/header-slo.php';
     <section <?php post_class( 'stack' ); ?> id="post-<?php the_ID(); ?>">
 
       <header class="content-header stack">
-        <?php the_post_thumbnail() ?>
-        <?php the_title( '<h1 class="gpalab-slo-page-title">', '</h1>' ); ?>
+        <div class="identity-logo">
+          <?php the_post_thumbnail() ?>
+        </div>
         <?php
+          the_title( '<h1 class="gpalab-slo-page-title">', '</h1>' );
+
           // Get all mission settings.
           $slo_settings = get_option( 'gpalab-slo-settings' );
 
