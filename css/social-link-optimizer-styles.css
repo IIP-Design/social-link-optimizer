@@ -268,8 +268,6 @@ a:active {
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-word;
-  -webkit-hyphens: auto;
-  hyphens: auto;
 }
 
 .gpalab-slo-content-list.list > li .title a {
