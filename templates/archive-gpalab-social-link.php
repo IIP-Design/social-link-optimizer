@@ -26,10 +26,14 @@ require 'template-parts/header-slo.php';
     <section <?php post_class( 'stack' ); ?> id="post-<?php the_ID(); ?>">
 
       <header class="content-header stack">
-        <div class="identity-logo">
-          <?php the_post_thumbnail(); ?>
-        </div>
+        
           <?php
+          if ( ! empty( get_the_post_thumbnail() ) ) {
+            echo '<div class="identity-logo">';
+            the_post_thumbnail();
+            echo '</div>';
+          }
+
           the_title( '<h1 class="gpalab-slo-page-title">', '</h1>' );
 
           // Get all mission settings.
