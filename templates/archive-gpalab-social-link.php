@@ -55,8 +55,8 @@ require 'template-parts/header-slo.php';
 
           // Extract the social account links from the selected mission data.
           $social_accts = array(
-            'twitter'   => $page_settings ['twitter'],
             'facebook'  => $page_settings ['facebook'],
+            'twitter'   => $page_settings ['twitter'],
             'instagram' => $page_settings ['instagram'],
             'youtube'   => $page_settings ['youtube'],
             'linkedin'  => $page_settings ['linkedin'],
