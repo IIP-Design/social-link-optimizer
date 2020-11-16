@@ -217,7 +217,14 @@ class CPT {
 
     ?>
 
-    <p>Archive this item if you do <strong>not</strong> want it displayed on the social bio page.</p>
+    <p>
+      <?php
+      echo wp_kses(
+        __( 'Archive this item if you do <strong>not</strong> want it displayed on the social bio page.', 'gpalab-slo' ),
+        array( 'strong' => array() )
+      );
+      ?>
+    </p>
 
     <p style="display: flex; align-items: center;">
       <label
@@ -288,6 +295,8 @@ class CPT {
         'gpalab_slo_archive',
         sanitize_text_field( wp_unslash( $_POST['gpalab_slo_archive'] ) )
       );
+    } else {
+      delete_post_meta( $post_id, 'gpalab_slo_archive' );
     }
   }
 
