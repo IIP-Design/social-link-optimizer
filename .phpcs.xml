@@ -4,6 +4,9 @@
 <description>A modification on the WordPress PHP coding standard, which comforms to the GPA/LAB style guide.</description>
 
 <!-- List of files/directories to check. -->
+<file>./admin</file>
+<file>./includes</file>
+<file>./public</file>
 <file>./templates</file>
 <file>./social-link-optimizer.php</file>
 

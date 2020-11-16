@@ -7,4 +7,4 @@ module.exports = {
     filename: 'gpalab-slo-[name].js',
     path: path.resolve( process.cwd(), 'build' ),
   },
-}
+};

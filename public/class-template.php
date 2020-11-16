@@ -23,6 +23,8 @@ class Template {
    * The array of templates that this plugin tracks.
    *
    * @var array $templates
+   *
+   * @since 0.0.1
    */
   protected $templates;
 
@@ -31,6 +33,8 @@ class Template {
    *
    * @param string $plugin     The plugin name.
    * @param string $version    The plugin version number.
+   *
+   * @since 0.0.1
    */
   public function __construct( $plugin, $version ) {
     $this->plugin    = $plugin;
@@ -46,6 +50,8 @@ class Template {
    * Adds our template to the page dropdown for v4.7+
    *
    * @param array $posts_templates   List of available post templates.
+   *
+   * @since 0.0.1
    */
   public function add_new_template( $posts_templates ) {
     $posts_templates = array_merge( $posts_templates, $this->templates );
@@ -58,6 +64,8 @@ class Template {
    * into thinking the template file exists where it doesn't really exist.
    *
    * @param array $atts   List of attributes.
+   *
+   * @since 0.0.1
    */
   public function register_project_templates( $atts ) {
 
@@ -88,7 +96,9 @@ class Template {
   /**
    * Checks if the template is assigned to the page.
    *
-   * @param array $template
+   * @param string $template  The current page's template.
+   *
+   * @since 0.0.1
    */
   public function view_project_template( $template ) {
     // Return the search template if we're searching (instead of the template for the first result).
@@ -128,12 +138,10 @@ class Template {
     if ( file_exists( $file ) ) {
       return $file;
     } else {
-      echo $file;
+      echo esc_html( $file );
     }
 
     // Return template.
     return $template;
-
   }
-
 }

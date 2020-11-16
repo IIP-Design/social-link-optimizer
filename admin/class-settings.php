@@ -281,18 +281,18 @@ class Settings {
           )
         );
 
-        $wechat_id = 'wechat_' . $key;
+        $whatsapp_id = 'whatsapp_' . $key;
 
         add_settings_field(
-          $wechat_id,
-          __( 'WeChat profile:', 'gpalab-slo' ),
+          $whatsapp_id,
+          __( 'WhatsApp profile:', 'gpalab-slo' ),
           array( $this, 'add_input' ),
           'gpalab-slo',
           'gpalab-slo-settings-' . $key,
           array(
-            'label_for' => $wechat_id,
+            'label_for' => $whatsapp_id,
             'key'       => $key,
-            'field'     => 'wechat',
+            'field'     => 'whatsapp',
             'option'    => $mission,
           )
         );
