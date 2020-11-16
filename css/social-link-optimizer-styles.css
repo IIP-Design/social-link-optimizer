@@ -264,6 +264,7 @@ a:active {
 .gpalab-slo-content-list.list > li .title {
   font-size: var(--length-1-125);
   text-align: center;
+  text-transform: uppercase;
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-word;
