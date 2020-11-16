@@ -1,7 +1,6 @@
 html {
   --font-primary: 'Lucida Grande', Helvetica, Arial, sans-serif;
   --font-secondary: 'Arial Black', Helvetica, Arial, sans-serif;
-  --font-size: 100%;
 
   --length-0-125: calc(var(--length-1) * 0.125);
   --length-0-25: calc(var(--length-1) * 0.25);
