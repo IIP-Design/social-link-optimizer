@@ -111,9 +111,7 @@ a:active {
 
 /* body */
 .page-template-archive-gpalab-social-link {
-  display: flex;
   min-height: 100vh;
-  flex-direction: column;
   color: var(--white);
   font-family: var(--font-primary);
   line-height: 1.5;
@@ -147,17 +145,13 @@ a:active {
 }
 
 #gpalab-slo-main-content {
-  flex: 1;
+  padding-bottom: var(--length-3-5);
 }
 
 #gpalab-slo-main-content > .stack > * {
   margin-left: auto;
   margin-right: auto;
   max-width: var(--length-40);
-}
-
-#gpalab-slo-site-footer {
-  padding: var(--length-3-5);
 }
 
 /* Header */
