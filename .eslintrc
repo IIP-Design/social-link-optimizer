@@ -1,6 +1,11 @@
 {
   "ignorePatterns": [ "node_modules/", "admin/build/", "vendor/" ],
   "rules": {
+    "node/no-unpublished-require": [
+      "error", {
+        "allowModules": ["@wordpress/scripts"]
+      }
+    ],
     "react/jsx-pascal-case": ["error", { "allowAllCaps": true }]
   }
 }
