@@ -13,11 +13,11 @@ html {
   --length-7: calc(var(--length-1) * 7);
   --length-40: calc(var(--length-1) * 40);
 
-  --white: #ffffff;
-  --wild-sand: #f6f6f6;
-  --alto: #d6d6d6;
+  --white: #FFFFFF;
+  --wild-sand: #F6F6F6;
+  --alto: #D6D6D6;
   --pacific-blue: #008FC6;
-  --astral-blue: #3472a1;
+  --astral-blue: #3472A1;
   --danube-blue: #5187C6;
   --chambray-blue: #416393;
   --midnight-blue: #001935;
