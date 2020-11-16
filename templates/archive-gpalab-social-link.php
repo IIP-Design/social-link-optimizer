@@ -4,8 +4,12 @@
  * Template Post Type: page
  *
  * @package GPALAB_SLO
+ * @since 0.0.1
  */
 
+ /**
+  * Renders the social links page template.
+  */
 require 'template-parts/header-slo.php';
 ?>
 
@@ -23,9 +27,9 @@ require 'template-parts/header-slo.php';
 
       <header class="content-header stack">
         <div class="identity-logo">
-          <?php the_post_thumbnail() ?>
+          <?php the_post_thumbnail(); ?>
         </div>
-        <?php
+          <?php
           the_title( '<h1 class="gpalab-slo-page-title">', '</h1>' );
 
           // Get all mission settings.
@@ -66,12 +70,12 @@ require 'template-parts/header-slo.php';
 
           // Get the path the the plugin's assets.
           $assets_dir = GPALAB_SLO_URL . 'assets/';
-        ?>
+          ?>
 
         <!-- Set up links to social media icons -->
         <aside>
           <h3 id="social-accts" class="hide-visually">
-            social media accounts
+            <?php esc_html_e( 'social media accounts', 'gpalab-slo' ); ?>
           </h3>
           <ul class="gpalab-slo-social-accts-list list-reset" aria-describedby="social-accts">
           <?php
@@ -109,13 +113,15 @@ require 'template-parts/header-slo.php';
 
           <!-- Set up list/grid of social links -->
           <h2 id="instagram-posts" class="hide-visually">
-            Instagram posts
+            <?php esc_html_e( 'Instagram posts', 'gpalab-slo' ); ?>
           </h2>
           <div id="instructions">
-            <p class="instructions <?php echo 'grid' !== $layout ? 'hide-visually' : '' ?>">
+            <p class="instructions <?php echo 'grid' !== $layout ? 'hide-visually' : ''; ?>">
               <?php
-                $item = 'grid' === $layout ? 'image' : 'item';
-                echo 'Select an ' . $item . ' to see more';
+                $item = 'grid' === $layout ? __( 'image', 'gpalab-slo' ) : __( 'item', 'gpalab-slo' );
+
+                /* translators: %s: list item type (one of image or item) */
+                printf( esc_html__( 'Select an %s to see more', 'gpalab-slo' ), esc_html( $item ) );
               ?>
             </p>
           </div>
