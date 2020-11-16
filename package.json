@@ -4,6 +4,7 @@
   "description": "Plugin to add a Social Link custom post type, custom meta box, and Social Link Optimizer page template",
   "scripts": {
     "build": "wp-scripts build admin/js/*.js --output-path=admin/build",
+    "dev": "wp-scripts start admin/js/*.js --output-path=admin/build",
     "lint": "npm run lint:JS && npm run lint:PHP",
     "lint:PHP": "./vendor/bin/phpcs",
     "lint:JS": "eslint --ext .js --quiet ./"
