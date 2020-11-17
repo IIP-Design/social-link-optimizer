@@ -117,6 +117,8 @@ class SLO {
     // Custom post type archive page hooks.
     $this->loader->add_action( 'init', $plugin_archive, 'register_slo_gutenberg_plugins' );
     $this->loader->add_action( 'admin_enqueue_scripts', $plugin_archive, 'enqueue_slo_missions_plugin' );
+    $this->loader->add_action( 'add_meta_boxes', $plugin_archive, 'legacy_compat_metabox' );
+    $this->loader->add_action( 'save_post', $plugin_archive, 'legacy_mission_meta_save' );
 
     // Custom post type hooks.
     $this->loader->add_action( 'init', $plugin_cpt, 'gpalab_slo_cpt', 0 );
