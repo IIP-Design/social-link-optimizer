@@ -167,18 +167,36 @@ class CPT {
     $selected = get_post_meta( $post->ID, 'gpalab_slo_mission', true );
     $missions = get_option( 'gpalab-slo-settings' );
 
+    $this->populate_mission_select( $selected, $missions, 'gpalab_slo_mission' );
+  }
+
+  /**
+   * Populates the add mission select with a list of mission options.
+   *
+   * @param string $selected   The mission id of the selected mission.
+   * @param array  $missions   A list of available missions.
+   * @param string $meta       The key of the post meta to be saved.
+   *
+   * @since 0.0.1
+   */
+  public function populate_mission_select( $selected, $missions, $meta ) {
+    // Show 'All Posts' as the default option for the SLO page template dropdown.
+    $empty_label = '_gpalab_slo_mission_select' === $meta ? __( 'All Posts', 'gpalab-slo' ) : '';
+
     ?>
 
     <label
-      for="gpalab_slo_mission"
+      for="<?php echo esc_attr( $meta ); ?>"
       style="margin-right: 0.5rem;"
     >
       <?php esc_html_e( 'Select a mission:', 'gpalab-slo' ); ?>
       <select
-        id="gpalab_slo_mission"
-        name="gpalab_slo_mission"
+        id="<?php echo esc_attr( $meta ); ?>"
+        name="<?php echo esc_attr( $meta ); ?>"
       >
-        <option value="" <?php selected( $selected, $mission['id'] ); ?>></option>
+        <option value="" <?php selected( $selected, $mission['id'] ); ?>>
+          <?php echo esc_html( $empty_label ); ?>
+        </option>
         <?php
         foreach ( $missions as $mission ) {
 
@@ -260,7 +278,7 @@ class CPT {
       return;
     }
 
-    // Save status.
+    // Check save status and validate nonce.
     $is_autosave    = wp_is_post_autosave( $post_id );
     $is_revision    = wp_is_post_revision( $post_id );
     $is_valid_nonce =
@@ -272,7 +290,7 @@ class CPT {
       return;
     }
 
-    // Sanitize/save.
+    // Sanitize/save the post meta.
     if ( isset( $_POST['gpalab_slo_link'] ) ) {
       update_post_meta(
         $post_id,
