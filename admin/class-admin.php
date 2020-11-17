@@ -79,9 +79,10 @@ class Admin {
       '', // Empty string indicated this meta-field is available on all post-types.
       '_gpalab_slo_mission_select',
       array(
-        'show_in_rest' => true,
-        'single'       => true,
-        'type'         => 'string',
+        'show_in_rest'  => true,
+        'single'        => true,
+        'type'          => 'string',
+        'auth_callback' => '__return_true',
       )
     );
   }
