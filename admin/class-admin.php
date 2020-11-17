@@ -77,11 +77,12 @@ class Admin {
   public function register_slo_mission_meta() {
     register_post_meta(
       '', // Empty string indicated this meta-field is available on all post-types.
-      'gpalab_slo_mission_select',
+      '_gpalab_slo_mission_select',
       array(
-        'show_in_rest' => true,
-        'single'       => true,
-        'type'         => 'string',
+        'show_in_rest'  => true,
+        'single'        => true,
+        'type'          => 'string',
+        'auth_callback' => '__return_true',
       )
     );
   }

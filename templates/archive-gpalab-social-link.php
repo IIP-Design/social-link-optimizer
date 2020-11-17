@@ -40,7 +40,7 @@ require 'template-parts/header-slo.php';
           $slo_settings = get_option( 'gpalab-slo-settings' );
 
           // Get the id of the selected mission for the current page.
-          $selected_mission = get_post_meta( get_the_ID(), 'gpalab_slo_mission_select', true );
+          $selected_mission = get_post_meta( get_the_ID(), '_gpalab_slo_mission_select', true );
 
           // Search for selected mission among the mission sessions and return it's data.
           $settings_key  = array_search( $selected_mission, array_column( $slo_settings, 'id' ), true );

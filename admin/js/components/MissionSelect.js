@@ -6,13 +6,6 @@ import { SelectControl } from '@wordpress/components';
 import { withSelect, withDispatch } from '@wordpress/data';
 
 const MissionSelect = compose(
-  withDispatch( ( dispatch, { metaKey } ) => ( {
-    setMissionValue( val ) {
-      dispatch( 'core/editor' ).editPost(
-        { meta: { [metaKey]: val } },
-      );
-    },
-  } ) ),
   withSelect( ( select, { label, metaKey, missions } ) => {
     const noSelection = [{ value: '', label: __( 'All Posts', 'gpalab-slo' ) }];
     const options = [...noSelection, ...missions];
@@ -23,6 +16,13 @@ const MissionSelect = compose(
       selected: select( 'core/editor' ).getEditedPostAttribute( 'meta' )[metaKey],
     };
   } ),
+  withDispatch( ( dispatch, { metaKey } ) => ( {
+    setMissionValue( val ) {
+      dispatch( 'core/editor' ).editPost(
+        { meta: { [metaKey]: val } },
+      );
+    },
+  } ) ),
 )( ( { label, options, selected, setMissionValue } ) => (
   <SelectControl
     label={ label }
