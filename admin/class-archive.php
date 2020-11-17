@@ -38,16 +38,22 @@ class Archive {
    * @since 0.0.1
    */
   public function enqueue_slo_missions_plugin() {
-    wp_enqueue_script( 'gpalab-slo-mission-plugin' );
+    $is_gutenberg = get_current_screen()->is_block_editor();
 
-    $missions = get_option( 'gpalab-slo-settings', array() );
+    if ( $is_gutenberg ) {
+      wp_enqueue_script( 'gpalab-slo-mission-plugin' );
 
-    wp_localize_script(
-      'gpalab-slo-mission-plugin',
-      'gpalabSloPlugin',
-      array(
-        'missions' => $missions,
-      )
-    );
+      $missions = get_option( 'gpalab-slo-settings', array() );
+
+      wp_localize_script(
+        'gpalab-slo-mission-plugin',
+        'gpalabSloPlugin',
+        array(
+          'missions' => $missions,
+        )
+      );
+    }
+  }
+
   }
 }
