@@ -136,6 +136,7 @@ class SLO {
     $this->loader->add_action( 'admin_menu', $plugin_settings, 'add_settings_page' );
     $this->loader->add_action( 'admin_init', $plugin_settings, 'populate_settings_page' );
     $this->loader->add_action( 'admin_enqueue_scripts', $plugin_settings, 'enqueue_slo_admin' );
+    $this->loader->add_filter( 'plugin_action_links_social-link-optimizer/social-link-optimizer.php', $plugin_settings, 'add_settings_link' );
   }
 
   /**

@@ -481,4 +481,36 @@ class Settings {
       echo '</label>';
     }
   }
+
+  /**
+   * Adds a link to the plugin's settings page on the Installed Plugins page.
+   *
+   * @param array $links  List of plugin action links.
+   * @return array        List of plugin action links with added settings link.
+   */
+  public function add_settings_link( $links ) {
+    $query_params = array(
+      'post_type' => 'gpalab-social-link',
+      'page'      => 'gpalab-slo-settings',
+    );
+
+    // Build and escape the settings page URL.
+    $url = esc_url(
+      add_query_arg(
+        $query_params,
+        get_admin_url() . 'edit.php'
+      )
+    );
+
+    // Write the link HTML.
+    $settings_link = "<a href='$url'>" . __( 'Settings', 'gpalab-slo' ) . '</a>';
+
+    // Add the Settings link to the beginning of the plugins list of action links.
+    array_unshift(
+      $links,
+      $settings_link
+    );
+
+    return $links;
+  }
 }
