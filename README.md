@@ -27,11 +27,13 @@ If using a Composer build process, add a reference to the plugin's git repositor
       "type": "git",
       "url": "git@github.com:IIP-Design/social-link-optimizer"
     },
-    ...(other repos)
+    {
+      "other repo": "..."
+    }
   ],
   "require": {
     "gpalab/social-link-optimizer": "*",
-    ...(other dependencies)
+    "other-dependency": "..."
   }
 }
 ```
@@ -69,10 +71,14 @@ Each social link item type has several properties, namely:
 
 The plugin also adds a custom page template that displays a group of social link items as a landing page. This template will appear as an option under the **Template** dropdown in the **Page Attributes** metabox in the page editor sidebar.
 
-![Screenshoot of the page templates dropdown](docs/assets/page-templates-dropdown.png)
+<p align="center">
+  <img alt="Screenshoot of the page templates dropdown" src="docs/assets/page-templates-dropdown.png" width="300px" />
+</p>
 
 Once the `Social Link Optimizer` option is selected in the template dropdown, a new metabox called **Connect a Mission** will appear in the editor sidebar.
 
-![Screenshoot of the connect a mission dropdown](docs/assets/connect-mission.png)
+<p align="center">
+  <img alt="Screenshoot of the connect a mission dropdown" src="docs/assets/connect-mission.png" width="300px" />
+</p>
 
 From this dropdown you can associate the page with one of the missions added in the settings page. With this done, the front end of the page will automatically display the grid/list of links that have been tagged with the corresponding mission.
