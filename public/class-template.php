@@ -44,16 +44,19 @@ class Template {
     );
   }
 
-  // }
-
   /**
    * Adds our template to the page dropdown for v4.7+
    *
    * @param array $posts_templates   List of available post templates.
-   *
+   * @return array                   Updated list of available page templates
    * @since 0.0.1
    */
   public function add_new_template( $posts_templates ) {
+    // If the user lacks the proper permission return the standard list of templates.
+    if ( ! current_user_can( 'gpalab_slo_add_slo_page' ) ) {
+      return $posts_templates;
+    }
+
     $posts_templates = array_merge( $posts_templates, $this->templates );
 
     return $posts_templates;
