@@ -107,7 +107,7 @@ class Permissions {
   public function remove_row_title_link( $url, $post_id, $context ) {
     // If not on the page listings page abort.
     if ( 'edit-page' !== get_current_screen()->id ) {
-      return;
+      return $url;
     }
 
     $is_slo_archive = 'archive-gpalab-social-link.php' === get_post_meta( $post_id, '_wp_page_template', true );
