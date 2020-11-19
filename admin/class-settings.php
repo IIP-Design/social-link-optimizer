@@ -27,7 +27,7 @@ class Settings {
       'edit.php?post_type=gpalab-social-link',
       __( 'Social Links Settings', 'gpalab-slo' ),
       __( 'Settings', 'gpalab-slo' ),
-      'manage_options',
+      'gpalab_slo_manage_settings',
       'gpalab-slo-settings',
       function() {
         return $this->create_admin_page();
