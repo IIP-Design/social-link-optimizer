@@ -32,6 +32,16 @@ function gpalab_social_link_optimizer_activate() {
 }
 register_activation_hook( __FILE__, 'gpalab_social_link_optimizer_activate' );
 
+/**
+ * Clean up site when the plugin is uninstalled.
+ */
+function gpalab_social_link_optimizer_uninstall() {
+  require_once plugin_dir_path( __FILE__ ) . 'includes/class-uninstall.php';
+
+  SLO\Uninstall::uninstall();
+}
+register_uninstall_hook( __FILE__, 'gpalab_social_link_optimizer_uninstall' );
+
 // Imports SLO class.
 require plugin_dir_path( __FILE__ ) . 'includes/class-slo.php';
 
