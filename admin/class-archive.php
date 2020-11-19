@@ -40,7 +40,7 @@ class Archive {
   public function enqueue_slo_missions_plugin() {
     $is_gutenberg = get_current_screen()->is_block_editor();
 
-    if ( $is_gutenberg ) {
+    if ( $is_gutenberg && current_user_can( 'gpalab_slo_edit_slo_page' ) ) {
       wp_enqueue_script( 'gpalab-slo-mission-plugin' );
 
       $missions = get_option( 'gpalab-slo-settings', array() );
@@ -66,7 +66,7 @@ class Archive {
     $is_slo_archive = 'archive-gpalab-social-link.php' === get_post_meta( $post->ID, '_wp_page_template', true );
 
     // Only show meta box on SLO page template && if Gutenberg is disabled.
-    if ( $is_slo_archive ) {
+    if ( $is_slo_archive && current_user_can( 'gpalab_slo_edit_slo_page' ) ) {
       add_meta_box(
         'gpalab_slo_mission_select',
         __( 'Connect a Mission', 'gpalab-slo' ),
