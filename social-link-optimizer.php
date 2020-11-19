@@ -1,14 +1,14 @@
 <?php
 /**
- * Plugin Name:       Social Link Optimizer
- * Plugin URI:        https://github.com/IIP-Design/social-link-optimizer
- * Description:       Adds a Social Link custom post type, custom meta box, and Social Link Optimizer page template
- * Version:           0.0.1
- * Author:            U.S. Department of State, Bureau of Global Public Affairs Digital Lab <gpa-lab@america.gov>
- * Author URI:        https://lab.america.gov
- * License:           GNU General Public License v2.0
- * License URI:       https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
- * Text Domain:       gpalab-slo
+ * Plugin Name: Social Link Optimizer
+ * Plugin URI: https://github.com/IIP-Design/social-link-optimizer
+ * Description: Adds a Social Link custom post type, custom meta box, and Social Link Optimizer page template
+ * Version: v0.0.1
+ * Author: U.S. Department of State, Bureau of Global Public Affairs Digital Lab <gpa-lab@america.gov>
+ * Author URI: https://lab.america.gov
+ * License: GNU General Public License v2.0
+ * License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
+ * Text Domain: gpalab-slo
  *
  * @package GPALAB_SLO
  */

@@ -84,6 +84,7 @@ class SLO {
     require_once GPALAB_SLO_DIR . 'admin/class-ajax.php';
     require_once GPALAB_SLO_DIR . 'admin/class-archive.php';
     require_once GPALAB_SLO_DIR . 'admin/class-cpt.php';
+    require_once GPALAB_SLO_DIR . 'admin/class-permissions.php';
     require_once GPALAB_SLO_DIR . 'admin/class-settings.php';
 
     // The class responsible for defining all actions that occur in the public-facing side of the site.
@@ -103,6 +104,7 @@ class SLO {
     $plugin_ajax     = new SLO\Ajax( $this->get_plugin_name(), $this->get_version() );
     $plugin_archive  = new SLO\Archive( $this->get_plugin_name(), $this->get_version() );
     $plugin_cpt      = new SLO\CPT( $this->get_plugin_name(), $this->get_version() );
+    $plugin_roles    = new SLO\Permissions( $this->get_plugin_name(), $this->get_version() );
     $plugin_settings = new SLO\Settings( $this->get_plugin_name(), $this->get_version() );
 
     // Admin hooks.
@@ -137,6 +139,11 @@ class SLO {
     $this->loader->add_action( 'admin_init', $plugin_settings, 'populate_settings_page' );
     $this->loader->add_action( 'admin_enqueue_scripts', $plugin_settings, 'enqueue_slo_admin' );
     $this->loader->add_filter( 'plugin_action_links_social-link-optimizer/social-link-optimizer.php', $plugin_settings, 'add_settings_link' );
+
+    // User roles and permissions hooks.
+    $this->loader->add_action( 'wp_before_admin_bar_render', $plugin_roles, 'slo_archive_remove_admin_bar_edit_link' );
+    $this->loader->add_filter( 'page_row_actions', $plugin_roles, 'disable_actions', 10, 2 );
+    $this->loader->add_filter( 'get_edit_post_link', $plugin_roles, 'remove_row_title_link', 10, 3 );
   }
 
   /**
