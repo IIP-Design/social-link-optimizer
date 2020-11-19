@@ -23,6 +23,19 @@ class CPT {
    * @since 0.0.1
    */
   public function gpalab_slo_cpt() {
+    $capabilities = array(
+      'edit_posts'             => 'gpalab_slo_edit_links',
+      'edit_others_posts'      => 'gpalab_slo_edit_others_links',
+      'edit_private_posts'     => 'gpalab_slo_edit_private_links',
+      'edit_published_posts'   => 'gpalab_slo_edit_published_links',
+      'delete_posts'           => 'gpalab_slo_delete_links',
+      'delete_others_posts'    => 'gpalab_slo_delete_others_links',
+      'delete_private_posts'   => 'gpalab_slo_delete_private_links',
+      'delete_published_posts' => 'gpalab_slo_delete_published_links',
+      'read_private_posts'     => 'gpalab_slo_read_private_links',
+      'publish_posts'          => 'gpalab_slo_delete_links',
+    );
+
     $labels = array(
       'name'                  => _x( 'Social Links', 'Post Type General Name', 'gpalab-slo' ),
       'singular_name'         => _x( 'Social Link', 'Post Type Singular Name', 'gpalab-slo' ),
@@ -79,7 +92,9 @@ class CPT {
       'exclude_from_search' => false,
       'publicly_queryable'  => true,
       'rewrite'             => $rewrite,
-      'capability_type'     => 'post',
+      'capability_type'     => 'gpalab_slo_links',
+      'capabilities'        => $capabilities,
+      'map_meta_cap'        => true,
       'show_in_rest'        => true,
     );
 
