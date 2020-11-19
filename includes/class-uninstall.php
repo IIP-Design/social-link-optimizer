@@ -31,6 +31,7 @@ class Uninstall {
     if ( ! is_multisite() ) {
 
       self::remove_options();
+      self::remove_capabilities();
       self::delete_slo_page_meta();
       self::reset_slo_page_templates();
       self::delete_slo_cpts();
@@ -50,6 +51,7 @@ class Uninstall {
         switch_to_blog( $id );
 
         self::remove_options();
+        self::remove_capabilities();
         self::delete_slo_page_meta();
         self::reset_slo_page_templates();
         self::delete_slo_cpts();
@@ -69,6 +71,45 @@ class Uninstall {
    */
   private static function remove_options() {
     delete_option( 'gpalab-slo-settings' );
+  }
+
+  /**
+   * Remove the custom capabilities added by the plugin.
+   *
+   * @since 0.0.1
+   */
+  private static function remove_capabilities() {
+    $custom_caps = array(
+      'gpalab_slo_manage_settings',
+      'gpalab_slo_add_slo_page',
+      'gpalab_slo_edit_slo_page',
+      'gpalab_slo_edit_links',
+      'gpalab_slo_edit_others_links',
+      'gpalab_slo_edit_private_links',
+      'gpalab_slo_edit_published_links',
+      'gpalab_slo_delete_links',
+      'gpalab_slo_delete_others_links',
+      'gpalab_slo_delete_private_links',
+      'gpalab_slo_delete_published_links',
+      'gpalab_slo_read_private_links',
+      'gpalab_slo_delete_links',
+    );
+
+    $editable = get_editable_roles();
+
+    foreach ( $custom_caps as $cap ) {
+
+      foreach ( wp_roles()->role_objects as $key => $role ) {
+
+        if ( isset( $editable[ $key ] ) && $role->has_cap( $cap ) ) {
+          $role->remove_cap( $cap );
+        }
+
+        unset( $role );
+      }
+    }
+
+    unset( $cap );
   }
 
   /**
