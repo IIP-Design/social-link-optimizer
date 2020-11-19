@@ -18,6 +18,8 @@ _This sections lists changes committed since most recent release_
 - A custom social link page template to display all of the social links for a particular mission
 - Two social link page layouts to display the social links as either a grid of linked images or a list of links
 - A mission identity header on the social link page template to present mission-specific avatar, website, and social property links
+- Custom user capabilities to help control access to the plugin's administrative options
+- Seamless integration with the User Role Editor plugin
 - Backwards compatibility for WordPress sites not utilizing the Gutenberg editor
 - An uninstall script to clean up the database after when the plugin is uninstall
 - Link to the plugin's settings page directly from the plugin listing on the Installed Plugins page

@@ -21,7 +21,6 @@ class SLO {
    * @access protected
    * @since 0.0.1
    */
-
   protected $loader;
 
   /**
@@ -86,6 +85,7 @@ class SLO {
     require_once GPALAB_SLO_DIR . 'admin/class-cpt.php';
     require_once GPALAB_SLO_DIR . 'admin/class-permissions.php';
     require_once GPALAB_SLO_DIR . 'admin/class-settings.php';
+    require_once GPALAB_SLO_DIR . 'admin/class-ure.php';
 
     // The class responsible for defining all actions that occur in the public-facing side of the site.
     require_once GPALAB_SLO_DIR . 'public/class-frontend.php';
@@ -106,6 +106,7 @@ class SLO {
     $plugin_cpt      = new SLO\CPT( $this->get_plugin_name(), $this->get_version() );
     $plugin_roles    = new SLO\Permissions( $this->get_plugin_name(), $this->get_version() );
     $plugin_settings = new SLO\Settings( $this->get_plugin_name(), $this->get_version() );
+    $plugin_ure      = new SLO\URE( $this->get_plugin_name(), $this->get_version() );
 
     // Admin hooks.
     $this->loader->add_action( 'init', $plugin_admin, 'register_admin_scripts_styles' );
@@ -144,6 +145,19 @@ class SLO {
     $this->loader->add_action( 'wp_before_admin_bar_render', $plugin_roles, 'slo_archive_remove_admin_bar_edit_link' );
     $this->loader->add_filter( 'page_row_actions', $plugin_roles, 'disable_actions', 10, 2 );
     $this->loader->add_filter( 'get_edit_post_link', $plugin_roles, 'remove_row_title_link', 10, 3 );
+
+    // Check if the User Role Editor is active.
+    $is_ure_installed = in_array(
+      'user-role-editor/user-role-editor.php',
+      apply_filters( 'active_plugins', get_option( 'active_plugins' ) ),
+      true
+    );
+
+    // User Role Editor compatibility hooks.
+    if ( $is_ure_installed ) {
+      $this->loader->add_filter( 'ure_capabilities_groups_tree', $plugin_ure, 'add_custom_group', 10, 1 );
+      $this->loader->add_filter( 'ure_custom_capability_groups', $plugin_ure, 'get_plugin_caps', 10, 2 );
+    }
   }
 
   /**
