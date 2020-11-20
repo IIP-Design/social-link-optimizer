@@ -80,10 +80,11 @@ class Settings {
         foreach ( $missions as $key => $mission ) {
           $tab  = '<li class="gpalab-slo-tab" ';
           $tab .= 'role="presentation" >';
-          $tab .= '<button class="gpalab-slo-tab-button" ';
+          $tab .= '<a class="gpalab-slo-tab-button" ';
+          $tab .= 'href="#gpalab-slo-tab-' . $key . '" ';
           $tab .= 'id="gpalab-slo-tab-' . $key . '" ';
           $tab .= 'data-id="' . $key . '" ';
-          $tab .= 'role="tab">' . esc_html( $mission['title'] ) . '</button>';
+          $tab .= 'role="tab">' . esc_html( $mission['title'] ) . '</a>';
           $tab .= '</li>';
 
           echo wp_kses( $tab, 'post' );
