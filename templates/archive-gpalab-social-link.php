@@ -50,7 +50,7 @@ require 'template-parts/header-slo.php';
 
           if ( isset( $url ) && '' !== $url ) {
             $protocols = array( 'https://', 'http://' );
-            $url_host  = str_replace( $protocols, '', $url );
+            $url_host  = rtrim( str_replace( $protocols, '', $url ), '/' );
 
             $markup  = '<p class="mission-website">';
             $markup .= '<a href=' . esc_html( $url ) . '>';
