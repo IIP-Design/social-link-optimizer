@@ -57,26 +57,57 @@ export const switchTab = index => {
 /**
  * Open on the initial tab.
  *
- * @param {int} index  The index of the selected tab.
+ * @param {number} index  The index of the selected tab.
  */
 export const initializeTabs = index => {
   const btns = document.querySelectorAll( '.gpalab-slo-tab-button' );
   const panels = document.querySelectorAll( '.gpalab-slo-tabpanel' );
 
+  // Abort if no tab buttons or panels present.
   if ( !btns || !panels ) {
     return;
   }
 
+  // Check to make sure that the provided index is within range of the tabs, if not open first tab
+  const selected = index >= btns.length ? 0 : index;
+
+  // Get all the tabs NOT selected.
   const remainingBtns = [...btns];
 
-  remainingBtns.splice( index, 1 );
+  remainingBtns.splice( selected, 1 );
 
   // Display the first tab button and panel.
-  btns[index].setAttribute( 'aria-selected', 'true' );
-  panels[index].style.display = 'flex';
+  btns[selected].setAttribute( 'aria-selected', 'true' );
+  panels[selected].style.display = 'flex';
 
-  // Capture the focus on the current tab by removing the ability to tab across buttons
+  // Capture the focus on the current tab by removing the ability to tab across the remaining buttons
   remainingBtns.forEach( btn => {
     btn.setAttribute( 'tabindex', '-1' );
   } );
+};
+
+/**
+ * Checks the current URL for a hash indicating which tab to open.
+ *
+ * @returns {number} The index of the tab to focus on.
+ */
+export const getTabFromLocation = () => {
+  const { hash } = window.location;
+  const re = /(gpalab-slo-tab-[0-9]*)/g;
+
+  const tab = hash.match( re ) ? hash.match( re )[0] : null;
+
+  return tab ? tab.replace( 'gpalab-slo-tab-', '' ) : 0;
+};
+
+/**
+ * Adds a hash value to the URL and reloads the browser to navigate to selected tab.
+ *
+ * @param {number} id  The id of the tab in question.
+ */
+export const reloadInTab = id => {
+  const { origin, pathname, search } = window.location;
+
+  window.location.href = `${origin}${pathname}${search}#gpalab-slo-tab-${id}`;
+  window.location.reload();
 };

@@ -41,7 +41,7 @@ export const eventListeners = () => {
   const addMissionBtn = document.getElementById( 'slo-add-mission' );
 
   addMissionBtn.addEventListener( 'click', () => {
-    addSLOMission();
+    addSLOMission( tabBtns.length );
   } );
 
   // Add event listeners to the Remove This Mission buttons.
@@ -49,7 +49,16 @@ export const eventListeners = () => {
 
   removeMissionBtns.forEach( btn => {
     btn.addEventListener( 'click', e => {
-      removeSLOMission( e );
+      const { id } = e.target.dataset;
+
+      // Find the currently selected tab and it's id.
+      const selected = [...tabBtns].filter( tab => tab.attributes['aria-selected'] !== undefined );
+      const index = selected[0].dataset.id;
+
+      // If deleting first tab one new first tab, otherwise ope tab prior to that just deleted.
+      const indexAfterRemoval = index > 0 ? index - 1 : 0;
+
+      removeSLOMission( id, indexAfterRemoval );
     } );
   } );
 };

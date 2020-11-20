@@ -1,7 +1,11 @@
+import { reloadInTab } from './tab-nav';
+
 /**
  * Send an Ajax request to add a new mission to the plugin settings.
+ *
+ * @param {string} length  Length of the old array which is equal to the index of the new item.
  */
-export const addSLOMission = async () => {
+export const addSLOMission = async length => {
   // Get values provided to the client by the server
   const fromPHP = window?.gpalabSloAdmin || {};
 
@@ -19,7 +23,8 @@ export const addSLOMission = async () => {
     const result = await response.json();
 
     console.log( result );
-    window.location.reload();
+
+    reloadInTab( length );
   } catch ( err ) {
     console.error( err );
   }
@@ -28,11 +33,10 @@ export const addSLOMission = async () => {
 /**
  * Remove a mission from the settings page.
  *
- * @param {Event} e  A JavaScript event object.
+ * @param {string} id     The id of the mission to delete.
+ * @param {number} index  The index of the tab that should show after reload.
  */
-export const removeSLOMission = async e => {
-  const { id } = e.target.dataset;
-
+export const removeSLOMission = async ( id, index ) => {
   // Get values provided to the client by the server
   const fromPHP = window?.gpalabSloAdmin || {};
 
@@ -51,7 +55,8 @@ export const removeSLOMission = async e => {
     const result = await response.json();
 
     console.log( result );
-    window.location.reload();
+
+    reloadInTab( index );
   } catch ( err ) {
     console.error( err );
   }
