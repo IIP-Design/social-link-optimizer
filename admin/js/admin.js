@@ -57,30 +57,18 @@ const removeSLOMission = async e => {
   }
 };
 
-// Focus on the first tab.
-const showFirstMission = () => {
-  const btns = document.querySelectorAll( '.gpalab-slo-tab-button' );
-  const panels = document.querySelectorAll( '.gpalab-slo-tabpanel' );
-
-  if ( !btns || !panels ) {
-    return;
-  }
-
-  btns[0].setAttribute( 'aria-selected', 'true' );
-  panels[0].style.display = 'flex';
-};
-
 // Move between tabs.
-const switchTab = e => {
-  const { id } = e.target.dataset;
-
+const selectTab = id => {
   const tabs = document.querySelectorAll( '.gpalab-slo-tab-button' );
 
   tabs.forEach( tab => {
     if ( tab.id === `gpalab-slo-tab-${id}` ) {
+      tab.focus();
       tab.setAttribute( 'aria-selected', 'true' );
+      tab.removeAttribute( 'tabindex' );
     } else {
       tab.removeAttribute( 'aria-selected' );
+      tab.setAttribute( 'tabindex', '-1' );
     }
   } );
 
@@ -95,6 +83,63 @@ const switchTab = e => {
   } );
 };
 
+const switchTab = index => {
+  const btns = document.querySelectorAll( '.gpalab-slo-tab-button' );
+
+  if ( index !== null ) {
+    switch ( index ) {
+      case -1:
+        selectTab( btns[btns.length - 1].dataset.id );
+        break;
+      case btns.length:
+        selectTab( btns[0].dataset.id );
+        break;
+      default:
+        selectTab( btns[index].dataset.id );
+    }
+  }
+};
+
+// Focus on the first tab.
+const showFirstMission = () => {
+  const btns = document.querySelectorAll( '.gpalab-slo-tab-button' );
+  const panels = document.querySelectorAll( '.gpalab-slo-tabpanel' );
+
+  if ( !btns || !panels ) {
+    return;
+  }
+
+  const remainingBtns = [...btns];
+
+  remainingBtns.shift();
+
+  btns[0].setAttribute( 'aria-selected', 'true' );
+  remainingBtns.forEach( btn => {
+    btn.setAttribute( 'tabindex', '-1' );
+  } );
+  panels[0].style.display = 'flex';
+
+  btns.forEach( ( btn, idx ) => {
+    btn.addEventListener( 'keydown', e => {
+      switch ( e.which ) {
+        case 37:
+          switchTab( idx - 1 );
+          break;
+        case 39:
+          switchTab( idx + 1 );
+          break;
+        case 40:
+          e.preventDefault();
+          document.getElementById( `title_${idx}` ).focus();
+          break;
+        default:
+          return null;
+      }
+    } );
+  } );
+};
+
+
 const addMissionBtn = document.getElementById( 'slo-add-mission' );
 
 addMissionBtn.addEventListener( 'click', () => {
@@ -105,7 +150,9 @@ const tabBtns = document.querySelectorAll( '.gpalab-slo-tab-button' );
 
 tabBtns.forEach( btn => {
   btn.addEventListener( 'click', e => {
-    switchTab( e );
+    const { id } = e.target.dataset;
+
+    selectTab( id );
   } );
 } );
 
@@ -116,5 +163,6 @@ removeMissionBtns.forEach( btn => {
     removeSLOMission( e );
   } );
 } );
+
 
 window.onload = showFirstMission;
