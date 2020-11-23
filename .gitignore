@@ -5,3 +5,6 @@
 # Dependencies
 node_modules/
 vendor/
+
+# Dev sourcemaps
+admin/build/*.js.map

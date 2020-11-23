@@ -47,7 +47,7 @@ class Admin {
 
     wp_register_style(
       'gpalab-slo-admin-css',
-      GPALAB_SLO_URL . 'admin/css/admin.css',
+      GPALAB_SLO_URL . 'admin/css/gpalab-slo-admin.css',
       array(),
       $this->version
     );

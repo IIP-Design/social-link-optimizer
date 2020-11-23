@@ -50,13 +50,13 @@ class Frontend {
 
         wp_dequeue_style( $handle );
       }
-    }
 
-    wp_enqueue_style(
-      'social-bio-links',
-      GPALAB_SLO_URL . '/public/css/gpalab-slo-front.css',
-      array(),
-      $version
-    );
+      wp_enqueue_style(
+        'social-bio-links',
+        GPALAB_SLO_URL . '/public/css/gpalab-slo-front.css',
+        array(),
+        $version
+      );
+    }
   }
 }
