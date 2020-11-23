@@ -41,7 +41,7 @@
 
 .gpalab-slo-tab-button[aria-selected] {
   background-color: #ffffff;
-  border-bottom: none;
+  border-bottom-color: transparent;
 }
 
 .gpalab-slo-tabpanel {
