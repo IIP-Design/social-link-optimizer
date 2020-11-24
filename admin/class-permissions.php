@@ -106,7 +106,7 @@ class Permissions {
    */
   public function remove_row_title_link( $url, $post_id, $context ) {
     // If not on the page listings page abort.
-    if ( 'edit-page' !== get_current_screen()->id ) {
+    if ( is_admin() && 'edit-page' !== get_current_screen()->id ) {
       return $url;
     }
 
