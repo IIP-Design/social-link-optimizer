@@ -8,3 +8,7 @@ vendor/
 
 # Dev sourcemaps
 admin/build/*.js.map
+
+# Jekyll
+docs/_site
+docs/Gemfile.lock

@@ -1,0 +1,16 @@
+remote_theme: IIP-Design/lab-notes
+
+title: Social Link Optimizer Plugin
+author: Bureau of Global Public Affairs (GPA) Digital Lab Team
+author_homepage: https://github.com/IIP-Design
+repository: IIP-Design/social-link-optimizer
+description: A WordPress plugin that adds the ability to aggregate multiple content links onto a single page.
+favicon: /social-link-optimizer/assets/img/favicon.ico
+logo: /social-link-optimizer/assets/img/dos_seal.svg
+show_downloads: false
+show_nav: true
+
+markdown: kramdown
+kramdown:
+  syntax_highlighter_opts:
+    disable: true
