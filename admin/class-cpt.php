@@ -11,7 +11,7 @@ namespace SLO;
 /**
  * Registers the social links custom post type.
  *
- * The Settings class adds a settings page allowing site admins to configure the plugin.
+ * The CPT class adds a custom post type that is used to add social link data.
  *
  * @package SLO\CPT
  * @since 0.0.1

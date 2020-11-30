@@ -11,7 +11,7 @@ namespace SLO;
 /**
  * Adds the page template for the social link archive page.
  *
- * The Settings class adds a settings page allowing site admins to configure the plugin.
+ * The Template class adds the SLO archive page to the list of page template options.
  *
  * @package SLO\CPT
  * @since 0.0.1
