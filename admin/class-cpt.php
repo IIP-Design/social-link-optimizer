@@ -11,7 +11,7 @@ namespace SLO;
 /**
  * Registers the social links custom post type.
  *
- * The Settings class adds a settings page allowing site admins to configure the plugin.
+ * The CPT class adds a custom post type that is used to add social link data.
  *
  * @package SLO\CPT
  * @since 0.0.1
@@ -441,6 +441,7 @@ class CPT {
     global $pagenow;
 
     // Get the post type.
+    // phpcs:disable WordPress.Security.NonceVerification.Recommended
     $post_type = isset( $_GET['post_type'] ) ? sanitize_text_field( wp_unslash( $_GET['post_type'] ) ) : '';
 
     if (
@@ -486,9 +487,11 @@ class CPT {
       $current_mission = '';
 
       // Update $current_mission if filter option has been selected.
+      // phpcs:disable WordPress.Security.NonceVerification.Recommended
       if ( isset( $_GET['mission'] ) ) {
         $current_mission = sanitize_text_field( wp_unslash( $_GET['mission'] ) ); // Check if option has been selected.
       }
+      // phpcs:enable
 
       // Render out the filter dropdown.
       ?>
