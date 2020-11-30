@@ -1,5 +1,5 @@
 {
-  "ignorePatterns": [ "node_modules/", "admin/build/", "vendor/" ],
+  "ignorePatterns": [ "node_modules/", "admin/build/", "docs/_site", "vendor/" ],
   "rules": {
     "node/no-unpublished-require": [
       "error", {
