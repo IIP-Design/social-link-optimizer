@@ -23,7 +23,7 @@ require 'template-parts/header-slo.php';
       the_post();
       ?>
 
-    <section <?php post_class( 'stack' ); ?> id="post-<?php the_ID(); ?>">
+    <article <?php post_class( 'stack' ); ?> id="post-<?php the_ID(); ?>">
 
       <header class="content-header stack">
         
@@ -232,7 +232,7 @@ require 'template-parts/header-slo.php';
 
       </div><!-- .section-inner -->
 
-    </section><!-- .post -->
+    </article><!-- .post -->
 
       <?php
     }
