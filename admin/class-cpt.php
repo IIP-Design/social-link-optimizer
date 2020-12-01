@@ -122,7 +122,7 @@ class CPT {
       array( $this, 'add_mission_select' ),
       'gpalab-social-link',
       'side',
-      'low'
+      'high'
     );
 
     add_meta_box(
