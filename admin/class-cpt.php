@@ -133,6 +133,12 @@ class CPT {
       'side',
       'high'
     );
+
+    remove_meta_box(
+      'postcustom',
+      'gpalab-social-link',
+      'normal'
+    );
   }
 
   /**
