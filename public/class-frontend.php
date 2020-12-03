@@ -37,8 +37,9 @@ class Frontend {
   public function gpalab_slo_stylesheets() {
     $wp_styles       = wp_styles();
     $is_slo_template = is_page_template( 'archive-gpalab-social-link.php' );
+    $is_slo_preview  = is_singular( 'gpalab-social-link' );
 
-    if ( $is_slo_template ) {
+    if ( $is_slo_template || $is_slo_preview ) {
       foreach ( $wp_styles->registered as $wp_style ) {
         $handle              = $wp_style->handle;
         $src                 = $wp_style->src;
