@@ -164,4 +164,33 @@ class CPT_List {
       <?php
     }
   }
+
+  /**
+   * Removes the View and Quick Edit action buttons from social link posts.
+   *
+   * @param array  $actions  List of action links.
+   * @param object $post     WordPress post Object.
+   *
+   * @since 0.0.1
+   */
+  public function disable_link_actions( $actions = array(), $post = null ) {
+
+    // If the page template is not an gpalab-social-link post, return all actions.
+    if ( 'gpalab-social-link' !== $post->post_type ) {
+      return $actions;
+    }
+
+    // Remove the View link - not terribly useful since it points to the redirect URL.
+    if ( isset( $actions['view'] ) ) {
+      unset( $actions['view'] );
+    }
+
+    // Remove the Quick Edit link - removes some unnecessary complexity.
+    if ( isset( $actions['inline hide-if-no-js'] ) ) {
+      unset( $actions['inline hide-if-no-js'] );
+    }
+
+    // Return the set of links without the Edit, Quick Edit, or Trash actions.
+    return $actions;
+  }
 }
