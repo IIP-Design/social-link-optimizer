@@ -42,7 +42,9 @@ require 'template-parts/header-slo.php';
         $settings_key  = array_search( $selected_mission, array_column( $slo_settings, 'id' ), true );
         $page_settings = is_numeric( $settings_key ) ? $slo_settings[ $settings_key ] : array();
 
-        $preview_title = '<h1 class="gpalab-slo-page-title">' . $page_settings['title'] . ' - Preview</h1>';
+        $page_title = $selected_mission ? $page_settings['title'] : __( 'All Missions', 'gpalab-slo' );
+
+        $preview_title = '<h1 class="gpalab-slo-page-title">' . $page_title . ' - Preview</h1>';
 
         echo wp_kses( $preview_title, 'post' );
 
