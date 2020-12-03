@@ -53,9 +53,9 @@ class Frontend {
 
       wp_enqueue_style(
         'social-bio-links',
-        GPALAB_SLO_URL . '/public/css/gpalab-slo-front.css',
+        GPALAB_SLO_URL . 'public/css/gpalab-slo-front.css',
         array(),
-        $version
+        $this->version
       );
     }
   }
