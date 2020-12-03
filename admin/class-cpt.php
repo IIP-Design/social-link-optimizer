@@ -387,4 +387,26 @@ class CPT {
       'low'
     );
   }
+
+  /**
+   * When loading gpalab-social-link posts, load the post template provided by the plugin.
+   *
+   * @param string $single   The path to the appropriate single template.
+   * @return string          If a social link, the path to our template, otherwise the default path.
+   *
+   * @since 0.0.1
+   */
+  public function single_link_template( $single ) {
+    global $post;
+
+    /* Checks for single template by post type */
+    if ( 'gpalab-social-link' === $post->post_type ) {
+      if ( file_exists( GPALAB_SLO_DIR . '/templates/single-gpalab-social-link.php' ) ) {
+        return GPALAB_SLO_DIR . '/templates/single-gpalab-social-link.php';
+      }
+    }
+
+    return $single;
+
+  }
 }

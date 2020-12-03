@@ -131,6 +131,7 @@ class SLO {
     $this->loader->add_action( 'save_post', $plugin_cpt, 'gpalab_slo_meta_save' );
     $this->loader->add_action( 'do_meta_boxes', $plugin_cpt, 'gpalab_slo_image_meta_box' );
     $this->loader->add_filter( 'post_type_link', $plugin_cpt, 'gpalab_slo_filter_permalink', 10, 2 );
+    $this->loader->add_filter( 'single_template', $plugin_cpt, 'single_link_template' );
 
     // Hooks to manage the All Links page.
     $this->loader->add_action( 'manage_gpalab-social-link_posts_custom_column', $plugin_cpt_list, 'populate_custom_columns', 10, 2 );
