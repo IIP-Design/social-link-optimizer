@@ -18,6 +18,19 @@ namespace SLO;
  */
 class CPT {
   /**
+   * Initializes the class with the plugin name and version.
+   *
+   * @param string $plugin     The plugin name.
+   * @param string $version    The plugin version number.
+   *
+   * @since 0.0.1
+   */
+  public function __construct( $plugin, $version ) {
+    $this->plugin  = $plugin;
+    $this->version = $version;
+  }
+
+  /**
    * Register social links custom post type.
    *
    * @since 0.0.1
@@ -134,8 +147,18 @@ class CPT {
       'high'
     );
 
+    /**
+     * The following metaboxes are not used in editing the social link posts,
+     * but can cause confusion for users unfamiliar with WordPress.
+     */
     remove_meta_box(
       'postcustom',
+      'gpalab-social-link',
+      'normal'
+    );
+
+    remove_meta_box(
+      'slugdiv',
       'gpalab-social-link',
       'normal'
     );
@@ -376,150 +399,92 @@ class CPT {
   }
 
   /**
-   * Add custom columns to the list of social links posts.
+   * When loading gpalab-social-link posts, load the post template provided by the plugin.
    *
-   * @param array $defaults  List of default columns.
-   *
-   * @since 0.0.1
-   */
-  public function add_custom_columns( $defaults ) {
-    $defaults['gpalab_slo_archive'] = __( 'Archived', 'gpalab-slo' );
-    $defaults['gpalab_slo_mission'] = __( 'Mission', 'gpalab-slo' );
-
-    return $defaults;
-  }
-
-  /**
-   * Make the social links custom post type's columns sortable.
-   *
-   * @param array $columns  List of default columns.
+   * @param string $single   The path to the appropriate single template.
+   * @return string          If a social link, the path to our template, otherwise the default path.
    *
    * @since 0.0.1
    */
-  public function make_custom_columns_sortable( $columns ) {
-    $columns['gpalab_slo_archive'] = __( 'Archived', 'gpalab-slo' );
-    $columns['gpalab_slo_mission'] = __( 'Mission', 'gpalab-slo' );
+  public function single_link_template( $single ) {
+    global $post;
 
-    return $columns;
-  }
-
-  /**
-   * Populate the content of the missions column.
-   *
-   * @param string $column_name   Name of the given column.
-   * @param int    $post_id       List of default columns.
-   *
-   * @since 0.0.1
-   */
-  public function populate_custom_columns( $column_name, $post_id ) {
-    // Populate the Archived column.
-    if ( 'gpalab_slo_archive' === $column_name ) {
-      $is_archive     = get_post_meta( $post_id, 'gpalab_slo_archive', true );
-      $human_friendly = 'true' === $is_archive ? 'yes' : 'no';
-
-      echo esc_html( $human_friendly );
+    /* Checks for single template by post type */
+    if ( 'gpalab-social-link' === $post->post_type ) {
+      if ( file_exists( GPALAB_SLO_DIR . '/templates/single-gpalab-social-link.php' ) ) {
+        return GPALAB_SLO_DIR . '/templates/single-gpalab-social-link.php';
+      }
     }
 
-    // Populate the Mission column.
-    if ( 'gpalab_slo_mission' === $column_name ) {
-      // Get all missions.
-      $slo_settings = get_option( 'gpalab-slo-settings' );
+    return $single;
 
-      // Get the id of the mission associated with the current post.
-      $mission_id = get_post_meta( $post_id, 'gpalab_slo_mission', true );
+  }
 
-      // Search for selected mission among the mission sessions and return it's data.
-      $settings_key   = array_search( $mission_id, array_column( $slo_settings, 'id' ), true );
-      $human_friendly = is_numeric( $settings_key ) ? $slo_settings[ $settings_key ]['title'] : '';
+  /**
+   * Rewrite the preview urls for social links to simulated SLO aggregate page.
+   *
+   * @param string $link  The default preview url.
+   * @return string       The preview url.
+   *
+   * @since 0.0.1
+   */
+  public function hijack_slo_preview( $link ) {
+    global $post;
 
-      echo esc_html( $human_friendly );
+    if ( 'gpalab-social-link' === $post->post_type ) {
+      return '/?post_type=gpalab-social-link&p=' . $post->ID . '&preview=true';
+    } else {
+      return $link;
     }
   }
 
   /**
-   * Filters the social links query by mission.
-   *
-   * @param array $query  WordPress query arguments.
+   * Hides the permalink below the post title on the social edit link to avoid confusion.
    *
    * @since 0.0.1
    */
-  public function filter_social_links_by_mission( $query ) {
-    global $pagenow;
+  public function hide_permalink() {
+    global $post_type;
 
-    // Get the post type.
+    if ( 'gpalab-social-link' === $post_type ) {
+      echo '<style type="text/css">#edit-slug-box{display: none;}</style>';
+    }
+  }
+
+  /**
+   * Rewrite the messages in the growl notifications shown to users on updates.
+   *
+   * @param array $msg   List of messages shown to the user on update.
+   * @return array       Updated list with custom messages for gpalab-social-links.
+   */
+  public function social_link_updated_messages( $msg ) {
+
+    /* translators: %s: date and time of the revision */
+    $revision = __( 'Social link restored to revision from %s.', 'gpalab-slo' );
+
     // phpcs:disable WordPress.Security.NonceVerification.Recommended
-    $post_type = isset( $_GET['post_type'] ) ? sanitize_text_field( wp_unslash( $_GET['post_type'] ) ) : '';
+    $is_revision = isset( $_GET['revision'] )
+                 ? sprintf( $revision, wp_post_revision_title( (int) $_GET['revision'], false ) )
+                 : false;
+    // phpcs:enable
 
-    if (
-      is_admin()
-      && 'edit.php' === $pagenow
-      && 'gpalab-social-link' === $post_type
-      && isset( $_GET['mission'] )
-      && 'all' !== $_GET['mission']
-    ) {
-      // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-      // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_value
-      $query->query_vars['meta_key']     = 'gpalab_slo_mission';
-      $query->query_vars['meta_value']   = sanitize_text_field( wp_unslash( $_GET['mission'] ) );
-      $query->query_vars['meta_compare'] = '=';
-      // phpcs:enable
-    }
-  }
+    /* translators: %s: date and time for which publishing is scheduled */
+    $scheduled = __( 'Social link scheduled for: %s.', 'gpalab-slo' );
 
-  /**
-   * Adds a post filter dropdown to the social links custom post type listing page.
-   *
-   * @since 0.0.1
-   */
-  public function add_mission_filter_dropdown() {
-    global $typenow;
+    $msg['gpalab-social-link'] = array(
+      0  => '', // Unused. Messages start at index 1.
+      1  => __( 'Social link updated.', 'gpalab-slo' ),
+      2  => __( 'Custom field updated.', 'gpalab-slo' ),
+      3  => __( 'Custom field deleted.', 'gpalab-slo' ),
+      4  => __( 'Social link updated.', 'gpalab-slo' ),
+      5  => $is_revision,
+      6  => __( 'Social link published.', 'gpalab-slo' ),
+      7  => __( 'Social link saved.', 'gpalab-slo' ),
+      8  => __( 'Social link submitted.', 'gpalab-slo' ),
+      9  => sprintf( $scheduled, '<strong>' . $scheduled_date . '</strong>' ),
+      10 => __( 'Social link draft updated.', 'gpalab-slo' ),
+    );
 
-    if ( 'gpalab-social-link' === $typenow ) {
-      // Get all missions.
-      $missions     = array();
-      $slo_settings = get_option( 'gpalab-slo-settings' );
-
-      // Get title and id for each mission.
-      foreach ( $slo_settings as $setting ) {
-        $mission = array();
-
-        $mission['label'] = $setting['title'];
-        $mission['value'] = $setting['id'];
-
-        array_push( $missions, $mission );
-      }
-
-      // Initialize the selected mission as empty (ie. all missions).
-      $current_mission = '';
-
-      // Update $current_mission if filter option has been selected.
-      // phpcs:disable WordPress.Security.NonceVerification.Recommended
-      if ( isset( $_GET['mission'] ) ) {
-        $current_mission = sanitize_text_field( wp_unslash( $_GET['mission'] ) ); // Check if option has been selected.
-      }
-      // phpcs:enable
-
-      // Render out the filter dropdown.
-      ?>
-        <select name="mission" id="mission">
-          <option value="all" <?php selected( 'all', $current_mission ); ?>>
-            <?php esc_html_e( 'All Missions', 'gpalab-slo' ); ?>
-          </option>
-
-          <?php
-          foreach ( $missions as $mission ) {
-            $value = $mission['value'];
-
-            ?>
-            <option value="<?php echo esc_attr( $value ); ?>" <?php selected( $value, $current_mission ); ?>>
-              <?php echo esc_attr( $mission['label'] ); ?>
-            </option>
-
-            <?php
-          }
-          ?>
-        </select>
-      <?php
-    }
+    return $msg;
   }
 }

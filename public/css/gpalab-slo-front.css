@@ -109,7 +109,8 @@ a:active {
 }
 
 /* body */
-.page-template-archive-gpalab-social-link {
+.page-template-archive-gpalab-social-link,
+.gpalab-social-link-template-default {
   min-height: 100vh;
   color: var(--white);
   font-family: var(--font-primary);
