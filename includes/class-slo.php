@@ -83,6 +83,7 @@ class SLO {
     require_once GPALAB_SLO_DIR . 'admin/class-ajax.php';
     require_once GPALAB_SLO_DIR . 'admin/class-archive.php';
     require_once GPALAB_SLO_DIR . 'admin/class-cpt.php';
+    require_once GPALAB_SLO_DIR . 'admin/class-cpt-list.php';
     require_once GPALAB_SLO_DIR . 'admin/class-permissions.php';
     require_once GPALAB_SLO_DIR . 'admin/class-settings.php';
     require_once GPALAB_SLO_DIR . 'admin/class-ure.php';
@@ -104,6 +105,7 @@ class SLO {
     $plugin_ajax     = new SLO\Ajax( $this->get_plugin_name(), $this->get_version() );
     $plugin_archive  = new SLO\Archive( $this->get_plugin_name(), $this->get_version() );
     $plugin_cpt      = new SLO\CPT( $this->get_plugin_name(), $this->get_version() );
+    $plugin_cpt_list = new SLO\CPT_List( $this->get_plugin_name(), $this->get_version() );
     $plugin_roles    = new SLO\Permissions( $this->get_plugin_name(), $this->get_version() );
     $plugin_settings = new SLO\Settings( $this->get_plugin_name(), $this->get_version() );
     $plugin_ure      = new SLO\URE( $this->get_plugin_name(), $this->get_version() );
@@ -128,12 +130,14 @@ class SLO {
     $this->loader->add_action( 'add_meta_boxes', $plugin_cpt, 'gpalab_slo_custom_meta' );
     $this->loader->add_action( 'save_post', $plugin_cpt, 'gpalab_slo_meta_save' );
     $this->loader->add_action( 'do_meta_boxes', $plugin_cpt, 'gpalab_slo_image_meta_box' );
-    $this->loader->add_action( 'manage_gpalab-social-link_posts_custom_column', $plugin_cpt, 'populate_custom_columns', 10, 2 );
-    $this->loader->add_filter( 'manage_edit-gpalab-social-link_columns', $plugin_cpt, 'add_custom_columns' );
-    $this->loader->add_filter( 'manage_edit-gpalab-social-link_sortable_columns', $plugin_cpt, 'make_custom_columns_sortable' );
-    $this->loader->add_action( 'restrict_manage_posts', $plugin_cpt, 'add_mission_filter_dropdown' );
-    $this->loader->add_filter( 'parse_query', $plugin_cpt, 'filter_social_links_by_mission' );
     $this->loader->add_filter( 'post_type_link', $plugin_cpt, 'gpalab_slo_filter_permalink', 10, 2 );
+
+    // Hooks to manage the All Links page.
+    $this->loader->add_action( 'manage_gpalab-social-link_posts_custom_column', $plugin_cpt_list, 'populate_custom_columns', 10, 2 );
+    $this->loader->add_filter( 'manage_edit-gpalab-social-link_columns', $plugin_cpt_list, 'add_custom_columns' );
+    $this->loader->add_filter( 'manage_edit-gpalab-social-link_sortable_columns', $plugin_cpt_list, 'make_custom_columns_sortable' );
+    $this->loader->add_action( 'restrict_manage_posts', $plugin_cpt_list, 'add_mission_filter_dropdown' );
+    $this->loader->add_filter( 'parse_query', $plugin_cpt_list, 'filter_social_links_by_mission' );
 
     // Settings page hooks.
     $this->loader->add_action( 'admin_menu', $plugin_settings, 'add_settings_page' );
