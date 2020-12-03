@@ -450,4 +450,41 @@ class CPT {
       echo '<style type="text/css">#edit-slug-box{display: none;}</style>';
     }
   }
+
+  /**
+   * Rewrite the messages in the growl notifications shown to users on updates.
+   *
+   * @param array $msg   List of messages shown to the user on update.
+   * @return array       Updated list with custom messages for gpalab-social-links.
+   */
+  public function social_link_updated_messages( $msg ) {
+
+    /* translators: %s: date and time of the revision */
+    $revision = __( 'Social link restored to revision from %s.', 'gpalab-slo' );
+
+    // phpcs:disable WordPress.Security.NonceVerification.Recommended
+    $is_revision = isset( $_GET['revision'] )
+                 ? sprintf( $revision, wp_post_revision_title( (int) $_GET['revision'], false ) )
+                 : false;
+    // phpcs:enable
+
+    /* translators: %s: date and time for which publishing is scheduled */
+    $scheduled = __( 'Social link scheduled for: %s.', 'gpalab-slo' );
+
+    $msg['gpalab-social-link'] = array(
+      0  => '', // Unused. Messages start at index 1.
+      1  => __( 'Social link updated.', 'gpalab-slo' ),
+      2  => __( 'Custom field updated.', 'gpalab-slo' ),
+      3  => __( 'Custom field deleted.', 'gpalab-slo' ),
+      4  => __( 'Social link updated.', 'gpalab-slo' ),
+      5  => $is_revision,
+      6  => __( 'Social link published.', 'gpalab-slo' ),
+      7  => __( 'Social link saved.', 'gpalab-slo' ),
+      8  => __( 'Social link submitted.', 'gpalab-slo' ),
+      9  => sprintf( $scheduled, '<strong>' . $scheduled_date . '</strong>' ),
+      10 => __( 'Social link draft updated.', 'gpalab-slo' ),
+    );
+
+    return $msg;
+  }
 }
