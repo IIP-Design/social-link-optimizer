@@ -409,4 +409,22 @@ class CPT {
     return $single;
 
   }
+
+  /**
+   * Rewrite the preview urls for social links to simulated SLO aggregate page.
+   *
+   * @param string $link  The default preview url.
+   * @return string       The preview url.
+   *
+   * @since 0.0.1
+   */
+  public function hijack_slo_preview( $link ) {
+    global $post;
+
+    if ( 'gpalab-social-link' === $post->post_type ) {
+      return '/?post_type=gpalab-social-link&p=' . $post->ID . '&preview=true';
+    } else {
+      return $link;
+    }
+  }
 }
