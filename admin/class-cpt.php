@@ -147,8 +147,18 @@ class CPT {
       'high'
     );
 
+    /**
+     * The following metaboxes are not used in editing the social link posts,
+     * but can cause confusion for users unfamiliar with WordPress.
+     */
     remove_meta_box(
       'postcustom',
+      'gpalab-social-link',
+      'normal'
+    );
+
+    remove_meta_box(
+      'slugdiv',
       'gpalab-social-link',
       'normal'
     );
@@ -425,6 +435,19 @@ class CPT {
       return '/?post_type=gpalab-social-link&p=' . $post->ID . '&preview=true';
     } else {
       return $link;
+    }
+  }
+
+  /**
+   * Hides the permalink below the post title on the social edit link to avoid confusion.
+   *
+   * @since 0.0.1
+   */
+  public function hide_permalink() {
+    global $post_type;
+
+    if ( 'gpalab-social-link' === $post_type ) {
+      echo '<style type="text/css">#edit-slug-box{display: none;}</style>';
     }
   }
 }

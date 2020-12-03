@@ -133,6 +133,7 @@ class SLO {
     $this->loader->add_filter( 'post_type_link', $plugin_cpt, 'gpalab_slo_filter_permalink', 10, 2 );
     $this->loader->add_filter( 'single_template', $plugin_cpt, 'single_link_template' );
     $this->loader->add_filter( 'preview_post_link', $plugin_cpt, 'hijack_slo_preview' );
+    $this->loader->add_action( 'admin_head', $plugin_cpt, 'hide_permalink' );
 
     // Hooks to manage the All Links page.
     $this->loader->add_action( 'manage_gpalab-social-link_posts_custom_column', $plugin_cpt_list, 'populate_custom_columns', 10, 2 );
