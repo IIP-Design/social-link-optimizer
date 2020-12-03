@@ -18,6 +18,19 @@ namespace SLO;
  */
 class CPT {
   /**
+   * Initializes the class with the plugin name and version.
+   *
+   * @param string $plugin     The plugin name.
+   * @param string $version    The plugin version number.
+   *
+   * @since 0.0.1
+   */
+  public function __construct( $plugin, $version ) {
+    $this->plugin  = $plugin;
+    $this->version = $version;
+  }
+
+  /**
    * Register social links custom post type.
    *
    * @since 0.0.1
