@@ -144,7 +144,7 @@ class CPT {
       array( $this, 'add_archive_checkbox' ),
       'gpalab-social-link',
       'side',
-      'high'
+      'low'
     );
 
     /**
