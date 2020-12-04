@@ -238,7 +238,7 @@ class CPT {
         id="<?php echo esc_attr( $meta ); ?>"
         name="<?php echo esc_attr( $meta ); ?>"
       >
-        <option value="" <?php selected( $selected, $mission['id'] ); ?>>
+        <option value="" <?php selected( $selected, '' ); ?>>
           <?php echo esc_html( $empty_label ); ?>
         </option>
         <?php
@@ -459,6 +459,8 @@ class CPT {
    */
   public function social_link_updated_messages( $msg ) {
 
+    global $post;
+
     /* translators: %s: date and time of the revision */
     $revision = __( 'Social link restored to revision from %s.', 'gpalab-slo' );
 
@@ -469,7 +471,9 @@ class CPT {
     // phpcs:enable
 
     /* translators: %s: date and time for which publishing is scheduled */
-    $scheduled = __( 'Social link scheduled for: %s.', 'gpalab-slo' );
+    $scheduled = __( 'Social link publication scheduled for: %s.', 'gpalab-slo' );
+
+    $scheduled_date = date_i18n( __( 'M j, Y @ H:i' ), strtotime( $post->post_date ) );
 
     $msg['gpalab-social-link'] = array(
       0  => '', // Unused. Messages start at index 1.
