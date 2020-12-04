@@ -36,18 +36,26 @@ class CPT {
    * @since 0.0.1
    */
   public function gpalab_slo_cpt() {
+    /**
+     * Private post capabilities are disabled as we don't anticipate their use.
+     * If eventually enabled, the corresponding change should be made in the
+     * Activator and Uninstall classes found in the includes directory as well
+     * as in the URE class found in this directory.
+     */
+    // phpcs:disable Squiz.PHP.CommentedOutCode.Found
     $capabilities = array(
       'edit_posts'             => 'gpalab_slo_edit_links',
       'edit_others_posts'      => 'gpalab_slo_edit_others_links',
-      'edit_private_posts'     => 'gpalab_slo_edit_private_links',
       'edit_published_posts'   => 'gpalab_slo_edit_published_links',
       'delete_posts'           => 'gpalab_slo_delete_links',
       'delete_others_posts'    => 'gpalab_slo_delete_others_links',
-      'delete_private_posts'   => 'gpalab_slo_delete_private_links',
       'delete_published_posts' => 'gpalab_slo_delete_published_links',
-      'read_private_posts'     => 'gpalab_slo_read_private_links',
-      'publish_posts'          => 'gpalab_slo_delete_links',
+      'publish_posts'          => 'gpalab_slo_publish_links',
+      // 'edit_private_posts'     => 'gpalab_slo_edit_private_links',
+      // 'delete_private_posts'   => 'gpalab_slo_delete_private_links',
+      // 'read_private_posts'     => 'gpalab_slo_read_private_links',
     );
+    // phpcs:enable
 
     $labels = array(
       'name'                  => _x( 'Social Links', 'Post Type General Name', 'gpalab-slo' ),
@@ -439,15 +447,16 @@ class CPT {
   }
 
   /**
-   * Hides the permalink below the post title on the social edit link to avoid confusion.
+   * Hides the permalink below the post title and the post visibility
+   * settings on the social link edit screen to avoid confusion.
    *
    * @since 0.0.1
    */
-  public function hide_permalink() {
+  public function hide_unused_elements() {
     global $post_type;
 
     if ( 'gpalab-social-link' === $post_type ) {
-      echo '<style type="text/css">#edit-slug-box{display: none;}</style>';
+      echo '<style type="text/css">#edit-slug-box, #visibility{display: none;}</style>';
     }
   }
 

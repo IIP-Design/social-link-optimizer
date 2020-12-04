@@ -59,20 +59,28 @@ class URE {
    * @since 0.0.1
    */
   public function get_plugin_caps( $groups, $cap_id ) {
+    /**
+     * Private post capabilities are disabled as we don't anticipate their use.
+     * To implement them, add the following capabilities to the below array:
+     *   - 'gpalab_slo_read_private_links'
+     *   - 'gpalab_slo_edit_private_links'
+     *   - 'gpalab_slo_delete_private_links'
+     *
+     * If eventually enabled, the corresponding change should be made in the
+     * Activator and Uninstall classes found in the includes directory as well
+     * as in the CPT class found in this directory.
+     */
     $plugin_caps = array(
       'gpalab_slo_manage_settings',
       'gpalab_slo_add_slo_page',
       'gpalab_slo_edit_slo_page',
       'gpalab_slo_edit_links',
       'gpalab_slo_edit_others_links',
-      'gpalab_slo_edit_private_links',
       'gpalab_slo_edit_published_links',
       'gpalab_slo_delete_links',
       'gpalab_slo_delete_others_links',
-      'gpalab_slo_delete_private_links',
       'gpalab_slo_delete_published_links',
-      'gpalab_slo_read_private_links',
-      'gpalab_slo_delete_links',
+      'gpalab_slo_publish_links',
     );
 
     if ( in_array( $cap_id, $plugin_caps, true ) ) {
