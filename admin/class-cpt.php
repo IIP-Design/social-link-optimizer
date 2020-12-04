@@ -89,9 +89,9 @@ class CPT {
 
     $rewrite = array(
       'slug'       => 'gpalab-social-link',
-      'with_front' => true,
+      'with_front' => false,
       'pages'      => true,
-      'feeds'      => true,
+      'feeds'      => false,
     );
 
     $args = array(
@@ -414,18 +414,17 @@ class CPT {
    *
    * @since 0.0.1
    */
-  public function single_link_template( $single ) {
+  public function preview_link_template( $single ) {
     global $post;
 
     /* Checks for single template by post type */
     if ( 'gpalab-social-link' === $post->post_type ) {
-      if ( file_exists( GPALAB_SLO_DIR . '/templates/single-gpalab-social-link.php' ) ) {
-        return GPALAB_SLO_DIR . '/templates/single-gpalab-social-link.php';
+      if ( file_exists( GPALAB_SLO_DIR . '/templates/preview-gpalab-social-link.php' ) ) {
+        return GPALAB_SLO_DIR . '/templates/preview-gpalab-social-link.php';
       }
     }
 
     return $single;
-
   }
 
   /**
