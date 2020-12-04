@@ -67,24 +67,24 @@ class CPT {
       'parent_item_colon'     => __( 'Parent Item:', 'gpalab-slo' ),
       'all_items'             => __( 'All Links', 'gpalab-slo' ),
       'add_new_item'          => __( 'Add New Link', 'gpalab-slo' ),
-      'add_new'               => __( 'Add New', 'gpalab-slo' ),
+      'add_new'               => __( 'Add New Link', 'gpalab-slo' ),
       'new_item'              => __( 'New Item', 'gpalab-slo' ),
-      'edit_item'             => __( 'Edit Item', 'gpalab-slo' ),
+      'edit_item'             => __( 'Edit Social Link', 'gpalab-slo' ),
       'update_item'           => __( 'Update Item', 'gpalab-slo' ),
-      'view_item'             => __( 'View Item', 'gpalab-slo' ),
+      'view_item'             => __( 'View Link', 'gpalab-slo' ),
       'view_items'            => __( 'View Links', 'gpalab-slo' ),
-      'search_items'          => __( 'Search Link', 'gpalab-slo' ),
+      'search_items'          => __( 'Search Links', 'gpalab-slo' ),
       'not_found'             => __( 'Not found', 'gpalab-slo' ),
       'not_found_in_trash'    => __( 'Not found in Trash', 'gpalab-slo' ),
-      'featured_image'        => __( 'Featured Image', 'gpalab-slo' ),
-      'set_featured_image'    => __( 'Set featured image', 'gpalab-slo' ),
-      'remove_featured_image' => __( 'Remove featured image', 'gpalab-slo' ),
-      'use_featured_image'    => __( 'Use as featured image', 'gpalab-slo' ),
+      'featured_image'        => __( 'Linked Image', 'gpalab-slo' ),
+      'set_featured_image'    => __( 'Add an image to the grid', 'gpalab-slo' ),
+      'remove_featured_image' => __( 'Remove image', 'gpalab-slo' ),
+      'use_featured_image'    => __( 'Use as grid image', 'gpalab-slo' ),
       'insert_into_item'      => __( 'Insert into item', 'gpalab-slo' ),
       'uploaded_to_this_item' => __( 'Uploaded to this item', 'gpalab-slo' ),
-      'items_list'            => __( 'Items list', 'gpalab-slo' ),
-      'items_list_navigation' => __( 'Items list navigation', 'gpalab-slo' ),
-      'filter_items_list'     => __( 'Filter items list', 'gpalab-slo' ),
+      'items_list'            => __( 'Link list', 'gpalab-slo' ),
+      'items_list_navigation' => __( 'Link list navigation', 'gpalab-slo' ),
+      'filter_items_list'     => __( 'Filter link list', 'gpalab-slo' ),
     );
 
     $rewrite = array(
@@ -96,7 +96,7 @@ class CPT {
 
     $args = array(
       'label'               => __( 'Social Link', 'gpalab-slo' ),
-      'description'         => __( 'Post Type Description', 'gpalab-slo' ),
+      'description'         => __( 'Links used to populate mission social link pages', 'gpalab-slo' ),
       'labels'              => $labels,
       'supports'            => array( 'title', 'thumbnail', 'custom-fields' ),
       'taxonomies'          => array(),
@@ -130,7 +130,7 @@ class CPT {
   public function gpalab_slo_custom_meta() {
     add_meta_box(
       'gpalab_slo_link',
-      __( 'Link this social post to', 'gpalab-slo' ),
+      __( 'Add a Link to This Social Post', 'gpalab-slo' ),
       array( $this, 'add_link_input' ),
       'gpalab-social-link',
       'normal',
@@ -398,7 +398,7 @@ class CPT {
 
     add_meta_box(
       'postimagediv',
-      __( 'Featured Image' ),
+      __( 'Add a Grid Image', 'gpalab-slo' ),
       'post_thumbnail_meta_box',
       'gpalab-social-link',
       'normal', // move to normal from side.
