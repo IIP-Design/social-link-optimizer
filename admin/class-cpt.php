@@ -465,6 +465,8 @@ class CPT {
    *
    * @param array $msg   List of messages shown to the user on update.
    * @return array       Updated list with custom messages for gpalab-social-links.
+   *
+   * @since 0.0.1
    */
   public function social_link_updated_messages( $msg ) {
 
@@ -499,5 +501,19 @@ class CPT {
     );
 
     return $msg;
+  }
+
+  /**
+   * Remove the View link from the admin bar for social links.
+   *
+   * @param object $wp_admin_bar  List of nodes to appear in the admin bar.
+   *
+   * @since 0.0.1
+   */
+  public function remove_view_from_admin_bar( $wp_admin_bar ) {
+
+    if ( is_admin() && 'gpalab-social-link' === get_current_screen()->post_type ) {
+      $wp_admin_bar->remove_node( 'view' );
+    }
   }
 }
