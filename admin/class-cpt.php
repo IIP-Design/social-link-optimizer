@@ -116,7 +116,7 @@ class CPT {
       'capability_type'     => 'gpalab_slo_links',
       'capabilities'        => $capabilities,
       'map_meta_cap'        => true,
-      'show_in_rest'        => true,
+      'show_in_rest'        => false,
     );
 
     register_post_type( 'gpalab-social-link', $args );
