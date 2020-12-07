@@ -105,6 +105,7 @@ class Frontend {
         'social_links'  => wp_json_encode( $the_query->query_vars ),
         'current_page'  => $paged,
         'max_num_pages' => $the_query->max_num_pages,
+        'mission'       => $mission,
         'nonce'         => wp_create_nonce( 'gpalab-slo-nonce' ),
       )
     );
