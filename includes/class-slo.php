@@ -181,6 +181,7 @@ class SLO {
 
     // Frontend hooks.
     $this->loader->add_action( 'wp_enqueue_scripts', $plugin_frontend, 'gpalab_slo_stylesheets', 100 );
+    $this->loader->add_action( 'wp_enqueue_scripts', $plugin_frontend, 'gpalab_slo_scripts' );
 
     // Add a filter to the attributes metabox to inject template into the cache.
     if ( version_compare( floatval( get_bloginfo( 'version' ) ), '4.7', '<' ) ) {
