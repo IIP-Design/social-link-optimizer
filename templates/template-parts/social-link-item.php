@@ -37,10 +37,10 @@ $hide_visually_class = 'grid' === $layout
   : '';
 
 // Cobble together the HTML for a link item.
-$item  = '<li><article>';
+$item  = '<li>';
 $item .= '<h3 class="title ' . $hide_visually_class . '">' . wp_kses( $item_title, 'post' ) . '</h3>';
 $item .= 'grid' === $layout ? wp_kses( $item_photo, 'post' ) : '';
-$item .= '</article></li>';
+$item .= '</li>';
 
 // Sanitize the HTML returned onto the page.
 echo wp_kses( $item, 'post' );
