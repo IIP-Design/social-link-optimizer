@@ -36,18 +36,26 @@ class CPT {
    * @since 0.0.1
    */
   public function gpalab_slo_cpt() {
+    /**
+     * Private post capabilities are disabled as we don't anticipate their use.
+     * If eventually enabled, the corresponding change should be made in the
+     * Activator and Uninstall classes found in the includes directory as well
+     * as in the URE class found in this directory.
+     */
+    // phpcs:disable Squiz.PHP.CommentedOutCode.Found
     $capabilities = array(
       'edit_posts'             => 'gpalab_slo_edit_links',
       'edit_others_posts'      => 'gpalab_slo_edit_others_links',
-      'edit_private_posts'     => 'gpalab_slo_edit_private_links',
       'edit_published_posts'   => 'gpalab_slo_edit_published_links',
       'delete_posts'           => 'gpalab_slo_delete_links',
       'delete_others_posts'    => 'gpalab_slo_delete_others_links',
-      'delete_private_posts'   => 'gpalab_slo_delete_private_links',
       'delete_published_posts' => 'gpalab_slo_delete_published_links',
-      'read_private_posts'     => 'gpalab_slo_read_private_links',
-      'publish_posts'          => 'gpalab_slo_delete_links',
+      'publish_posts'          => 'gpalab_slo_publish_links',
+      // 'edit_private_posts'     => 'gpalab_slo_edit_private_links',
+      // 'delete_private_posts'   => 'gpalab_slo_delete_private_links',
+      // 'read_private_posts'     => 'gpalab_slo_read_private_links',
     );
+    // phpcs:enable
 
     $labels = array(
       'name'                  => _x( 'Social Links', 'Post Type General Name', 'gpalab-slo' ),
@@ -59,36 +67,36 @@ class CPT {
       'parent_item_colon'     => __( 'Parent Item:', 'gpalab-slo' ),
       'all_items'             => __( 'All Links', 'gpalab-slo' ),
       'add_new_item'          => __( 'Add New Link', 'gpalab-slo' ),
-      'add_new'               => __( 'Add New', 'gpalab-slo' ),
+      'add_new'               => __( 'Add New Link', 'gpalab-slo' ),
       'new_item'              => __( 'New Item', 'gpalab-slo' ),
-      'edit_item'             => __( 'Edit Item', 'gpalab-slo' ),
+      'edit_item'             => __( 'Edit Social Link', 'gpalab-slo' ),
       'update_item'           => __( 'Update Item', 'gpalab-slo' ),
-      'view_item'             => __( 'View Item', 'gpalab-slo' ),
+      'view_item'             => __( 'View Link', 'gpalab-slo' ),
       'view_items'            => __( 'View Links', 'gpalab-slo' ),
-      'search_items'          => __( 'Search Link', 'gpalab-slo' ),
+      'search_items'          => __( 'Search Links', 'gpalab-slo' ),
       'not_found'             => __( 'Not found', 'gpalab-slo' ),
       'not_found_in_trash'    => __( 'Not found in Trash', 'gpalab-slo' ),
-      'featured_image'        => __( 'Featured Image', 'gpalab-slo' ),
-      'set_featured_image'    => __( 'Set featured image', 'gpalab-slo' ),
-      'remove_featured_image' => __( 'Remove featured image', 'gpalab-slo' ),
-      'use_featured_image'    => __( 'Use as featured image', 'gpalab-slo' ),
+      'featured_image'        => __( 'Linked Image', 'gpalab-slo' ),
+      'set_featured_image'    => __( 'Add an image to the grid', 'gpalab-slo' ),
+      'remove_featured_image' => __( 'Remove image', 'gpalab-slo' ),
+      'use_featured_image'    => __( 'Use as grid image', 'gpalab-slo' ),
       'insert_into_item'      => __( 'Insert into item', 'gpalab-slo' ),
       'uploaded_to_this_item' => __( 'Uploaded to this item', 'gpalab-slo' ),
-      'items_list'            => __( 'Items list', 'gpalab-slo' ),
-      'items_list_navigation' => __( 'Items list navigation', 'gpalab-slo' ),
-      'filter_items_list'     => __( 'Filter items list', 'gpalab-slo' ),
+      'items_list'            => __( 'Link list', 'gpalab-slo' ),
+      'items_list_navigation' => __( 'Link list navigation', 'gpalab-slo' ),
+      'filter_items_list'     => __( 'Filter link list', 'gpalab-slo' ),
     );
 
     $rewrite = array(
       'slug'       => 'gpalab-social-link',
-      'with_front' => true,
+      'with_front' => false,
       'pages'      => true,
-      'feeds'      => true,
+      'feeds'      => false,
     );
 
     $args = array(
       'label'               => __( 'Social Link', 'gpalab-slo' ),
-      'description'         => __( 'Post Type Description', 'gpalab-slo' ),
+      'description'         => __( 'Links used to populate mission social link pages', 'gpalab-slo' ),
       'labels'              => $labels,
       'supports'            => array( 'title', 'thumbnail', 'custom-fields' ),
       'taxonomies'          => array(),
@@ -101,14 +109,14 @@ class CPT {
       'show_in_admin_bar'   => true,
       'show_in_nav_menus'   => true,
       'can_export'          => true,
-      'has_archive'         => true,
-      'exclude_from_search' => false,
+      'has_archive'         => false,
+      'exclude_from_search' => true,
       'publicly_queryable'  => true,
       'rewrite'             => $rewrite,
       'capability_type'     => 'gpalab_slo_links',
       'capabilities'        => $capabilities,
       'map_meta_cap'        => true,
-      'show_in_rest'        => true,
+      'show_in_rest'        => false,
     );
 
     register_post_type( 'gpalab-social-link', $args );
@@ -122,7 +130,7 @@ class CPT {
   public function gpalab_slo_custom_meta() {
     add_meta_box(
       'gpalab_slo_link',
-      __( 'Link this social post to', 'gpalab-slo' ),
+      __( 'Add a Link to This Social Post', 'gpalab-slo' ),
       array( $this, 'add_link_input' ),
       'gpalab-social-link',
       'normal',
@@ -144,7 +152,7 @@ class CPT {
       array( $this, 'add_archive_checkbox' ),
       'gpalab-social-link',
       'side',
-      'high'
+      'low'
     );
 
     /**
@@ -238,7 +246,7 @@ class CPT {
         id="<?php echo esc_attr( $meta ); ?>"
         name="<?php echo esc_attr( $meta ); ?>"
       >
-        <option value="" <?php selected( $selected, $mission['id'] ); ?>>
+        <option value="" <?php selected( $selected, '' ); ?>>
           <?php echo esc_html( $empty_label ); ?>
         </option>
         <?php
@@ -390,7 +398,7 @@ class CPT {
 
     add_meta_box(
       'postimagediv',
-      __( 'Featured Image' ),
+      __( 'Add a Grid Image', 'gpalab-slo' ),
       'post_thumbnail_meta_box',
       'gpalab-social-link',
       'normal', // move to normal from side.
@@ -406,18 +414,17 @@ class CPT {
    *
    * @since 0.0.1
    */
-  public function single_link_template( $single ) {
+  public function preview_link_template( $single ) {
     global $post;
 
     /* Checks for single template by post type */
     if ( 'gpalab-social-link' === $post->post_type ) {
-      if ( file_exists( GPALAB_SLO_DIR . '/templates/single-gpalab-social-link.php' ) ) {
-        return GPALAB_SLO_DIR . '/templates/single-gpalab-social-link.php';
+      if ( file_exists( GPALAB_SLO_DIR . '/templates/preview-gpalab-social-link.php' ) ) {
+        return GPALAB_SLO_DIR . '/templates/preview-gpalab-social-link.php';
       }
     }
 
     return $single;
-
   }
 
   /**
@@ -439,15 +446,16 @@ class CPT {
   }
 
   /**
-   * Hides the permalink below the post title on the social edit link to avoid confusion.
+   * Hides the permalink below the post title and the post visibility
+   * settings on the social link edit screen to avoid confusion.
    *
    * @since 0.0.1
    */
-  public function hide_permalink() {
+  public function hide_unused_elements() {
     global $post_type;
 
     if ( 'gpalab-social-link' === $post_type ) {
-      echo '<style type="text/css">#edit-slug-box{display: none;}</style>';
+      echo '<style type="text/css">#edit-slug-box, #visibility{display: none;}</style>';
     }
   }
 
@@ -456,8 +464,12 @@ class CPT {
    *
    * @param array $msg   List of messages shown to the user on update.
    * @return array       Updated list with custom messages for gpalab-social-links.
+   *
+   * @since 0.0.1
    */
   public function social_link_updated_messages( $msg ) {
+
+    global $post;
 
     /* translators: %s: date and time of the revision */
     $revision = __( 'Social link restored to revision from %s.', 'gpalab-slo' );
@@ -469,7 +481,9 @@ class CPT {
     // phpcs:enable
 
     /* translators: %s: date and time for which publishing is scheduled */
-    $scheduled = __( 'Social link scheduled for: %s.', 'gpalab-slo' );
+    $scheduled = __( 'Social link publication scheduled for: %s.', 'gpalab-slo' );
+
+    $scheduled_date = date_i18n( __( 'M j, Y @ H:i' ), strtotime( $post->post_date ) );
 
     $msg['gpalab-social-link'] = array(
       0  => '', // Unused. Messages start at index 1.
@@ -486,5 +500,19 @@ class CPT {
     );
 
     return $msg;
+  }
+
+  /**
+   * Remove the View link from the admin bar for social links.
+   *
+   * @param object $wp_admin_bar  List of nodes to appear in the admin bar.
+   *
+   * @since 0.0.1
+   */
+  public function remove_view_from_admin_bar( $wp_admin_bar ) {
+
+    if ( is_admin() && 'gpalab-social-link' === get_current_screen()->post_type ) {
+      $wp_admin_bar->remove_node( 'view' );
+    }
   }
 }

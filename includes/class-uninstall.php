@@ -79,20 +79,28 @@ class Uninstall {
    * @since 0.0.1
    */
   private static function remove_capabilities() {
+    /**
+     * Private post capabilities are disabled as we don't anticipate their use.
+     * To implement them, add the following capabilities to the below array:
+     *   - 'gpalab_slo_read_private_links'
+     *   - 'gpalab_slo_edit_private_links'
+     *   - 'gpalab_slo_delete_private_links'
+     *
+     * If eventually enabled, the corresponding change should be made in the
+     * CPT and URE classes found in the admin directory as well as in the
+     * Activator class found in this directory.
+     */
     $custom_caps = array(
       'gpalab_slo_manage_settings',
       'gpalab_slo_add_slo_page',
       'gpalab_slo_edit_slo_page',
       'gpalab_slo_edit_links',
       'gpalab_slo_edit_others_links',
-      'gpalab_slo_edit_private_links',
       'gpalab_slo_edit_published_links',
       'gpalab_slo_delete_links',
       'gpalab_slo_delete_others_links',
-      'gpalab_slo_delete_private_links',
       'gpalab_slo_delete_published_links',
-      'gpalab_slo_read_private_links',
-      'gpalab_slo_delete_links',
+      'gpalab_slo_publish_links',
     );
 
     $editable = get_editable_roles();

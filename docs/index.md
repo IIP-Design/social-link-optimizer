@@ -122,18 +122,15 @@ The three core capabilities are:
 
 By default, only users assigned the role `Admin` will have these core capabilities.
 
-The plugin also adds a group of capabilities pertaining to the creation/editing of individual social links. These capabilities correspond to the set of capabilities used to manage posts/pages and provide the [equivalent permission](https://developer.wordpress.org/reference/functions/get_post_type_capabilities/). They are:
+The plugin also adds a group of capabilities pertaining to the creation/editing of individual social links. These capabilities correspond to the set of capabilities used to manage posts/pages and provide the [equivalent permission](https://developer.wordpress.org/reference/functions/get_post_type_capabilities/) (excluding those for private posts). They are:
 
 - `gpalab_slo_edit_links`
 - `gpalab_slo_edit_others_links`
-- `gpalab_slo_edit_private_links`
 - `gpalab_slo_edit_published_links`
 - `gpalab_slo_delete_links`
 - `gpalab_slo_delete_others_links`
-- `gpalab_slo_delete_private_links`
 - `gpalab_slo_delete_published_links`
-- `gpalab_slo_read_private_links`
-- `gpalab_slo_delete_links`
+- `gpalab_slo_publish_links`
 
 By default, users with the role `Editor` and higher have access to these capabilities.
 

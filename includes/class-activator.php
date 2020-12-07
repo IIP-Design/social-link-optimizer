@@ -67,19 +67,28 @@ class Activator {
         $role->add_cap( $edit_page_cap, $grant );
       }
 
-      // Grant social link permissions to editor users.
+      /**
+       * Grant social link permissions to editor users.
+       *
+       * Private post capabilities are disabled as we don't anticipate their use.
+       * If eventually enabled, the corresponding change should be made in the
+       * CPT and URE classes found in the admin directory as well as in the
+       * Uninstall class found in this directory.
+       */
+      // phpcs:disable Squiz.PHP.CommentedOutCode.Found
       if ( isset( $editable[ $key ] ) && $role->has_cap( $default_editor_cap ) ) {
         $role->add_cap( 'gpalab_slo_edit_links', $grant );
         $role->add_cap( 'gpalab_slo_edit_others_links', $grant );
-        $role->add_cap( 'gpalab_slo_edit_private_links', $grant );
         $role->add_cap( 'gpalab_slo_edit_published_links', $grant );
         $role->add_cap( 'gpalab_slo_delete_links', $grant );
         $role->add_cap( 'gpalab_slo_delete_others_links', $grant );
-        $role->add_cap( 'gpalab_slo_delete_private_links', $grant );
         $role->add_cap( 'gpalab_slo_delete_published_links', $grant );
-        $role->add_cap( 'gpalab_slo_read_private_links', $grant );
-        $role->add_cap( 'gpalab_slo_delete_links', $grant );
+        $role->add_cap( 'gpalab_slo_publish_links', $grant );
+        // $role->add_cap( 'gpalab_slo_read_private_links', $grant );
+        // $role->add_cap( 'gpalab_slo_edit_private_links', $grant );
+        // $role->add_cap( 'gpalab_slo_delete_private_links', $grant );
       }
+      // phpcs:enable
     }
 
     unset( $role );

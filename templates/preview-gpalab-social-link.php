@@ -12,6 +12,14 @@
   * preview how a social link would look once published.
   */
 
+// If the user is not hitting a preview URL, redirect them to the homepage.
+// phpcs:disable WordPress.Security.NonceVerification.Recommended
+if ( ! isset( $_GET['preview'] ) || 'true' !== sanitize_text_field( wp_unslash( $_GET['preview'] ) ) ) {
+  wp_safe_redirect( home_url() );
+  exit;
+}
+// phpcs:enable
+
 require 'template-parts/header-slo.php';
 
 ?>

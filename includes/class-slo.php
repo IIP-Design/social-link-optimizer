@@ -131,10 +131,11 @@ class SLO {
     $this->loader->add_action( 'save_post', $plugin_cpt, 'gpalab_slo_meta_save' );
     $this->loader->add_action( 'do_meta_boxes', $plugin_cpt, 'gpalab_slo_image_meta_box' );
     $this->loader->add_filter( 'post_type_link', $plugin_cpt, 'gpalab_slo_filter_permalink', 10, 2 );
-    $this->loader->add_filter( 'single_template', $plugin_cpt, 'single_link_template' );
+    $this->loader->add_filter( 'single_template', $plugin_cpt, 'preview_link_template' );
     $this->loader->add_filter( 'preview_post_link', $plugin_cpt, 'hijack_slo_preview' );
-    $this->loader->add_action( 'admin_head', $plugin_cpt, 'hide_permalink' );
+    $this->loader->add_action( 'admin_head', $plugin_cpt, 'hide_unused_elements' );
     $this->loader->add_filter( 'post_updated_messages', $plugin_cpt, 'social_link_updated_messages', 10, 1 );
+    $this->loader->add_action( 'admin_bar_menu', $plugin_cpt, 'remove_view_from_admin_bar', 999 );
 
     // Hooks to manage the All Links page.
     $this->loader->add_action( 'manage_gpalab-social-link_posts_custom_column', $plugin_cpt_list, 'populate_custom_columns', 10, 2 );
