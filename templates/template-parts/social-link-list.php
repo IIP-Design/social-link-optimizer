@@ -35,12 +35,6 @@ if ( $the_query->have_posts() ) {
 
     require 'social-link-item.php';
   }
-
-  if ( $the_query->max_num_pages > 1 ) {
-    $load_more = __( 'Load more', 'gpalab-slo' );
-
-    echo '<button id="load-more" type="button">' . esc_html( $load_more ) . '</button>';
-  }
 } else {
   // Show fallback message if no links found.
   $no_links = __( 'No Social Bio Links', 'gpalab-slo' );

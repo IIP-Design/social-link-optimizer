@@ -76,6 +76,11 @@ require 'template-parts/header-slo.php';
           </ul>
 
           <?php
+          if ( $the_query->max_num_pages > 1 ) {
+            $load_more = __( 'Load more', 'gpalab-slo' );
+
+            echo '<button id="load-more" type="button">' . esc_html( $load_more ) . '</button>';
+          }
         } else {
           the_content( __( 'Continue reading', 'gpalab-slo' ) );
         }
