@@ -30,11 +30,11 @@ class Frontend {
   }
 
   /**
-   * Enqueue styles plugin's scripts and styles.
+   * Enqueue plugin's styles and scripts.
    *
    * @since 0.0.1
    */
-  public function gpalab_slo_stylesheets() {
+  public function gpalab_slo_styles_scripts() {
     $wp_styles       = wp_styles();
     $is_slo_template = is_page_template( 'archive-gpalab-social-link.php' );
     $is_slo_preview  = is_singular( 'gpalab-social-link' );
@@ -59,15 +59,9 @@ class Frontend {
         $this->version
       );
     }
-  }
 
-  /**
-   * Load more scripts.
-   *
-   * @since 0.0.1
-   */
-  public function gpalab_slo_scripts() {
-    if ( ! is_page_template( 'archive-gpalab-social-link.php' ) ) {
+    // Scripts.
+    if ( ! $is_slo_template ) {
       return;
     }
 
@@ -91,7 +85,7 @@ class Frontend {
 
     wp_register_script(
       'gpalab-slo-load-more-js',
-      GPALAB_SLO_URL . 'public/js/frontend-scripts.js',
+      GPALAB_SLO_URL . 'public/js/public.js',
       array(),
       $script_asset['version'],
       true
@@ -110,6 +104,96 @@ class Frontend {
       )
     );
 
-     wp_enqueue_script( 'gpalab-slo-load-more-js' );
+    wp_enqueue_script( 'gpalab-slo-load-more-js' );
+  }
+
+  /**
+   * Wrap some string or HTML element in a link.
+   *
+   * @param string $element   The element to be placed within a link.
+   * @param string $url       The wrapping url.
+   */
+  public function linkify( $element, $url ) {
+    return '<a href="' . esc_url( $url ) . '">' . $element . '</a>';
+  }
+
+  /**
+   * Create the list item markup for displaying social links.
+   *
+   * @param string $layout    The display setting for a selected mission.
+   */
+  public function get_social_link_item( $layout ) {
+    // Retrieve the item title.
+    $item_title = $this->linkify( get_the_title( $current_post ), get_permalink() );
+
+    // Retrieve the item photo.
+    $thumbnail = get_the_post_thumbnail(
+      $current_post,
+      'post-thumbnail',
+      array( 'class' => 'gpalab-slo-thumbnail' )
+    );
+
+    $item_photo = $this->linkify( $thumbnail, get_permalink() );
+
+    $hide_visually_class = 'grid' === $layout
+      ? 'hide-visually'
+      : '';
+
+    // Cobble together the HTML for a link item.
+    $item  = '<li>';
+    $item .= '<h3 class="title ' . $hide_visually_class . '">' . wp_kses( $item_title, 'post' ) . '</h3>';
+    $item .= 'grid' === $layout ? wp_kses( $item_photo, 'post' ) : '';
+    $item .= '</li>';
+
+    // Sanitize the HTML returned onto the page.
+    echo wp_kses( $item, 'post' );
+  }
+
+  /**
+   * Load more social links AJAX handler.
+   *
+   * @since 0.0.1
+   */
+  public function gpalab_slo_load_more() {
+    check_ajax_referer( 'gpalab-slo-nonce', 'security' );
+
+    $paged      = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 0;
+    $query      = isset( $_POST['query'] ) ? sanitize_text_field( wp_unslash( $_POST['query'] ) ) : '';
+    $mission_id = isset( $_POST['mission'] ) ? sanitize_text_field( wp_unslash( $_POST['mission'] ) ) : '';
+
+    // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+    // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+    $args = array(
+      'meta_key'       => 'gpalab_slo_mission',
+      'meta_value'     => $mission_id,
+      'meta_compare'   => '=',
+      'post_type'      => 'gpalab-social-link',
+      'post_status'    => 'publish',
+      'posts_per_page' => 3,
+      'paged'          => $paged ? $paged + 1 : 1,
+      'query'          => json_decode( $query, true ),
+    );
+    // phpcs:enable
+    $wp_query = new \WP_Query( $args );
+
+    if ( $wp_query->have_posts() ) {
+
+      $slo_settings  = get_option( 'gpalab-slo-settings' );
+      $settings_key  = array_search( $mission_id, array_column( $slo_settings, 'id' ), true );
+      $page_settings = is_numeric( $settings_key ) ? $slo_settings[ $settings_key ] : array();
+      $layout        = ( isset( $page_settings['type'] ) && '' !== $page_settings['type'] )
+        ? $page_settings['type']
+        : 'grid';
+
+      while ( $wp_query->have_posts() ) {
+        $wp_query->the_post();
+        $current_post = get_the_ID();
+
+        $this->get_social_link_item( $layout );
+      }
+    }
+
+    wp_reset_postdata();
+    wp_die();
   }
 }

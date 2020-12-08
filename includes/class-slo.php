@@ -180,8 +180,11 @@ class SLO {
     $plugin_template = new SLO\Template( $this->get_plugin_name(), $this->get_version() );
 
     // Frontend hooks.
-    $this->loader->add_action( 'wp_enqueue_scripts', $plugin_frontend, 'gpalab_slo_stylesheets', 100 );
-    $this->loader->add_action( 'wp_enqueue_scripts', $plugin_frontend, 'gpalab_slo_scripts' );
+    $this->loader->add_action( 'wp_enqueue_scripts', $plugin_frontend, 'gpalab_slo_styles_scripts', 100 );
+
+    // AJAX hooks.
+    $this->loader->add_action( 'wp_ajax_gpalab_slo_load_more', $plugin_frontend, 'gpalab_slo_load_more' );
+    $this->loader->add_action( 'wp_ajax_nopriv_gpalab_slo_load_more', $plugin_frontend, 'gpalab_slo_load_more' );
 
     // Add a filter to the attributes metabox to inject template into the cache.
     if ( version_compare( floatval( get_bloginfo( 'version' ) ), '4.7', '<' ) ) {
