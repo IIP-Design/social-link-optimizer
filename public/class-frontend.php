@@ -91,7 +91,7 @@ class Frontend {
 
     wp_register_script(
       'gpalab-slo-load-more-js',
-      GPALAB_SLO_URL . 'public/js/gpalab-slo-scripts.js',
+      GPALAB_SLO_URL . 'public/js/frontend-scripts.js',
       array(),
       $script_asset['version'],
       true
