@@ -69,7 +69,7 @@ require 'template-parts/header-slo.php';
 
           ?>
 
-          <ul class="gpalab-slo-content-list list-reset <?php echo esc_html( $layout ); ?>" aria-describedby="instructions">
+          <ul class="gpalab-slo-content-list list-reset <?php echo esc_html( $layout ); ?>" aria-describedby="instructions" role="status" aria-live="polite">
 
             <?php require 'template-parts/social-link-list.php'; ?>
 
