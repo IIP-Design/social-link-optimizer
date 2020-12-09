@@ -130,6 +130,7 @@ a:active {
   position: absolute;
   top: var(--length-0-625);
   left: var(--length-0-625);
+  z-index: 100000; /* display above admin toolbar, if present */
   border: var(--length-0-125) solid var(--chambray-blue);
   padding: var(--length-0-875);
   color: var(--chambray-blue);
