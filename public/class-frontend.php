@@ -81,13 +81,11 @@ class Frontend {
 
     $the_query = new \WP_Query( $args );
 
-    $script_asset = require GPALAB_SLO_DIR . 'admin/build/gpalab-slo-mission-plugin.asset.php';
-
     wp_register_script(
       'gpalab-slo-load-more-js',
       GPALAB_SLO_URL . 'public/js/public.js',
       array(),
-      $script_asset['version'],
+      $this->version,
       true
     );
 
