@@ -9,7 +9,7 @@ const createFragment = tagString => (
 /**
  * Add a styling hook to each li tag.
  * @param {string} str string of html tags
- * @param {string} cls class value to add
+ * @param {string} cls class value(s) to add
  */
 const addStyleHooks = ( str = '', cls = 'new-item' ) => {
   const regex = /<[lL][iI]>/g;
