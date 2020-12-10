@@ -111,6 +111,8 @@ a:active {
 /* body */
 .page-template-archive-gpalab-social-link,
 .gpalab-social-link-template-default {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   color: var(--white);
   font-family: var(--font-primary);
@@ -146,6 +148,7 @@ a:active {
 }
 
 #gpalab-slo-main-content {
+  flex-grow: 1;
   padding-bottom: var(--length-3-5);
 }
 
@@ -299,6 +302,11 @@ a:active {
   100% {
     opacity: 1;
   }
+}
+
+/* Footer */
+#gpalab-slo-site-footer {
+  flex-shrink: 0;
 }
 
 /* admin Edit link */
