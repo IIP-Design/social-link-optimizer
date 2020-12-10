@@ -111,7 +111,7 @@ class Frontend {
    * @param string $element   The element to be placed within a link.
    * @param string $url       The wrapping url.
    */
-  public function linkify( $element, $url ) {
+  private function linkify( $element, $url ) {
     return '<a href="' . esc_url( $url ) . '">' . $element . '</a>';
   }
 
@@ -122,7 +122,9 @@ class Frontend {
    */
   public function get_social_link_item( $layout ) {
     // Retrieve the item title.
-    $item_title = $this->linkify( get_the_title( $current_post ), get_permalink() );
+    $item_title = 'list' === $layout
+      ? $this->linkify( get_the_title( $current_post ), get_permalink() )
+      : get_the_title( $current_post );
 
     // Retrieve the item photo.
     $thumbnail = get_the_post_thumbnail(
