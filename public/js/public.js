@@ -44,25 +44,22 @@ const handleLoadMore = async function( e ) {
     body: new URLSearchParams( data ),
   };
 
-  fetch( fromPHP.ajaxUrl, options )
-    .then( async response => {
-      if ( !response.ok ) {
-        throw new Error( 'Network response was not ok.' );
-      }
+  try {
+    const response = await fetch( fromPHP.ajaxUrl, options );
+    const result = await response.text();
+    const resultWithStyleHooks = addStyleHooks( result );
+    const fragment = createFragment( resultWithStyleHooks );
 
-      const result = await response.text();
-      const resultWithStyleHooks = addStyleHooks( result );
-      const fragment = createFragment( resultWithStyleHooks );
+    socialLinksList.appendChild( fragment );
+    fromPHP.current_page++;
 
-      socialLinksList.appendChild( fragment );
-      fromPHP.current_page++;
-
-      // Remove load more button if last page
-      if ( fromPHP.current_page === +fromPHP.max_num_pages ) {
-        this.parentNode.removeChild( this );
-      }
-    } )
-    .catch( err => console.error( err ) );
+    // Remove load more button if last page
+    if ( fromPHP.current_page === +fromPHP.max_num_pages ) {
+      this.parentNode.removeChild( this );
+    }
+  } catch ( err ) {
+    console.error( err );
+  }
 };
 
 /**
