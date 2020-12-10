@@ -284,6 +284,23 @@ a:active {
   box-shadow: 0 0 0 var(--length-0-125) var(--white);
 }
 
+/* Loaded items */
+.gpalab-slo-content-list > li.new-item {
+  animation-name: fade-in;
+  animation-duration: 300ms;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 /* admin Edit link */
 .section-inner .post-edit.meta-wrapper {
   display: flex;

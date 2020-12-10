@@ -7,6 +7,17 @@ const createFragment = tagString => (
 );
 
 /**
+ * Add a styling hook to each li tag.
+ * @param {string} str string of html tags
+ * @param {string} cls class value to add
+ */
+const addStyleHooks = ( str = '', cls = 'new-item' ) => {
+  const regex = /<[lL][iI]>/g;
+
+  return str.replace( regex, `<li class="${cls}">` );
+};
+
+/**
  * Send an AJAX request to load more social links.
  * @param {object} e event object
  */
@@ -40,7 +51,8 @@ const handleLoadMore = async function( e ) {
       }
 
       const result = await response.text();
-      const fragment = createFragment( result );
+      const resultWithStyleHooks = addStyleHooks( result );
+      const fragment = createFragment( resultWithStyleHooks );
 
       socialLinksList.appendChild( fragment );
       fromPHP.current_page++;
