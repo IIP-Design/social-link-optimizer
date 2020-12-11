@@ -121,10 +121,12 @@ class Frontend {
    * @param string $layout    The display setting for a selected mission.
    */
   public function get_social_link_item( $layout ) {
+    $is_grid = 'grid' === $layout;
+
     // Retrieve the item title.
-    $item_title = 'list' === $layout
-      ? $this->linkify( get_the_title( $current_post ), get_permalink() )
-      : get_the_title( $current_post );
+    $item_title = $is_grid
+      ? get_the_title( $current_post )
+      : $this->linkify( get_the_title( $current_post ), get_permalink() );
 
     // Retrieve the item photo.
     $thumbnail = get_the_post_thumbnail(
@@ -135,14 +137,12 @@ class Frontend {
 
     $item_photo = $this->linkify( $thumbnail, get_permalink() );
 
-    $hide_visually_class = 'grid' === $layout
-      ? 'hide-visually'
-      : '';
+    $hide_visually_class = $is_grid ? 'hide-visually' : '';
 
     // Cobble together the HTML for a link item.
     $item  = '<li>';
     $item .= '<h3 class="title ' . $hide_visually_class . '">' . wp_kses( $item_title, 'post' ) . '</h3>';
-    $item .= 'grid' === $layout ? wp_kses( $item_photo, 'post' ) : '';
+    $item .= $is_grid ? wp_kses( $item_photo, 'post' ) : '';
     $item .= '</li>';
 
     // Sanitize the HTML returned onto the page.
