@@ -13,7 +13,7 @@ $args    = array(
   'meta_key'       => 'gpalab_slo_mission',
   'meta_value'     => $selected_mission,
   'meta_compare'   => '=',
-  'posts_per_page' => 3, // set to 3 temporarily for development.
+  'posts_per_page' => 18,
   'paged'          => $globals,
 );
 // phpcs:enable

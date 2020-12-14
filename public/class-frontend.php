@@ -74,7 +74,7 @@ class Frontend {
       'meta_key'       => 'gpalab_slo_mission',
       'meta_value'     => $mission,
       'meta_compare'   => '=',
-      'posts_per_page' => 3,
+      'posts_per_page' => 18,
       'paged'          => $paged,
     );
     // phpcs:enable
@@ -169,7 +169,7 @@ class Frontend {
       'meta_compare'   => '=',
       'post_type'      => 'gpalab-social-link',
       'post_status'    => 'publish',
-      'posts_per_page' => 3,
+      'posts_per_page' => 18,
       'paged'          => $paged ? $paged + 1 : 1,
       'query'          => json_decode( $query, true ),
     );
