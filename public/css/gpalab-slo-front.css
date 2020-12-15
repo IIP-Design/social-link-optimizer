@@ -20,6 +20,7 @@ html {
   --astral-blue: #3472A1;
   --danube-blue: #5187C6;
   --chambray-blue: #416393;
+  --whale-blue: #06284C;
   --midnight-blue: #001935;
   --dark: #0000004D;
 
@@ -285,6 +286,35 @@ a:active {
 
 .gpalab-slo-content-list.list > li .title :focus {
   box-shadow: 0 0 0 var(--length-0-125) var(--white);
+}
+
+/* Load more */
+.load-more-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--length-0-25);
+  margin-top: var(--length-3-5);
+}
+
+.load-more-container > #load-more {
+  grid-column: 2;
+  border: var(--length-0-125) solid transparent;
+  border-radius: var(--length-0-625);
+  padding: var(--length-0-875);
+  color: var(--white);
+  font-family: inherit;
+  font-size: var(--length-0-875);
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: var(--whale-blue);
+  cursor: pointer;
+  transition: background-color 150ms linear, color 150ms linear;
+}
+
+.load-more-container > #load-more:hover,
+.load-more-container > #load-more:focus {
+  color: var(--alto);
+  text-decoration: underline;
 }
 
 /* Loaded items */
