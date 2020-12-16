@@ -20,7 +20,7 @@
 
   </head>
 
-  <body <?php body_class(); ?>>
+  <body <?php body_class(); ?> id="gpalab-slo" tabindex="-1">
     <a class="skip-to-content" href="#instagram-posts">
       Skip to Instagram content
     </a>

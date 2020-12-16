@@ -13,7 +13,7 @@
 ?>
 
 <!-- Set up list/grid of social links -->
-<h2 id="instagram-posts" class="hide-visually">
+<h2 id="instagram-posts" class="hide-visually" tabindex="-1">
  <?php esc_html_e( 'Instagram posts', 'gpalab-slo' ); ?>
 </h2>
 <div id="instructions">
