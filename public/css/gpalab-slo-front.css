@@ -12,6 +12,7 @@ html {
   --length-3-5: calc(var(--length-1) * 3.5);
   --length-7: calc(var(--length-1) * 7);
   --length-40: calc(var(--length-1) * 40);
+  --length-50: calc(var(--length-1) * 50);
 
   --white: #FFFFFF;
   --wild-sand: #F6F6F6;
@@ -112,8 +113,6 @@ a:active {
 /* body */
 .page-template-archive-gpalab-social-link,
 .gpalab-social-link-template-default {
-  display: flex;
-  flex-direction: column;
   min-height: 100vh;
   color: var(--white);
   font-family: var(--font-primary);
@@ -146,11 +145,6 @@ a:active {
 
 .skip-to-content:focus {
   transform: translateY(0%);
-}
-
-#gpalab-slo-main-content {
-  flex-grow: 1;
-  padding-bottom: var(--length-3-5);
 }
 
 #gpalab-slo-main-content > .stack > * {
@@ -336,7 +330,26 @@ a:active {
 
 /* Footer */
 #gpalab-slo-site-footer {
-  flex-shrink: 0;
+  position: sticky;
+  bottom: var(--length-1-5);
+  box-sizing: content-box;
+  max-width: var(--length-50);
+  margin-left: auto;
+  margin-right: auto;
+  padding: var(--length-1-125);
+}
+
+#gpalab-slo-site-footer > .back-to-top {
+  display: grid;
+  place-content: center;
+  width: var(--length-3-5);
+  height: var(--length-3-5);
+  margin-left: auto;
+}
+
+#gpalab-slo-site-footer > .back-to-top > img {
+  height: auto;
+  width: auto;
 }
 
 /* admin Edit link */
