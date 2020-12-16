@@ -345,6 +345,12 @@ a:active {
   width: var(--length-3-5);
   height: var(--length-3-5);
   margin-left: auto;
+  opacity: 0;
+  transition: opacity 150ms ease-in;
+}
+
+#gpalab-slo-site-footer > .back-to-top.is-visible {
+  opacity: 1;
 }
 
 #gpalab-slo-site-footer > .back-to-top > img {
