@@ -1,6 +1,7 @@
 html {
-  --font-primary: 'Lucida Grande', Helvetica, Arial, sans-serif;
-  --font-secondary: 'Arial Black', Helvetica, Arial, sans-serif;
+  --font-primary: 'Oswald', var(--font-safe);
+  --font-secondary: 'Roboto', var(--font-safe);
+  --font-safe: Helvetica, Arial, sans-serif;
 
   --length-0-125: calc(var(--length-1) * 0.125);
   --length-0-25: calc(var(--length-1) * 0.25);
@@ -8,6 +9,7 @@ html {
   --length-0-875: calc(var(--length-1) * 0.875);
   --length-1: 1rem;
   --length-1-125: calc(var(--length-1) * 1.125);
+  --length-1-375: calc(var(--length-1) * 1.375);
   --length-1-5: calc(var(--length-1) * 1.5);
   --length-3-5: calc(var(--length-1) * 3.5);
   --length-7: calc(var(--length-1) * 7);
@@ -136,8 +138,8 @@ a:active {
   border: var(--length-0-125) solid var(--chambray-blue);
   padding: var(--length-0-875);
   color: var(--chambray-blue);
+  font-family: var(--font-secondary);
   font-size: var(--length-0-875);
-  font-weight: bold;
   transform: translateY(-125%);
   transition: transform 150ms linear;
   background-color: var(--white);
@@ -174,12 +176,13 @@ a:active {
 .gpalab-slo-page-title {
   font-family: var(--font-primary);
   font-size: var(--length-1-5);
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .mission-website {
-  font-family: var(--font-secondary);
-  font-size: var(--length-1-125);
+  font-family: var(--font-primary);
+  font-size: var(--length-1-375);
+  font-weight: 400;
 }
 
 .mission-website > a {
@@ -200,7 +203,8 @@ a:active {
 }
 
 .instructions {
-  font-size: var(--length-0-875);
+  font-family: var(--font-secondary);
+  font-size: var(--length-1);
   text-align: center;
 }
 
@@ -296,9 +300,9 @@ a:active {
   border-radius: var(--length-0-625);
   padding: var(--length-0-875);
   color: var(--white);
-  font-family: inherit;
-  font-size: var(--length-0-875);
-  font-weight: bold;
+  font-family: var(--font-safe);
+  font-size: var(--length-1-125);
+  font-weight: 700;
   text-transform: uppercase;
   background-color: var(--whale-blue);
   cursor: pointer;
@@ -363,8 +367,42 @@ a:active {
   display: flex;
   align-items: center;
   gap: var(--length-0-625);
+  font-family: var(--font-secondary);
 }
 
 .section-inner .post-edit.meta-wrapper .svg-icon {
   fill: var(--white);
+}
+
+/* oswald-regular - latin */
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+    url('../assets/fonts/oswald-v35-latin-regular.woff2') format('woff2'),
+    url('../assets/fonts/oswald-v35-latin-regular.woff') format('woff'),
+    url('../assets/fonts/oswald-v35-latin-regular.ttf') format('truetype');
+}
+
+/* oswald-700 - latin */
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 700;
+  src: local(''),
+    url('../assets/fonts/oswald-v35-latin-700.woff2') format('woff2'),
+    url('../assets/fonts/oswald-v35-latin-700.woff') format('woff'),
+    url('../assets/fonts/oswald-v35-latin-700.ttf') format('truetype');
+}
+
+/* roboto-500 - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: local(''),
+    url('../assets/fonts/roboto-v20-latin-500.woff2') format('woff2'),
+    url('../assets/fonts/roboto-v20-latin-500.woff') format('woff'),
+    url('../assets/fonts/roboto-v20-latin-500.ttf') format('truetype');
 }
