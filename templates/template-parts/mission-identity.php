@@ -37,9 +37,9 @@ $assets_dir = GPALAB_SLO_URL . 'public/assets/';
 
 <!-- Set up links to social media icons -->
 <aside>
-<h3 id="social-accts" class="hide-visually">
+<h2 id="social-accts" class="hide-visually">
   <?php esc_html_e( 'social media accounts', 'gpalab-slo' ); ?>
-</h3>
+</h2>
 <ul class="gpalab-slo-social-accts-list list-reset" aria-describedby="social-accts">
 <?php
 foreach ( $social_accts as $key => $value ) {
