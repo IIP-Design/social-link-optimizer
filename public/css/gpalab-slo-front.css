@@ -334,6 +334,7 @@ a:active {
 
 /* Footer */
 #gpalab-slo-site-footer {
+  position: -webkit-sticky;
   position: sticky;
   bottom: var(--length-1-5);
   box-sizing: content-box;
