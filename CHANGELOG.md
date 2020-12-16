@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 _This sections lists changes committed since most recent release_
 
+### Added:
+- A load more social links button that appends the next page's content
+- A back to top link
+
 ## [v1.0.0](https://github.com/IIP-Design/social-link-optimizer/releases/tag/v1.0.0) - 2020.11 (Initial Release)
 
 ### Added:
