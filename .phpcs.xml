@@ -14,6 +14,7 @@
 <exclude-pattern>*/vendor</exclude-pattern>
 <exclude-pattern>*/index.php</exclude-pattern>
 <exclude-pattern>/admin/build/*.asset.php</exclude-pattern>
+<exclude-pattern>/public/build/*.asset.php</exclude-pattern>
 
 <arg name="colors"/>
 <arg name="extensions" value="php" />

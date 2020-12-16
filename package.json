@@ -6,8 +6,8 @@
     "node": ">=10.0.0"
   },
   "scripts": {
-    "build": "wp-scripts build admin/js/*.js --output-path=admin/build",
-    "dev": "wp-scripts start admin/js/*.js --output-path=admin/build",
+    "build": "wp-scripts build admin/js/*.js --output-path=admin/build && wp-scripts build public/js/*.js --output-path=public/build",
+    "dev": "wp-scripts start admin/js/*.js --output-path=admin/build && wp-scripts start public/js/*.js --output-path=public/build",
     "lint": "npm run lint:JS && npm run lint:PHP",
     "lint:PHP": "./vendor/bin/phpcs",
     "lint:JS": "eslint --ext .js --quiet ./"

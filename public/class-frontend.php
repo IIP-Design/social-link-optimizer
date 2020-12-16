@@ -81,16 +81,18 @@ class Frontend {
 
     $the_query = new \WP_Query( $args );
 
+    $script_asset = require GPALAB_SLO_DIR . 'public/build/gpalab-slo-public.asset.php';
+
     wp_register_script(
-      'gpalab-slo-load-more-js',
-      GPALAB_SLO_URL . 'public/js/public.js',
-      array(),
-      $this->version,
+      'gpalab-slo-load-more',
+      GPALAB_SLO_URL . 'public/build/gpalab-slo-public.js',
+      $script_asset['dependencies'],
+      $script_asset['version'],
       true
     );
 
     wp_localize_script(
-      'gpalab-slo-load-more-js',
+      'gpalab-slo-load-more',
       'gpalabSloLoadMore',
       array(
         'ajaxUrl'       => admin_url( 'admin-ajax.php' ),
@@ -102,7 +104,7 @@ class Frontend {
       )
     );
 
-    wp_enqueue_script( 'gpalab-slo-load-more-js' );
+    wp_enqueue_script( 'gpalab-slo-load-more' );
   }
 
   /**
