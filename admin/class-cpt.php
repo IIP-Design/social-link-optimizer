@@ -130,7 +130,7 @@ class CPT {
   public function gpalab_slo_custom_meta() {
     add_meta_box(
       'gpalab_slo_link',
-      __( 'Add a Link to This Social Post', 'gpalab-slo' ),
+      __( 'Add a Link to This Social Post (required)', 'gpalab-slo' ),
       array( $this, 'add_link_input' ),
       'gpalab-social-link',
       'normal',
@@ -139,7 +139,7 @@ class CPT {
 
     add_meta_box(
       'gpalab_slo_mission',
-      __( 'Select Mission', 'gpalab-slo' ),
+      __( 'Select Mission (required)', 'gpalab-slo' ),
       array( $this, 'add_mission_select' ),
       'gpalab-social-link',
       'side',
@@ -200,6 +200,7 @@ class CPT {
         id="gpalab_slo_link"
         style="flex-grow: 1;"
         value="<?php echo esc_url( $link, array( 'http', 'https' ) ); ?>"
+        required
       />
     </p>
 
@@ -245,6 +246,7 @@ class CPT {
       <select
         id="<?php echo esc_attr( $meta ); ?>"
         name="<?php echo esc_attr( $meta ); ?>"
+        required
       >
         <option value="" <?php selected( $selected, '' ); ?>>
           <?php echo esc_html( $empty_label ); ?>
