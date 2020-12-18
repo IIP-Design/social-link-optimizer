@@ -103,6 +103,7 @@ class SLO {
     require_once GPALAB_SLO_DIR . 'admin/class-permissions.php';
     require_once GPALAB_SLO_DIR . 'admin/class-settings.php';
     require_once GPALAB_SLO_DIR . 'admin/class-ure.php';
+    require_once GPALAB_SLO_DIR . 'admin/class-validation.php';
 
     // The class responsible for defining all actions that occur in the public-facing side of the site.
     require_once GPALAB_SLO_DIR . 'public/class-frontend.php';
@@ -115,19 +116,21 @@ class SLO {
    * @since 0.0.1
    */
   private function define_admin_hooks() {
-    $plugin_admin    = new SLO\Admin( $this->get_plugin_name(), $this->get_version() );
-    $plugin_ajax     = new SLO\Ajax( $this->get_plugin_name(), $this->get_version() );
-    $plugin_archive  = new SLO\Archive( $this->get_plugin_name(), $this->get_version() );
-    $plugin_cpt      = new SLO\CPT( $this->get_plugin_name(), $this->get_version() );
-    $plugin_cpt_list = new SLO\CPT_List( $this->get_plugin_name(), $this->get_version() );
-    $plugin_roles    = new SLO\Permissions( $this->get_plugin_name(), $this->get_version() );
-    $plugin_settings = new SLO\Settings( $this->get_plugin_name(), $this->get_version() );
-    $plugin_ure      = new SLO\URE( $this->get_plugin_name(), $this->get_version() );
+    $plugin_admin      = new SLO\Admin( $this->get_plugin_name(), $this->get_version() );
+    $plugin_ajax       = new SLO\Ajax( $this->get_plugin_name(), $this->get_version() );
+    $plugin_archive    = new SLO\Archive( $this->get_plugin_name(), $this->get_version() );
+    $plugin_cpt        = new SLO\CPT( $this->get_plugin_name(), $this->get_version() );
+    $plugin_cpt_list   = new SLO\CPT_List( $this->get_plugin_name(), $this->get_version() );
+    $plugin_roles      = new SLO\Permissions( $this->get_plugin_name(), $this->get_version() );
+    $plugin_settings   = new SLO\Settings( $this->get_plugin_name(), $this->get_version() );
+    $plugin_ure        = new SLO\URE( $this->get_plugin_name(), $this->get_version() );
+    $plugin_validation = new SLO\Validation( $this->get_plugin_name(), $this->get_version() );
 
     // Admin hooks.
     $this->loader->add_action( 'init', $plugin_admin, 'register_admin_scripts_styles' );
     $this->loader->add_action( 'init', $plugin_admin, 'register_slo_mission_meta' );
     $this->loader->add_action( 'admin_notices', $plugin_admin, 'localize_admin_script_globals' );
+    $this->loader->add_action( 'init', $plugin_validation, 'register_validation_scripts_styles' );
 
     // Ajax hooks.
     $this->loader->add_action( 'wp_ajax_gpalab_add_slo_mission', $plugin_ajax, 'handle_mission_addition' );
@@ -182,6 +185,9 @@ class SLO {
       $this->loader->add_filter( 'ure_capabilities_groups_tree', $plugin_ure, 'add_custom_group', 10, 1 );
       $this->loader->add_filter( 'ure_custom_capability_groups', $plugin_ure, 'get_plugin_caps', 10, 2 );
     }
+
+    // Required form fields validation hooks.
+    $this->loader->add_action( 'admin_enqueue_scripts', $plugin_validation, 'enqueue_slo_validation' );
   }
 
   /**

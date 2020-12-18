@@ -186,6 +186,7 @@ class CPT {
 
     ?>
 
+    <p id="instructions">Example: https://www.website.com</p>
     <p style="display: flex; align-items: center;">
       <label
         for="gpalab_slo_link"
@@ -195,8 +196,8 @@ class CPT {
         <?php esc_html_e( 'Link:', 'gpalab-slo' ); ?>
       </label>
       <input
-        type="text"
-        name="gpalab_slo_link" 
+        type="url"
+        name="gpalab_slo_link"
         id="gpalab_slo_link"
         style="flex-grow: 1;"
         value="<?php echo esc_url( $link, array( 'http', 'https' ) ); ?>"
