@@ -53,11 +53,25 @@ class SLO {
    * @since 0.0.1
    */
   public function __construct() {
-    $this->plugin_name = 'social-link-optimizer';
-    $this->version     = '0.0.1';
+    $this->plugin_name = $this->load_constants()->plugin_name;
+    $this->version     = $this->load_constants()->version;
     $this->load_dependencies();
     $this->define_admin_hooks();
     $this->define_public_hooks();
+  }
+
+  /**
+   * Import the constant values used to initialize the plugin's classes.
+   *
+   * @return SLO_Constants
+   *
+   * @since 0.0.1
+   */
+  private function load_constants() {
+    // Defines the plugin name and version.
+    require_once GPALAB_SLO_DIR . 'class-constants.php';
+
+    return new SLO\Constants();
   }
 
   /**
@@ -78,6 +92,8 @@ class SLO {
     // The class responsible for orchestrating the actions and filters of the core plugin.
     require_once GPALAB_SLO_DIR . 'includes/class-loader.php';
 
+    $this->loader = new SLO\Loader();
+
     // The class responsible for defining all actions that occur in the admin area.
     require_once GPALAB_SLO_DIR . 'admin/class-admin.php';
     require_once GPALAB_SLO_DIR . 'admin/class-ajax.php';
@@ -91,8 +107,6 @@ class SLO {
     // The class responsible for defining all actions that occur in the public-facing side of the site.
     require_once GPALAB_SLO_DIR . 'public/class-frontend.php';
     require_once GPALAB_SLO_DIR . 'public/class-template.php';
-
-    $this->loader = new SLO\Loader();
   }
 
   /**

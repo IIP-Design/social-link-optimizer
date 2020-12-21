@@ -120,19 +120,20 @@ class Frontend {
   /**
    * Create the list item markup for displaying social links.
    *
-   * @param string $layout    The display setting for a selected mission.
+   * @param string $layout      The display setting for a selected mission.
+   * @param int    $post_id     The id of the current post.
    */
-  public function get_social_link_item( $layout ) {
+  public function get_social_link_item( $layout, $post_id ) {
     $is_grid = 'grid' === $layout;
 
     // Retrieve the item title.
     $item_title = $is_grid
-      ? get_the_title( $current_post )
-      : $this->linkify( get_the_title( $current_post ), get_permalink() );
+      ? get_the_title( $post_id )
+      : $this->linkify( get_the_title( $post_id ), get_permalink() );
 
     // Retrieve the item photo.
     $thumbnail = get_the_post_thumbnail(
-      $current_post,
+      $post_id,
       'post-thumbnail',
       array( 'class' => 'gpalab-slo-thumbnail' )
     );
@@ -191,7 +192,7 @@ class Frontend {
         $wp_query->the_post();
         $current_post = get_the_ID();
 
-        $this->get_social_link_item( $layout );
+        $this->get_social_link_item( $layout, $current_post );
       }
     }
 
