@@ -196,7 +196,7 @@ class CPT {
         <?php esc_html_e( 'Link:', 'gpalab-slo' ); ?>
       </label>
       <input
-        type="url"
+        type="text"
         name="gpalab_slo_link"
         id="gpalab_slo_link"
         style="flex-grow: 1;"

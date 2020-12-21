@@ -136,12 +136,12 @@ var setRequiredAttribute = function setRequiredAttribute(selector) {
  */
 
 
-var getCustomErrorMessage = function getCustomErrorMessage(inputName) {
-  var message = 'Please enter a title';
+var getCustomTooltipErrorMessage = function getCustomTooltipErrorMessage(inputName) {
+  var message = 'Please enter a title.';
 
   switch (inputName) {
     case 'gpalab_slo_mission':
-      message = 'Please select a mission';
+      message = 'Please select a mission.';
       break;
 
     case 'gpalab_slo_link':
@@ -155,15 +155,84 @@ var getCustomErrorMessage = function getCustomErrorMessage(inputName) {
   return message;
 };
 /**
+ * Return invalid required fields.
+ */
+
+
+var getInvalidFields = function getInvalidFields() {
+  return document.querySelectorAll('[aria-invalid="true"]');
+};
+/**
+ * Return invalid required fields.
+ */
+
+
+var getFormLiveRegion = function getFormLiveRegion() {
+  return document.getElementById('gpalab-slo-validation');
+};
+/**
+ * Update the live region content.
+ * @param {node} element the live region node
+ * @param {node} childNode the node to append to the live region
+ */
+
+
+var updateLiveRegion = function updateLiveRegion(element, childNode) {
+  var classValues = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+  element.innerHTML = '';
+  element.classList = classValues;
+
+  if (childNode && classValues) {
+    element.appendChild(childNode);
+  }
+};
+/**
+ * Construct the live region error message.
+ */
+
+
+var getLiveRegionErrorMessage = function getLiveRegionErrorMessage() {
+  var errors = getInvalidFields();
+
+  if (!errors.length) {
+    return;
+  }
+
+  var p = document.createElement('p');
+  var ul = document.createElement('ul');
+  var msg = "Please complete the following required field".concat(errors.length > 1 ? 's' : '', ":");
+  p.textContent = msg;
+  ul.style.listStyle = 'disc';
+  ul.style.paddingLeft = '1rem';
+  errors.forEach(function (error) {
+    var _error$name;
+
+    var li = document.createElement('li');
+    var fields = (error === null || error === void 0 ? void 0 : (_error$name = error.name) === null || _error$name === void 0 ? void 0 : _error$name.split('_')) || [];
+    var field = fields[fields.length - 1];
+
+    if (field) {
+      li.textContent = field;
+      ul.appendChild(li);
+    }
+  });
+  p.appendChild(ul);
+  return p;
+};
+/**
  * Set a custom error message.
  * @param {node} element required form field
  * @param {string} message custom error message
  */
 
 
-var handleErrorMessage = function handleErrorMessage(element) {
-  var message = getCustomErrorMessage(element.name);
-  element.setCustomValidity(message);
+var handleFieldErrorMessage = function handleFieldErrorMessage(element) {
+  var tooltipMsg = getCustomTooltipErrorMessage(element.name);
+  var p = getLiveRegionErrorMessage();
+  element.setCustomValidity(tooltipMsg);
+  var formLiveRegion = getFormLiveRegion(); // Update the live region content.
+
+  updateLiveRegion(formLiveRegion, p, 'notice notice-error gpalab-slo');
 };
 /**
  * Set custom error message.
@@ -172,9 +241,10 @@ var handleErrorMessage = function handleErrorMessage(element) {
 
 
 var handleInvalidField = function handleInvalidField(e) {
-  var target = e.target;
+  var target = e.target; // Set field as invalid
+
   target.setAttribute('aria-invalid', 'true');
-  handleErrorMessage(target);
+  handleFieldErrorMessage(target);
   handleInvalidFieldStyling(target);
 };
 /**
@@ -184,16 +254,39 @@ var handleInvalidField = function handleInvalidField(e) {
 
 
 var handleFieldValidation = function handleFieldValidation(e) {
-  var target = e.target;
+  var target = e.target; // Field remains invalid if empty spaces are entered.
 
-  if (e.target.value.trim() === '') {
+  if (target.value.trim() === '') {
     return;
-  }
+  } // Reset styling, custom tooltip, etc.
+
 
   target.removeAttribute('aria-invalid');
   target.setCustomValidity('');
   target.checkValidity();
   handleResetFieldStyling(target);
+  var formLiveRegion = getFormLiveRegion(); // Reset the live region content.
+
+  updateLiveRegion(formLiveRegion, null);
+  var errors = getInvalidFields(); // Update the live region content if there are still errors.
+
+  if (errors === null || errors === void 0 ? void 0 : errors.length) {
+    var p = getLiveRegionErrorMessage();
+    updateLiveRegion(formLiveRegion, p, 'notice notice-error gpalab-slo');
+  }
+};
+/**
+ * Insert a live region for validation errors
+ */
+
+
+var insertFormLiveRegion = function insertFormLiveRegion() {
+  var form = document.getElementById('post');
+  var formLiveRegion = document.createElement('div');
+  formLiveRegion.setAttribute('id', 'gpalab-slo-validation');
+  formLiveRegion.setAttribute('role', 'status');
+  formLiveRegion.setAttribute('aria-live', 'polite');
+  form.insertAdjacentElement('beforebegin', formLiveRegion);
 };
 /**
  * Add input and invalid event listeners to post form.
@@ -220,6 +313,7 @@ var ready = function ready(callback) {
 };
 
 ready(function () {
+  insertFormLiveRegion();
   addRequiredTitleLabel();
   setRequiredAttribute('[name="post_title"]');
   initializeEventListeners();
