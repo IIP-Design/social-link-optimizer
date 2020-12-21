@@ -53,11 +53,25 @@ class SLO {
    * @since 0.0.1
    */
   public function __construct() {
-    $this->plugin_name = 'social-link-optimizer';
-    $this->version     = '0.0.1';
+    $this->plugin_name = $this->load_constants()->plugin_name;
+    $this->version     = $this->load_constants()->version;
     $this->load_dependencies();
     $this->define_admin_hooks();
     $this->define_public_hooks();
+  }
+
+  /**
+   * Import the constant values used to initialize the plugin's classes.
+   *
+   * @return SLO_Constants
+   *
+   * @since 0.0.1
+   */
+  private function load_constants() {
+    // Defines the plugin name and version.
+    require_once GPALAB_SLO_DIR . 'class-constants.php';
+
+    return new SLO\Constants();
   }
 
   /**
@@ -78,6 +92,8 @@ class SLO {
     // The class responsible for orchestrating the actions and filters of the core plugin.
     require_once GPALAB_SLO_DIR . 'includes/class-loader.php';
 
+    $this->loader = new SLO\Loader();
+
     // The class responsible for defining all actions that occur in the admin area.
     require_once GPALAB_SLO_DIR . 'admin/class-admin.php';
     require_once GPALAB_SLO_DIR . 'admin/class-ajax.php';
@@ -91,8 +107,6 @@ class SLO {
     // The class responsible for defining all actions that occur in the public-facing side of the site.
     require_once GPALAB_SLO_DIR . 'public/class-frontend.php';
     require_once GPALAB_SLO_DIR . 'public/class-template.php';
-
-    $this->loader = new SLO\Loader();
   }
 
   /**
@@ -180,7 +194,11 @@ class SLO {
     $plugin_template = new SLO\Template( $this->get_plugin_name(), $this->get_version() );
 
     // Frontend hooks.
-    $this->loader->add_action( 'wp_enqueue_scripts', $plugin_frontend, 'gpalab_slo_stylesheets', 100 );
+    $this->loader->add_action( 'wp_enqueue_scripts', $plugin_frontend, 'gpalab_slo_styles_scripts', 100 );
+
+    // AJAX hooks.
+    $this->loader->add_action( 'wp_ajax_gpalab_slo_load_more', $plugin_frontend, 'gpalab_slo_load_more' );
+    $this->loader->add_action( 'wp_ajax_nopriv_gpalab_slo_load_more', $plugin_frontend, 'gpalab_slo_load_more' );
 
     // Add a filter to the attributes metabox to inject template into the cache.
     if ( version_compare( floatval( get_bloginfo( 'version' ) ), '4.7', '<' ) ) {

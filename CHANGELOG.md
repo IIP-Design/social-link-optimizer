@@ -16,6 +16,7 @@ _This sections lists changes committed since most recent release_
 - A social link custom post type that can be populated with an image, a redirect URL, and associated with a given mission
 - A settings page where multiple missions can be added to the site to enable grouping of social links
 - A custom social link page template to display all of the social links for a particular mission
+- A load more social links button that appends the next page's content and back to top link on the social link page template
 - Two social link page layouts to display the social links as either a grid of linked images or a list of links
 - A mission identity header on the social link page template to present mission-specific avatar, website, and social property links
 - Custom user capabilities to help control access to the plugin's administrative options

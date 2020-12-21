@@ -7,11 +7,14 @@
 
 // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_value
-$args = array(
-  'post_type'    => 'gpalab-social-link',
-  'meta_key'     => 'gpalab_slo_mission',
-  'meta_value'   => $selected_mission,
-  'meta_compare' => '=',
+$globals = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+$args    = array(
+  'post_type'      => 'gpalab-social-link',
+  'meta_key'       => 'gpalab_slo_mission',
+  'meta_value'     => $selected_mission,
+  'meta_compare'   => '=',
+  'posts_per_page' => 18,
+  'paged'          => $globals,
 );
 // phpcs:enable
 

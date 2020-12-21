@@ -5,42 +5,14 @@
  * @package GPALAB_SLO
  */
 
-// Check if function already exists to prevent re-declaration in the loop.
-if ( ! function_exists( 'linkify' ) ) {
-  /**
-   * Wrap some string or HTML element in a link.
-   *
-   * @param string $element   The element to be placed within a link.
-   * @param string $url       The wrapping url.
-   */
-  function linkify( $element, $url ) {
-    return '<a href="' . esc_url( $url ) . '">' . $element . '</a>';
-  }
-}
+// Pull in the plugin's constant values to initialize the frontend class.
+require_once GPALAB_SLO_DIR . 'class-constants.php';
 
-// Retrieve the item title.
-$item_title = 'list' === $layout
-  ? linkify( get_the_title( $current_post ), get_permalink() )
-  : get_the_title( $current_post );
+$plugin_constants = new SLO\Constants();
 
-// Retrieve the item photo.
-$thumbnail = get_the_post_thumbnail(
-  $current_post,
-  'post-thumbnail',
-  array( 'class' => 'gpalab-slo-thumbnail' )
-);
+// The class responsible for defining all actions that occur in the public-facing side of the site.
+require_once GPALAB_SLO_DIR . 'public/class-frontend.php';
 
-$item_photo = linkify( $thumbnail, get_permalink() );
+$plugin_frontend = new SLO\Frontend( $plugin_constants->plugin_name, $plugin_constants->version );
 
-$hide_visually_class = 'grid' === $layout
-  ? 'hide-visually'
-  : '';
-
-// Cobble together the HTML for a link item.
-$item  = '<li><article>';
-$item .= '<h3 class="title ' . $hide_visually_class . '">' . wp_kses( $item_title, 'post' ) . '</h3>';
-$item .= 'grid' === $layout ? wp_kses( $item_photo, 'post' ) : '';
-$item .= '</article></li>';
-
-// Sanitize the HTML returned onto the page.
-echo wp_kses( $item, 'post' );
+$plugin_frontend->get_social_link_item( $layout, $current_post );

@@ -1,6 +1,6 @@
 {
   "extends": ["@gpa-lab/eslint-config", "@gpa-lab/eslint-config/react"],
-  "ignorePatterns": [ "node_modules/", "admin/build/", "docs/_site", "vendor/" ],
+  "ignorePatterns": [ "node_modules/", "admin/build/", "public/build/", "docs/_site/", "vendor/" ],
   "rules": {
     "node/no-unpublished-require": [
       "error", {

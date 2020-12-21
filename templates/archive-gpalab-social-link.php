@@ -69,13 +69,18 @@ require 'template-parts/header-slo.php';
 
           ?>
 
-          <ul class="gpalab-slo-content-list list-reset <?php echo esc_html( $layout ); ?>" aria-describedby="instructions">
+          <ul class="gpalab-slo-content-list list-reset <?php echo esc_html( $layout ); ?>" aria-describedby="instructions" role="status" aria-live="polite">
 
             <?php require 'template-parts/social-link-list.php'; ?>
 
           </ul>
 
           <?php
+          if ( $the_query->max_num_pages > 1 ) {
+            $load_more = __( 'Load more', 'gpalab-slo' );
+
+            echo '<div class="load-more-container"><button id="load-more" type="button">' . esc_html( $load_more ) . '</button></div>';
+          }
         } else {
           the_content( __( 'Continue reading', 'gpalab-slo' ) );
         }
