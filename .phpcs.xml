@@ -9,12 +9,12 @@
 <file>./public</file>
 <file>./templates</file>
 <file>./social-link-optimizer.php</file>
+<file>./class-constants.php</file>
 
 <!-- Exclude empty index.php files from testing. -->
 <exclude-pattern>*/vendor</exclude-pattern>
 <exclude-pattern>*/index.php</exclude-pattern>
-<exclude-pattern>/admin/build/*.asset.php</exclude-pattern>
-<exclude-pattern>/public/build/*.asset.php</exclude-pattern>
+<exclude-pattern>*/build/*.asset.php</exclude-pattern>
 
 <arg name="colors"/>
 <arg name="extensions" value="php" />
