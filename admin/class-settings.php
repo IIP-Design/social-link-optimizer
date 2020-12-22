@@ -99,7 +99,7 @@ class Settings {
           $this->custom_do_settings_sections( 'gpalab-slo' );
         ?>
         <button class="button button-secondary" id="slo-add-mission" type="button" >
-          Add Mission
+          <?php esc_html_e( 'Add Mission', 'gpalab-slo' ); ?>
         </button>
         <?php
           submit_button();
@@ -117,8 +117,6 @@ class Settings {
   public function populate_settings_page() {
     $missions = get_option( 'gpalab-slo-settings' );
 
-    $populate = $this->generate_tab_panels();
-
     if ( isset( $missions ) ) {
 
       foreach ( $missions as $key => $mission ) {
@@ -134,7 +132,7 @@ class Settings {
           'gpalab-slo-settings-' . $key,
           __( 'Manage Mission Social Link Pages:', 'gpalab-slo' ),
           function() {
-            return $populate;
+            return $this->generate_tab_panels();
           },
           'gpalab-slo'
         );
@@ -333,7 +331,7 @@ class Settings {
     $value = isset( $option[ $field ] ) ? $option[ $field ] : '';
 
     // Generate the markup for the input field.
-    $input .= '<input class="regular-text" type="text" ';
+    $input  = '<input class="regular-text" type="text" ';
     $input .= 'name="gpalab-slo-settings[' . $key . '][' . $field . ']" ';
     $input .= 'id="' . $id . '" ';
     $input .= 'value="' . $value . '" >';
@@ -376,14 +374,14 @@ class Settings {
     $input .= 'id="' . $id . '_grid" ';
     $input .= ( 'grid' === $checked ) ? 'checked ' : '';
     $input .= 'value="grid" >';
-    $input .= 'Three column grid</label>';
+    $input .= __( 'Three column grid', 'gpalab-slo' ) . '</label>';
     $input .= '<label for="' . $id . '_list">';
     $input .= '<input type="radio" ';
     $input .= 'name="gpalab-slo-settings[' . $key . '][' . $field . ']" ';
     $input .= 'id="' . $id . '_list" ';
     $input .= ( 'list' === $checked ) ? 'checked ' : '';
     $input .= 'value="list" >';
-    $input .= 'Vertical list</label>';
+    $input .= __( 'Vertical list', 'gpalab-slo' ) . '</label>';
     $input .= '</div>';
 
     // Identify which HTML elements to allow.
@@ -447,7 +445,7 @@ class Settings {
       $this->custom_do_settings_fields( $page, $section['id'] );
 
       // Button to remove the current section from the settings array.
-      echo '<button class="button button-secondary slo-remove-mission" data-id=' . esc_attr( $id ) . ' type="button">Remove This Mission</button>';
+      echo '<button class="button button-secondary slo-remove-mission" data-id=' . esc_attr( $id ) . ' type="button">' . esc_html__( 'Remove This Mission', 'gpalab-slo' ) . '</button>';
 
       echo '</section>';
     }
