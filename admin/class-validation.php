@@ -44,6 +44,13 @@ class Validation {
       $script_asset['version'],
       true
     );
+
+    wp_register_style(
+      'gpalab-slo-validation-css',
+      GPALAB_SLO_URL . 'admin/css/gpalab-slo-validation.css',
+      array(),
+      $this->version
+    );
   }
 
   /**
@@ -61,6 +68,7 @@ class Validation {
 
     if ( $is_social_link && $is_post_screen ) {
       wp_enqueue_script( 'gpalab-slo-validation-js' );
+      wp_enqueue_style( 'gpalab-slo-validation-css' );
     }
   }
 }

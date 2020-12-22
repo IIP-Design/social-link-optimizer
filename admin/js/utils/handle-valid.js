@@ -1,4 +1,4 @@
-import { getFormLiveRegion, handleResetFieldStyling, updateLiveRegion } from './validation-utils';
+import { getFormLiveRegion, updateLiveRegion } from './validation-utils';
 import { getInvalidFields, getLiveRegionInvalidMessage } from './handle-invalid';
 
 /**
@@ -17,7 +17,6 @@ export const handleFieldValidation = e => {
   target.removeAttribute( 'aria-invalid' );
   target.setCustomValidity( '' );
   target.checkValidity();
-  handleResetFieldStyling( target );
 
   const formLiveRegion = getFormLiveRegion();
 

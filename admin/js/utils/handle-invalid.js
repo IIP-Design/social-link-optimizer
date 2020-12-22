@@ -44,8 +44,6 @@ export const getLiveRegionInvalidMessage = () => {
   const msg = `Please complete the following required field${errors.length > 1 ? 's' : ''}:`;
 
   p.textContent = msg;
-  ul.style.listStyle = 'disc';
-  ul.style.paddingLeft = '1rem';
 
   errors.forEach( error => {
     const li = document.createElement( 'li' );
@@ -81,15 +79,6 @@ export const handleInvalidFieldMessage = element => {
 };
 
 /**
- * Add error styling to an invalid form field.
- * @param {node} element invalid form field
- */
-const handleInvalidFieldStyling = element => {
-  element.style.borderColor = '#dc3232';
-  element.style.boxShadow = '0 0 0 1px #dc3232';
-};
-
-/**
  * Set custom error message.
  * @param {object} e event object
  */
@@ -99,6 +88,5 @@ export const handleInvalidField = e => {
   // Set field as invalid
   target.setAttribute( 'aria-invalid', 'true' );
   handleInvalidFieldMessage( target );
-  handleInvalidFieldStyling( target );
 };
 

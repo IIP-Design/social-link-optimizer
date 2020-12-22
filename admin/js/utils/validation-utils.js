@@ -16,15 +16,6 @@ export const setRequiredAttribute = selector => {
 };
 
 /**
- * Reset a form field to the default WordPress classic editor styling.
- * @param {node} element form field
- */
-export const handleResetFieldStyling = element => {
-  element.style.borderColor = '#7e8993';
-  element.style.boxShadow = '0 0 0 0 transparent';
-};
-
-/**
  * Insert a live region for validation errors
  */
 export const insertFormLiveRegion = () => {

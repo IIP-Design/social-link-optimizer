@@ -148,8 +148,6 @@ var getLiveRegionInvalidMessage = function getLiveRegionInvalidMessage() {
   var ul = document.createElement('ul');
   var msg = "Please complete the following required field".concat(errors.length > 1 ? 's' : '', ":");
   p.textContent = msg;
-  ul.style.listStyle = 'disc';
-  ul.style.paddingLeft = '1rem';
   errors.forEach(function (error) {
     var _error$name;
 
@@ -180,26 +178,15 @@ var handleInvalidFieldMessage = function handleInvalidFieldMessage(element) {
   Object(_validation_utils__WEBPACK_IMPORTED_MODULE_0__["updateLiveRegion"])(formLiveRegion, p, 'notice notice-error gpalab-slo');
 };
 /**
- * Add error styling to an invalid form field.
- * @param {node} element invalid form field
- */
-
-var handleInvalidFieldStyling = function handleInvalidFieldStyling(element) {
-  element.style.borderColor = '#dc3232';
-  element.style.boxShadow = '0 0 0 1px #dc3232';
-};
-/**
  * Set custom error message.
  * @param {object} e event object
  */
-
 
 var handleInvalidField = function handleInvalidField(e) {
   var target = e.target; // Set field as invalid
 
   target.setAttribute('aria-invalid', 'true');
   handleInvalidFieldMessage(target);
-  handleInvalidFieldStyling(target);
 };
 
 /***/ }),
@@ -234,7 +221,6 @@ var handleFieldValidation = function handleFieldValidation(e) {
   target.removeAttribute('aria-invalid');
   target.setCustomValidity('');
   target.checkValidity();
-  Object(_validation_utils__WEBPACK_IMPORTED_MODULE_0__["handleResetFieldStyling"])(target);
   var formLiveRegion = Object(_validation_utils__WEBPACK_IMPORTED_MODULE_0__["getFormLiveRegion"])(); // Reset the live region content.
 
   Object(_validation_utils__WEBPACK_IMPORTED_MODULE_0__["updateLiveRegion"])(formLiveRegion, null);
@@ -252,14 +238,13 @@ var handleFieldValidation = function handleFieldValidation(e) {
 /*!********************************************!*\
   !*** ./admin/js/utils/validation-utils.js ***!
   \********************************************/
-/*! exports provided: addRequiredTitleLabel, setRequiredAttribute, handleResetFieldStyling, insertFormLiveRegion, getFormLiveRegion, updateLiveRegion, debounce */
+/*! exports provided: addRequiredTitleLabel, setRequiredAttribute, insertFormLiveRegion, getFormLiveRegion, updateLiveRegion, debounce */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addRequiredTitleLabel", function() { return addRequiredTitleLabel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setRequiredAttribute", function() { return setRequiredAttribute; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "handleResetFieldStyling", function() { return handleResetFieldStyling; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "insertFormLiveRegion", function() { return insertFormLiveRegion; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getFormLiveRegion", function() { return getFormLiveRegion; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLiveRegion", function() { return updateLiveRegion; });
@@ -278,15 +263,6 @@ var addRequiredTitleLabel = function addRequiredTitleLabel() {
 
 var setRequiredAttribute = function setRequiredAttribute(selector) {
   document.querySelector(selector).setAttribute('required', '');
-};
-/**
- * Reset a form field to the default WordPress classic editor styling.
- * @param {node} element form field
- */
-
-var handleResetFieldStyling = function handleResetFieldStyling(element) {
-  element.style.borderColor = '#7e8993';
-  element.style.boxShadow = '0 0 0 0 transparent';
 };
 /**
  * Insert a live region for validation errors

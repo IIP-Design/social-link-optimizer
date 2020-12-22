@@ -1,0 +1,22 @@
+/* Live region */
+#gpalab-slo-validation ul {
+  list-style: disc;
+  padding-left: 1rem;
+}
+
+#gpalab-slo-validation ul > li {
+  margin-bottom: 0;
+}
+
+.notice.notice-error.gpalab-slo > p {
+  /* match default WordPress notice styling */
+  margin: 0.5em 0;
+  padding: 2px;
+}
+
+/* Invalid fields */
+#post [aria-invalid="true"] {
+  --error-color: #dc3232;
+  border-color: var(--error-color);
+  box-shadow: 0 0 0 1px var(--error-color);
+}
