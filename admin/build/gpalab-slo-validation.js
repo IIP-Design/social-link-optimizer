@@ -86,55 +86,33 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./admin/js/validation.js":
-/*!********************************!*\
-  !*** ./admin/js/validation.js ***!
-  \********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ "./admin/js/utils/handle-invalid.js":
+/*!******************************************!*\
+  !*** ./admin/js/utils/handle-invalid.js ***!
+  \******************************************/
+/*! exports provided: getInvalidFields, getLiveRegionErrorMessage, handleFieldErrorMessage, handleInvalidField */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInvalidFields", function() { return getInvalidFields; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getLiveRegionErrorMessage", function() { return getLiveRegionErrorMessage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "handleFieldErrorMessage", function() { return handleFieldErrorMessage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "handleInvalidField", function() { return handleInvalidField; });
+/* harmony import */ var _validation_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./validation-utils */ "./admin/js/utils/validation-utils.js");
 
 /**
- * Add error styling to an invalid form field.
- * @param {node} element invalid form field
- */
-var handleInvalidFieldStyling = function handleInvalidFieldStyling(element) {
-  element.style.borderColor = '#dc3232';
-  element.style.boxShadow = '0 0 0 1px #dc3232';
-};
-/**
- * Reset a form field to the default WordPress classic editor styling.
- * @param {node} element form field
+ * Return invalid required fields.
  */
 
-
-var handleResetFieldStyling = function handleResetFieldStyling(element) {
-  element.style.borderColor = '#7e8993';
-  element.style.boxShadow = '0 0 0 0 transparent';
-};
-/**
- * Add required to the title field label
- */
-
-
-var addRequiredTitleLabel = function addRequiredTitleLabel() {
-  var titleLabel = document.getElementById('title-prompt-text');
-  titleLabel.textContent += ' (required)';
-};
-/**
- * Add required attribute to a form element.
- * @param {string} selector CSS selector
- */
-
-
-var setRequiredAttribute = function setRequiredAttribute(selector) {
-  document.querySelector(selector).setAttribute('required', '');
+var getInvalidFields = function getInvalidFields() {
+  return document.querySelectorAll('[aria-invalid="true"]');
 };
 /**
  * Construct a custom error message.
  * @param {string} inputName form field name
  * @param {boolean} isSelect is the field a select element
  */
-
 
 var getCustomTooltipErrorMessage = function getCustomTooltipErrorMessage(inputName) {
   var message = 'Please enter a title.';
@@ -153,38 +131,6 @@ var getCustomTooltipErrorMessage = function getCustomTooltipErrorMessage(inputNa
   }
 
   return message;
-};
-/**
- * Return invalid required fields.
- */
-
-
-var getInvalidFields = function getInvalidFields() {
-  return document.querySelectorAll('[aria-invalid="true"]');
-};
-/**
- * Return invalid required fields.
- */
-
-
-var getFormLiveRegion = function getFormLiveRegion() {
-  return document.getElementById('gpalab-slo-validation');
-};
-/**
- * Update the live region content.
- * @param {node} element the live region node
- * @param {node} childNode the node to append to the live region
- */
-
-
-var updateLiveRegion = function updateLiveRegion(element, childNode) {
-  var classValues = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-  element.innerHTML = '';
-  element.classList = classValues;
-
-  if (childNode && classValues) {
-    element.appendChild(childNode);
-  }
 };
 /**
  * Construct the live region error message.
@@ -225,14 +171,22 @@ var getLiveRegionErrorMessage = function getLiveRegionErrorMessage() {
  * @param {string} message custom error message
  */
 
-
 var handleFieldErrorMessage = function handleFieldErrorMessage(element) {
   var tooltipMsg = getCustomTooltipErrorMessage(element.name);
   var p = getLiveRegionErrorMessage();
   element.setCustomValidity(tooltipMsg);
-  var formLiveRegion = getFormLiveRegion(); // Update the live region content.
+  var formLiveRegion = Object(_validation_utils__WEBPACK_IMPORTED_MODULE_0__["getFormLiveRegion"])(); // Update the live region content.
 
-  updateLiveRegion(formLiveRegion, p, 'notice notice-error gpalab-slo');
+  Object(_validation_utils__WEBPACK_IMPORTED_MODULE_0__["updateLiveRegion"])(formLiveRegion, p, 'notice notice-error gpalab-slo');
+};
+/**
+ * Add error styling to an invalid form field.
+ * @param {node} element invalid form field
+ */
+
+var handleInvalidFieldStyling = function handleInvalidFieldStyling(element) {
+  element.style.borderColor = '#dc3232';
+  element.style.boxShadow = '0 0 0 1px #dc3232';
 };
 /**
  * Set custom error message.
@@ -247,11 +201,27 @@ var handleInvalidField = function handleInvalidField(e) {
   handleFieldErrorMessage(target);
   handleInvalidFieldStyling(target);
 };
+
+/***/ }),
+
+/***/ "./admin/js/utils/handle-valid.js":
+/*!****************************************!*\
+  !*** ./admin/js/utils/handle-valid.js ***!
+  \****************************************/
+/*! exports provided: handleFieldValidation */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "handleFieldValidation", function() { return handleFieldValidation; });
+/* harmony import */ var _validation_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./validation-utils */ "./admin/js/utils/validation-utils.js");
+/* harmony import */ var _handle_invalid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./handle-invalid */ "./admin/js/utils/handle-invalid.js");
+
+
 /**
  * Validate a required form field.
  * @param {object} e event object
  */
-
 
 var handleFieldValidation = function handleFieldValidation(e) {
   var target = e.target; // Field remains invalid if empty spaces are entered.
@@ -264,21 +234,62 @@ var handleFieldValidation = function handleFieldValidation(e) {
   target.removeAttribute('aria-invalid');
   target.setCustomValidity('');
   target.checkValidity();
-  handleResetFieldStyling(target);
-  var formLiveRegion = getFormLiveRegion(); // Reset the live region content.
+  Object(_validation_utils__WEBPACK_IMPORTED_MODULE_0__["handleResetFieldStyling"])(target);
+  var formLiveRegion = Object(_validation_utils__WEBPACK_IMPORTED_MODULE_0__["getFormLiveRegion"])(); // Reset the live region content.
 
-  updateLiveRegion(formLiveRegion, null);
-  var errors = getInvalidFields(); // Update the live region content if there are still errors.
+  Object(_validation_utils__WEBPACK_IMPORTED_MODULE_0__["updateLiveRegion"])(formLiveRegion, null);
+  var errors = Object(_handle_invalid__WEBPACK_IMPORTED_MODULE_1__["getInvalidFields"])(); // Update the live region content if there are still errors.
 
   if (errors === null || errors === void 0 ? void 0 : errors.length) {
-    var p = getLiveRegionErrorMessage();
-    updateLiveRegion(formLiveRegion, p, 'notice notice-error gpalab-slo');
+    var p = Object(_handle_invalid__WEBPACK_IMPORTED_MODULE_1__["getLiveRegionErrorMessage"])();
+    Object(_validation_utils__WEBPACK_IMPORTED_MODULE_0__["updateLiveRegion"])(formLiveRegion, p, 'notice notice-error gpalab-slo');
   }
+};
+
+/***/ }),
+
+/***/ "./admin/js/utils/validation-utils.js":
+/*!********************************************!*\
+  !*** ./admin/js/utils/validation-utils.js ***!
+  \********************************************/
+/*! exports provided: addRequiredTitleLabel, setRequiredAttribute, handleResetFieldStyling, insertFormLiveRegion, getFormLiveRegion, updateLiveRegion */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addRequiredTitleLabel", function() { return addRequiredTitleLabel; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setRequiredAttribute", function() { return setRequiredAttribute; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "handleResetFieldStyling", function() { return handleResetFieldStyling; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "insertFormLiveRegion", function() { return insertFormLiveRegion; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getFormLiveRegion", function() { return getFormLiveRegion; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLiveRegion", function() { return updateLiveRegion; });
+/**
+ * Add required to the title field label
+ */
+var addRequiredTitleLabel = function addRequiredTitleLabel() {
+  var titleLabel = document.getElementById('title-prompt-text');
+  titleLabel.textContent += ' (required)';
+};
+/**
+ * Add required attribute to a form element.
+ * @param {string} selector CSS selector
+ */
+
+var setRequiredAttribute = function setRequiredAttribute(selector) {
+  document.querySelector(selector).setAttribute('required', '');
+};
+/**
+ * Reset a form field to the default WordPress classic editor styling.
+ * @param {node} element form field
+ */
+
+var handleResetFieldStyling = function handleResetFieldStyling(element) {
+  element.style.borderColor = '#7e8993';
+  element.style.boxShadow = '0 0 0 0 transparent';
 };
 /**
  * Insert a live region for validation errors
  */
-
 
 var insertFormLiveRegion = function insertFormLiveRegion() {
   var form = document.getElementById('post');
@@ -289,14 +300,53 @@ var insertFormLiveRegion = function insertFormLiveRegion() {
   form.insertAdjacentElement('beforebegin', formLiveRegion);
 };
 /**
- * Add input and invalid event listeners to post form.
+ * Return invalid required fields.
  */
 
+var getFormLiveRegion = function getFormLiveRegion() {
+  return document.getElementById('gpalab-slo-validation');
+};
+/**
+ * Update the live region content.
+ * @param {node} element the live region node
+ * @param {node} childNode the node to append to the live region
+ */
+
+var updateLiveRegion = function updateLiveRegion(element, childNode) {
+  var classValues = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+  element.innerHTML = '';
+  element.classList = classValues;
+
+  if (childNode && classValues) {
+    element.appendChild(childNode);
+  }
+};
+
+/***/ }),
+
+/***/ "./admin/js/validation.js":
+/*!********************************!*\
+  !*** ./admin/js/validation.js ***!
+  \********************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _utils_validation_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils/validation-utils */ "./admin/js/utils/validation-utils.js");
+/* harmony import */ var _utils_handle_valid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/handle-valid */ "./admin/js/utils/handle-valid.js");
+/* harmony import */ var _utils_handle_invalid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/handle-invalid */ "./admin/js/utils/handle-invalid.js");
+
+
+
+/**
+ * Add input and invalid event listeners to social link form.
+ */
 
 var initializeEventListeners = function initializeEventListeners() {
   var form = document.getElementById('post');
-  form.addEventListener('input', handleFieldValidation);
-  form.addEventListener('invalid', handleInvalidField, true);
+  form.addEventListener('input', _utils_handle_valid__WEBPACK_IMPORTED_MODULE_1__["handleFieldValidation"]);
+  form.addEventListener('invalid', _utils_handle_invalid__WEBPACK_IMPORTED_MODULE_2__["handleInvalidField"], true);
 };
 /**
  * Document ready
@@ -313,9 +363,9 @@ var ready = function ready(callback) {
 };
 
 ready(function () {
-  insertFormLiveRegion();
-  addRequiredTitleLabel();
-  setRequiredAttribute('[name="post_title"]');
+  Object(_utils_validation_utils__WEBPACK_IMPORTED_MODULE_0__["insertFormLiveRegion"])();
+  Object(_utils_validation_utils__WEBPACK_IMPORTED_MODULE_0__["addRequiredTitleLabel"])();
+  Object(_utils_validation_utils__WEBPACK_IMPORTED_MODULE_0__["setRequiredAttribute"])('[name="post_title"]');
   initializeEventListeners();
 });
 
