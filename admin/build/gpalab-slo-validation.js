@@ -301,7 +301,7 @@ var insertFormLiveRegion = function insertFormLiveRegion() {
   form.insertAdjacentElement('beforebegin', formLiveRegion);
 };
 /**
- * Return invalid required fields.
+ * Return the live region element.
  */
 
 var getFormLiveRegion = function getFormLiveRegion() {

@@ -38,7 +38,7 @@ export const insertFormLiveRegion = () => {
 };
 
 /**
- * Return invalid required fields.
+ * Return the live region element.
  */
 export const getFormLiveRegion = () => (
   document.getElementById( 'gpalab-slo-validation' )
