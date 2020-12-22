@@ -152,11 +152,28 @@ class Settings {
     if ( isset( $missions ) ) {
       foreach ( $missions as $key => $mission ) {
 
+        $page_id = 'page_' . $key;
+
+        add_settings_field(
+          $page_id,
+          null,
+          array( $this, 'add_input' ),
+          'gpalab-slo',
+          'gpalab-slo-settings-' . $key,
+          array(
+            'label_for' => $page_id,
+            'key'       => $key,
+            'field'     => 'page',
+            'option'    => $mission,
+            'type'      => 'hidden',
+          )
+        );
+
         $title_id = 'title_' . $key;
 
         add_settings_field(
           $title_id,
-          __( 'Mission name:', 'gpalab-slo' ),
+          __( 'Mission name (used as page title):', 'gpalab-slo' ),
           array( $this, 'add_input' ),
           'gpalab-slo',
           'gpalab-slo-settings-' . $key,
@@ -326,12 +343,13 @@ class Settings {
     $field  = $args['field'];
     $key    = $args['key'];
     $option = $args['option'];
+    $type   = ! empty( $args['type'] ) ? $args['type'] : 'text';
 
     $id    = $field . '_' . $key;
     $value = isset( $option[ $field ] ) ? $option[ $field ] : '';
 
     // Generate the markup for the input field.
-    $input  = '<input class="regular-text" type="text" ';
+    $input  = '<input class="regular-text" type="' . $type . '" ';
     $input .= 'name="gpalab-slo-settings[' . $key . '][' . $field . ']" ';
     $input .= 'id="' . $id . '" ';
     $input .= 'value="' . $value . '" >';
@@ -429,7 +447,7 @@ class Settings {
       }
 
       if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ) {
-          continue;
+        continue;
       }
 
       $missions = get_option( 'gpalab-slo-settings' );
