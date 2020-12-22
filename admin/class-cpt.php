@@ -189,7 +189,7 @@ class CPT {
     <p id="instructions">Example: https://www.website.com</p>
     <p style="display: flex; align-items: center;">
       <label
-        for="gpalab_slo_link"
+        for="gpalab_slo_link_field"
         class="gpa-lab-social-links-row-title"
         style="margin-right: 0.5rem;"
       >
@@ -198,7 +198,7 @@ class CPT {
       <input
         type="text"
         name="gpalab_slo_link"
-        id="gpalab_slo_link"
+        id="gpalab_slo_link_field"
         style="flex-grow: 1;"
         value="<?php echo esc_url( $link, array( 'http', 'https' ) ); ?>"
         required
@@ -240,12 +240,12 @@ class CPT {
     ?>
 
     <label
-      for="<?php echo esc_attr( $meta ); ?>"
+      for="<?php echo esc_attr( $meta ) . '_field'; ?>"
       style="margin-right: 0.5rem;"
     >
       <?php esc_html_e( 'Select a mission:', 'gpalab-slo' ); ?>
       <select
-        id="<?php echo esc_attr( $meta ); ?>"
+        id="<?php echo esc_attr( $meta ) . '_field'; ?>"
         name="<?php echo esc_attr( $meta ); ?>"
         required
       >
@@ -301,7 +301,7 @@ class CPT {
 
     <p style="display: flex; align-items: center;">
       <label
-        for="gpalab_slo_archive"
+        for="gpalab_slo_archive_field"
         class="gpalab-slo-archive-meta-title"
         style="margin-right: 0.5rem;"
       >
@@ -310,7 +310,7 @@ class CPT {
       <input
         type="checkbox"
         name="gpalab_slo_archive"
-        id="gpalab_slo_archive"
+        id="gpalab_slo_archive_field"
         value="true"
         <?php checked( $checkbox_value, 'true' ); ?>
       />
