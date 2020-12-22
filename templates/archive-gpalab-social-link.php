@@ -47,7 +47,9 @@ require 'template-parts/header-slo.php';
           $settings_key  = array_search( $selected_mission, array_column( $slo_settings, 'id' ), true );
           $page_settings = is_numeric( $settings_key ) ? $slo_settings[ $settings_key ] : array();
 
-          the_title( '<h1 class="gpalab-slo-page-title">', '</h1>' );
+          $page_title = isset( $page_settings['title'] ) ? $page_settings['title'] : get_the_title();
+
+          echo '<h1 class="gpalab-slo-page-title">' . esc_html( $page_title ) . '</h1>';
 
           require 'template-parts/mission-identity.php';
 
