@@ -12,6 +12,18 @@
   margin: 1rem 0 0;
 }
 
+.gpalab-slo-settings-form-controls {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0.5rem 1.5rem;
+}
+
+.gpalab-slo-settings-form-controls p.submit {
+  margin: 0;
+  padding: 0;
+}
+
 .gpalab-slo-tab-container > li:first-of-type {
   margin-left: 0.5rem;
 }
@@ -55,14 +67,35 @@
   padding: 1rem;
 }
 
+.gpalab-slo-tabpanel-text {
+  text-align: center;
+}
+
 .gpalab-slo-label {
   align-items: center;
   display: grid;
-  grid-template-columns: 20% 1fr;
-  margin: 0.5rem 0;
+  grid-template-columns: 25% 1fr;
+  margin: 0.5rem 1rem;
 }
 
-.slo-remove-mission {
+.gpalab-slo-label-secondary {
+  align-items: center;
+  display: grid;
+  grid-template-columns: 18% 1fr;
+  margin: 0.5rem 1rem;
+}
+
+.gpalab-slo-danger {
+  color: #a00a00;
+  text-align: center;
+}
+
+button.button.button-link-delete.slo-remove-mission {
+  border-color: #a00a00;
   align-self: flex-start;
-  margin: 0.5rem 0;
+  margin: 1rem 1rem 0.5rem;
+}
+
+button.button.button-secondary.slo-permalink {
+  margin-left: 2rem;
 }

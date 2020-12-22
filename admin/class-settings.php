@@ -98,12 +98,6 @@ class Settings {
           settings_fields( 'gpalab-slo' );
           $this->custom_do_settings_sections( 'gpalab-slo' );
         ?>
-        <button class="button button-secondary" id="slo-add-mission" type="button" >
-          <?php esc_html_e( 'Add Mission', 'gpalab-slo' ); ?>
-        </button>
-        <?php
-          submit_button();
-        ?>
       </form>
     </div>
     <?php
@@ -151,23 +145,6 @@ class Settings {
     // Create the contents of the tabbed container.
     if ( isset( $missions ) ) {
       foreach ( $missions as $key => $mission ) {
-
-        $page_id = 'page_' . $key;
-
-        add_settings_field(
-          $page_id,
-          null,
-          array( $this, 'add_input' ),
-          'gpalab-slo',
-          'gpalab-slo-settings-' . $key,
-          array(
-            'label_for' => $page_id,
-            'key'       => $key,
-            'field'     => 'page',
-            'option'    => $mission,
-            'type'      => 'hidden',
-          )
-        );
 
         $title_id = 'title_' . $key;
 
@@ -349,7 +326,7 @@ class Settings {
     $value = isset( $option[ $field ] ) ? $option[ $field ] : '';
 
     // Generate the markup for the input field.
-    $input  = '<input class="regular-text" type="' . $type . '" ';
+    $input  = '<input type="' . $type . '" ';
     $input .= 'name="gpalab-slo-settings[' . $key . '][' . $field . ']" ';
     $input .= 'id="' . $id . '" ';
     $input .= 'value="' . $value . '" >';
@@ -456,14 +433,42 @@ class Settings {
       $index = str_replace( 'gpalab-slo-settings-', '', $key );
       $id    = $missions[ $index ]['id'];
 
+      if ( isset( $missions[ $index ]['page'] ) ) {
+        $post_id = esc_html( $missions[ $index ]['page'] );
+        $link    = get_permalink( $post_id );
+
+        $link_text    = __( 'Social link optimizer page created at', 'gpalab-slo' );
+        $instructions = __( 'You can configure the page using the fields below. Use the "Change permalink" field to change the page URL.', 'gpalab-slo' );
+
+        echo '<p class="gpalab-slo-tabpanel-text">' . esc_html( $link_text ) . ': <a href="' . esc_url( $link ) . '">' . esc_url( $link ) . '.</a>';
+        echo '</br>' . esc_html( $instructions ) . '</p>';
+      }
+
       // Hidden input field to store the mission id.
       echo '<input type="hidden" name=' . esc_attr( 'gpalab-slo-settings[' . $index . '][id]' ) . ' value=' . esc_attr( $id ) . '>';
+      echo '<input type="hidden" name=' . esc_attr( 'gpalab-slo-settings[' . $index . '][page]' ) . ' value=' . esc_attr( $post_id ) . '>';
 
       // Render out all the input fields.
       $this->custom_do_settings_fields( $page, $section['id'] );
 
+      echo '<div class="gpalab-slo-settings-form-controls">';
+      echo '<button class="button button-secondary" id="slo-add-mission" type="button" >' . esc_html__( 'Add a Mission', 'gpalab-slo' ) . '</button>';
+      submit_button();
+      echo '</div>';
+
+      echo '<hr style="width:95%;margin:0.5rem auto 1rem">';
+      echo '<strong class="gpalab-slo-danger">' . esc_html__( 'Danger Zone', 'gpalab-slo' ) . '</strong>';
+      echo '<p style="text-align:center">' . esc_html__( 'Warning, altering the below settings can have destructive results. Proceed with caution', 'gpalab-slo' ) . '</p>';
+      echo '<label class="gpalab-slo-label-secondary" for="' . esc_attr( 'permalink-' . $id ) . '">';
+      echo esc_html__( 'Change permalink:', 'gpalab-slo' );
+      echo '<div>';
+      echo '<input class="regular-text" id="' . esc_attr( 'permalink-' . $id ) . '" name="permalink" type="text" value=' . esc_attr( get_post_field( 'post_name', $post_id ) ) . '>';
+      echo '<button class="button button-secondary slo-permalink">' . esc_html__( 'Update Permalink', 'gpalab-slo' ) . '</button>';
+      echo '</div>';
+      echo '</label>';
+
       // Button to remove the current section from the settings array.
-      echo '<button class="button button-secondary slo-remove-mission" data-id=' . esc_attr( $id ) . ' type="button">' . esc_html__( 'Remove This Mission', 'gpalab-slo' ) . '</button>';
+      echo '<button class="button button-link-delete slo-remove-mission" data-id=' . esc_attr( $id ) . ' type="button">' . esc_html__( 'Remove This Mission', 'gpalab-slo' ) . '</button>';
 
       echo '</section>';
     }
