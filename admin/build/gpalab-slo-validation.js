@@ -90,14 +90,14 @@
 /*!******************************************!*\
   !*** ./admin/js/utils/handle-invalid.js ***!
   \******************************************/
-/*! exports provided: getInvalidFields, getLiveRegionErrorMessage, handleFieldErrorMessage, handleInvalidField */
+/*! exports provided: getInvalidFields, getLiveRegionInvalidMessage, handleInvalidFieldMessage, handleInvalidField */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInvalidFields", function() { return getInvalidFields; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getLiveRegionErrorMessage", function() { return getLiveRegionErrorMessage; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "handleFieldErrorMessage", function() { return handleFieldErrorMessage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getLiveRegionInvalidMessage", function() { return getLiveRegionInvalidMessage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "handleInvalidFieldMessage", function() { return handleInvalidFieldMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "handleInvalidField", function() { return handleInvalidField; });
 /* harmony import */ var _validation_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./validation-utils */ "./admin/js/utils/validation-utils.js");
 
@@ -114,7 +114,7 @@ var getInvalidFields = function getInvalidFields() {
  * @param {boolean} isSelect is the field a select element
  */
 
-var getCustomTooltipErrorMessage = function getCustomTooltipErrorMessage(inputName) {
+var getCustomTooltipInvalidMessage = function getCustomTooltipInvalidMessage(inputName) {
   var message = 'Please enter a title.';
 
   switch (inputName) {
@@ -137,7 +137,7 @@ var getCustomTooltipErrorMessage = function getCustomTooltipErrorMessage(inputNa
  */
 
 
-var getLiveRegionErrorMessage = function getLiveRegionErrorMessage() {
+var getLiveRegionInvalidMessage = function getLiveRegionInvalidMessage() {
   var errors = getInvalidFields();
 
   if (!errors.length) {
@@ -171,9 +171,9 @@ var getLiveRegionErrorMessage = function getLiveRegionErrorMessage() {
  * @param {string} message custom error message
  */
 
-var handleFieldErrorMessage = function handleFieldErrorMessage(element) {
-  var tooltipMsg = getCustomTooltipErrorMessage(element.name);
-  var p = getLiveRegionErrorMessage();
+var handleInvalidFieldMessage = function handleInvalidFieldMessage(element) {
+  var tooltipMsg = getCustomTooltipInvalidMessage(element.name);
+  var p = getLiveRegionInvalidMessage();
   element.setCustomValidity(tooltipMsg);
   var formLiveRegion = Object(_validation_utils__WEBPACK_IMPORTED_MODULE_0__["getFormLiveRegion"])(); // Update the live region content.
 
@@ -198,7 +198,7 @@ var handleInvalidField = function handleInvalidField(e) {
   var target = e.target; // Set field as invalid
 
   target.setAttribute('aria-invalid', 'true');
-  handleFieldErrorMessage(target);
+  handleInvalidFieldMessage(target);
   handleInvalidFieldStyling(target);
 };
 
@@ -241,7 +241,7 @@ var handleFieldValidation = function handleFieldValidation(e) {
   var errors = Object(_handle_invalid__WEBPACK_IMPORTED_MODULE_1__["getInvalidFields"])(); // Update the live region content if there are still errors.
 
   if (errors === null || errors === void 0 ? void 0 : errors.length) {
-    var p = Object(_handle_invalid__WEBPACK_IMPORTED_MODULE_1__["getLiveRegionErrorMessage"])();
+    var p = Object(_handle_invalid__WEBPACK_IMPORTED_MODULE_1__["getLiveRegionInvalidMessage"])();
     Object(_validation_utils__WEBPACK_IMPORTED_MODULE_0__["updateLiveRegion"])(formLiveRegion, p, 'notice notice-error gpalab-slo');
   }
 };

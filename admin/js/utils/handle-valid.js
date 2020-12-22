@@ -1,5 +1,5 @@
 import { getFormLiveRegion, handleResetFieldStyling, updateLiveRegion } from './validation-utils';
-import { getInvalidFields, getLiveRegionErrorMessage } from './handle-invalid';
+import { getInvalidFields, getLiveRegionInvalidMessage } from './handle-invalid';
 
 /**
  * Validate a required form field.
@@ -28,7 +28,7 @@ export const handleFieldValidation = e => {
 
   // Update the live region content if there are still errors.
   if ( errors?.length ) {
-    const p = getLiveRegionErrorMessage();
+    const p = getLiveRegionInvalidMessage();
 
     updateLiveRegion( formLiveRegion, p, 'notice notice-error gpalab-slo' );
   }

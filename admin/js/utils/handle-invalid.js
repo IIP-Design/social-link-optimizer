@@ -12,7 +12,7 @@ export const getInvalidFields = () => (
  * @param {string} inputName form field name
  * @param {boolean} isSelect is the field a select element
  */
-const getCustomTooltipErrorMessage = inputName => {
+const getCustomTooltipInvalidMessage = inputName => {
   let message = 'Please enter a title.';
 
   switch ( inputName ) {
@@ -32,7 +32,7 @@ const getCustomTooltipErrorMessage = inputName => {
 /**
  * Construct the live region error message.
  */
-export const getLiveRegionErrorMessage = () => {
+export const getLiveRegionInvalidMessage = () => {
   const errors = getInvalidFields();
 
   if ( !errors.length ) {
@@ -68,9 +68,9 @@ export const getLiveRegionErrorMessage = () => {
  * @param {node} element required form field
  * @param {string} message custom error message
  */
-export const handleFieldErrorMessage = element => {
-  const tooltipMsg = getCustomTooltipErrorMessage( element.name );
-  const p = getLiveRegionErrorMessage();
+export const handleInvalidFieldMessage = element => {
+  const tooltipMsg = getCustomTooltipInvalidMessage( element.name );
+  const p = getLiveRegionInvalidMessage();
 
   element.setCustomValidity( tooltipMsg );
 
@@ -98,7 +98,7 @@ export const handleInvalidField = e => {
 
   // Set field as invalid
   target.setAttribute( 'aria-invalid', 'true' );
-  handleFieldErrorMessage( target );
+  handleInvalidFieldMessage( target );
   handleInvalidFieldStyling( target );
 };
 
