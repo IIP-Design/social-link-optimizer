@@ -252,7 +252,7 @@ var handleFieldValidation = function handleFieldValidation(e) {
 /*!********************************************!*\
   !*** ./admin/js/utils/validation-utils.js ***!
   \********************************************/
-/*! exports provided: addRequiredTitleLabel, setRequiredAttribute, handleResetFieldStyling, insertFormLiveRegion, getFormLiveRegion, updateLiveRegion */
+/*! exports provided: addRequiredTitleLabel, setRequiredAttribute, handleResetFieldStyling, insertFormLiveRegion, getFormLiveRegion, updateLiveRegion, debounce */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -263,6 +263,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "insertFormLiveRegion", function() { return insertFormLiveRegion; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getFormLiveRegion", function() { return getFormLiveRegion; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateLiveRegion", function() { return updateLiveRegion; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "debounce", function() { return debounce; });
 /**
  * Add required to the title field label
  */
@@ -321,6 +322,28 @@ var updateLiveRegion = function updateLiveRegion(element, childNode) {
     element.appendChild(childNode);
   }
 };
+/**
+ * Debounce function.
+ * @param {function} fn the function to debounce
+ */
+
+var debounce = function debounce(fn, delay) {
+  var timeout;
+  return function () {
+    var _this = this;
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    var fnCall = function fnCall() {
+      return fn.apply(_this, args);
+    };
+
+    clearTimeout(timeout);
+    timeout = setTimeout(fnCall, delay);
+  };
+};
 
 /***/ }),
 
@@ -345,7 +368,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var initializeEventListeners = function initializeEventListeners() {
   var form = document.getElementById('post');
-  form.addEventListener('input', _utils_handle_valid__WEBPACK_IMPORTED_MODULE_1__["handleFieldValidation"]);
+  var debounceFieldValidation = Object(_utils_validation_utils__WEBPACK_IMPORTED_MODULE_0__["debounce"])(_utils_handle_valid__WEBPACK_IMPORTED_MODULE_1__["handleFieldValidation"], 500);
+  form.addEventListener('input', debounceFieldValidation);
   form.addEventListener('invalid', _utils_handle_invalid__WEBPACK_IMPORTED_MODULE_2__["handleInvalidField"], true);
 };
 /**

@@ -57,3 +57,18 @@ export const updateLiveRegion = ( element, childNode, classValues = '' ) => {
     element.appendChild( childNode );
   }
 };
+
+/**
+ * Debounce function.
+ * @param {function} fn the function to debounce
+ */
+export const debounce = ( fn, delay ) => {
+  let timeout;
+
+  return function( ...args ) {
+    const fnCall = () => fn.apply( this, args );
+
+    clearTimeout( timeout );
+    timeout = setTimeout( fnCall, delay );
+  };
+};

@@ -1,4 +1,9 @@
-import { addRequiredTitleLabel, insertFormLiveRegion, setRequiredAttribute } from './utils/validation-utils';
+import {
+  addRequiredTitleLabel,
+  debounce,
+  insertFormLiveRegion,
+  setRequiredAttribute,
+} from './utils/validation-utils';
 import { handleFieldValidation } from './utils/handle-valid';
 import { handleInvalidField } from './utils/handle-invalid';
 
@@ -7,8 +12,9 @@ import { handleInvalidField } from './utils/handle-invalid';
  */
 const initializeEventListeners = () => {
   const form = document.getElementById( 'post' );
+  const debounceFieldValidation = debounce( handleFieldValidation, 500 );
 
-  form.addEventListener( 'input', handleFieldValidation );
+  form.addEventListener( 'input', debounceFieldValidation );
   form.addEventListener( 'invalid', handleInvalidField, true );
 };
 
