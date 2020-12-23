@@ -144,6 +144,7 @@ var getLiveRegionInvalidMessage = function getLiveRegionInvalidMessage() {
     return;
   }
 
+  var div = document.createElement('div');
   var p = document.createElement('p');
   var ul = document.createElement('ul');
   var msg = "Please complete the following required field".concat(errors.length > 1 ? 's' : '', ":");
@@ -160,8 +161,9 @@ var getLiveRegionInvalidMessage = function getLiveRegionInvalidMessage() {
       ul.appendChild(li);
     }
   });
-  p.appendChild(ul);
-  return p;
+  div.appendChild(p);
+  div.appendChild(ul);
+  return div;
 };
 /**
  * Set a custom error message.

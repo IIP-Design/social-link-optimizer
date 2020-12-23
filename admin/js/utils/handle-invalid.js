@@ -39,6 +39,7 @@ export const getLiveRegionInvalidMessage = () => {
     return;
   }
 
+  const div = document.createElement( 'div' );
   const p = document.createElement( 'p' );
   const ul = document.createElement( 'ul' );
   const msg = `Please complete the following required field${errors.length > 1 ? 's' : ''}:`;
@@ -56,9 +57,10 @@ export const getLiveRegionInvalidMessage = () => {
     }
   } );
 
-  p.appendChild( ul );
+  div.appendChild( p );
+  div.appendChild( ul );
 
-  return p;
+  return div;
 };
 
 /**

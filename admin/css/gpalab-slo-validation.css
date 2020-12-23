@@ -1,6 +1,7 @@
 /* Live region */
 #gpalab-slo-validation ul {
   list-style: disc;
+  margin-top: 0;
   padding-left: 1rem;
 }
 
