@@ -53,13 +53,16 @@
     n((n.s = 16));
 })([
   function (t, e, n) {
-    var r = n(6),
-      o = n(7),
-      a = n(8),
-      c = n(9);
+    var r = n(7),
+      o = n(8),
+      a = n(9),
+      c = n(10);
     t.exports = function (t) {
       return r(t) || o(t) || a(t) || c();
     };
+  },
+  function (t, e) {
+    t.exports = window.regeneratorRuntime;
   },
   function (t, e) {
     t.exports = function (t, e) {
@@ -71,46 +74,6 @@
   ,
   ,
   ,
-  function (t, e) {
-    !(function () {
-      t.exports = this.regeneratorRuntime;
-    })();
-  },
-  function (t, e, n) {
-    var r = n(1);
-    t.exports = function (t) {
-      if (Array.isArray(t)) return r(t);
-    };
-  },
-  function (t, e) {
-    t.exports = function (t) {
-      if ('undefined' != typeof Symbol && Symbol.iterator in Object(t)) return Array.from(t);
-    };
-  },
-  function (t, e, n) {
-    var r = n(1);
-    t.exports = function (t, e) {
-      if (t) {
-        if ('string' == typeof t) return r(t, e);
-        var n = Object.prototype.toString.call(t).slice(8, -1);
-        return (
-          'Object' === n && t.constructor && (n = t.constructor.name),
-          'Map' === n || 'Set' === n
-            ? Array.from(t)
-            : 'Arguments' === n || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)
-            ? r(t, e)
-            : void 0
-        );
-      }
-    };
-  },
-  function (t, e) {
-    t.exports = function () {
-      throw new TypeError(
-        'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
-      );
-    };
-  },
   function (t, e) {
     function n(t, e, n, r, o, a, c) {
       try {
@@ -136,6 +99,41 @@
           i(void 0);
         });
       };
+    };
+  },
+  function (t, e, n) {
+    var r = n(2);
+    t.exports = function (t) {
+      if (Array.isArray(t)) return r(t);
+    };
+  },
+  function (t, e) {
+    t.exports = function (t) {
+      if ('undefined' != typeof Symbol && Symbol.iterator in Object(t)) return Array.from(t);
+    };
+  },
+  function (t, e, n) {
+    var r = n(2);
+    t.exports = function (t, e) {
+      if (t) {
+        if ('string' == typeof t) return r(t, e);
+        var n = Object.prototype.toString.call(t).slice(8, -1);
+        return (
+          'Object' === n && t.constructor && (n = t.constructor.name),
+          'Map' === n || 'Set' === n
+            ? Array.from(t)
+            : 'Arguments' === n || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)
+            ? r(t, e)
+            : void 0
+        );
+      }
+    };
+  },
+  function (t, e) {
+    t.exports = function () {
+      throw new TypeError(
+        'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
+      );
     };
   },
   ,
@@ -186,9 +184,9 @@
         (window.location.href = ''.concat(n).concat(r).concat(o, '#gpalab-slo-tab-').concat(t)),
           window.location.reload();
       },
-      f = n(5),
+      f = n(1),
       p = n.n(f),
-      b = n(10),
+      b = n(6),
       v = n.n(b),
       m = (function () {
         var t = v()(
@@ -272,6 +270,49 @@
         return function (e, n) {
           return t.apply(this, arguments);
         };
+      })(),
+      h = (function () {
+        var t = v()(
+          p.a.mark(function t(e, n, r) {
+            var o, a, c, i, l;
+            return p.a.wrap(
+              function (t) {
+                for (;;)
+                  switch ((t.prev = t.next)) {
+                    case 0:
+                      return (
+                        (a =
+                          (null === (o = window) || void 0 === o ? void 0 : o.gpalabSloAdmin) ||
+                          {}),
+                        (c = new FormData()).append('action', 'gpalab_update_slo_permalink'),
+                        c.append('security', a.sloNonce),
+                        c.append('permalink', n),
+                        c.append('post_id', e),
+                        (t.prev = 6),
+                        (t.next = 9),
+                        fetch(a.ajaxUrl, { method: 'POST', body: c })
+                      );
+                    case 9:
+                      return (i = t.sent), (t.next = 12), i.json();
+                    case 12:
+                      (l = t.sent), console.log(l), d(r), (t.next = 20);
+                      break;
+                    case 17:
+                      (t.prev = 17), (t.t0 = t.catch(6)), console.error(t.t0);
+                    case 20:
+                    case 'end':
+                      return t.stop();
+                  }
+              },
+              t,
+              null,
+              [[6, 17]]
+            );
+          })
+        );
+        return function (e, n, r) {
+          return t.apply(this, arguments);
+        };
       })();
     (r = document.querySelectorAll('.gpalab-slo-tab-button')).forEach(function (t) {
       t.addEventListener('click', function (t) {
@@ -308,10 +349,19 @@
           y(e, n > 0 ? n - 1 : 0);
         });
       }),
+      document.querySelectorAll('.slo-permalink').forEach(function (t, e) {
+        t.addEventListener('click', function (t) {
+          var n = t.target.dataset,
+            r = n.id,
+            o = n.post,
+            a = document.getElementById('permalink-'.concat(r));
+          h(o, a.value, e);
+        });
+      }),
       (function (t) {
         var e = document.querySelectorAll('.gpalab-slo-tab-button'),
           n = document.querySelectorAll('.gpalab-slo-tabpanel');
-        if (e && n) {
+        if (0 !== e.length && 0 !== n.length) {
           var r = t >= e.length ? 0 : t,
             o = l()(e);
           o.splice(r, 1),
@@ -322,9 +372,10 @@
             });
         }
       })(
-        ((o = window.location.hash),
-        (a = /(gpalab-slo-tab-[0-9]*)/g),
-        ((c = o.match(a) ? o.match(a)[0] : null) ? c.replace('gpalab-slo-tab-', '') : 0) || 0)
+        ((a = /(gpalab-slo-tab-[0-9]*)/g),
+        ((c = (o = window.location.hash).match(a) ? o.match(a)[0] : null)
+          ? c.replace('gpalab-slo-tab-', '')
+          : 0) || 0)
       );
   },
 ]);

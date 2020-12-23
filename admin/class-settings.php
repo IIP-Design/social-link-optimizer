@@ -69,13 +69,20 @@ class Settings {
       <?php
       settings_errors();
 
-      $missions = get_option( 'gpalab-slo-settings' );
-      $title    = __( 'Manage Mission Social Link Pages:', 'gpalab-slo' );
+      $missions    = get_option( 'gpalab-slo-settings' );
+      $title       = __( 'Manage Mission Social Link Pages:', 'gpalab-slo' );
+      $no_missions = __( 'No missions have been added.', 'gpalab-slo' );
 
       // Create the tabs for the tabbed container.
       if ( isset( $missions ) ) {
         echo '<h2>' . esc_html( $title ) . '</h2>';
         echo '<ul class="gpalab-slo-tab-container" role="tablist">';
+
+        if ( empty( $missions ) ) {
+          echo '<p>' . esc_html( $no_missions ) . '</p>';
+          echo '<button class="button button-secondary" id="slo-add-mission" style="margin-left:1rem;align-self: center;" type="button" >';
+          echo esc_html__( 'Add a Mission', 'gpalab-slo' ) . '</button>';
+        }
 
         foreach ( $missions as $key => $mission ) {
           $tab  = '<li class="gpalab-slo-tab" ';

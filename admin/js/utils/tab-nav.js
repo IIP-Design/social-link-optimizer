@@ -64,7 +64,7 @@ export const initializeTabs = index => {
   const panels = document.querySelectorAll( '.gpalab-slo-tabpanel' );
 
   // Abort if no tab buttons or panels present.
-  if ( !btns || !panels ) {
+  if ( btns.length === 0 || panels.length === 0 ) {
     return;
   }
 
