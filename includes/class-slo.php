@@ -134,6 +134,7 @@ class SLO {
     // Ajax hooks.
     $this->loader->add_action( 'wp_ajax_gpalab_add_slo_mission', $plugin_ajax, 'handle_mission_addition' );
     $this->loader->add_action( 'wp_ajax_gpalab_remove_slo_mission', $plugin_ajax, 'handle_mission_removal' );
+    $this->loader->add_action( 'wp_ajax_gpalab_update_slo_permalink', $plugin_ajax, 'handle_permalink_update' );
 
     // Custom post type archive page hooks.
     $this->loader->add_action( 'init', $plugin_archive, 'register_slo_gutenberg_plugins' );

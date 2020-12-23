@@ -1,4 +1,4 @@
-import { addSLOMission, removeSLOMission } from './ajax';
+import { addSLOMission, removeSLOMission, updateSLOPermalink } from './ajax';
 import { selectTab, switchTab } from './tab-nav';
 
 /**
@@ -59,6 +59,19 @@ export const eventListeners = () => {
       const indexAfterRemoval = index > 0 ? index - 1 : 0;
 
       removeSLOMission( id, indexAfterRemoval );
+    } );
+  } );
+
+  // Add event listeners to the Update Permalink buttons.
+  const updatePermalinkBtns = document.querySelectorAll( '.slo-permalink' );
+
+  updatePermalinkBtns.forEach( ( btn, idx ) => {
+    btn.addEventListener( 'click', e => {
+      const { id, post } = e.target.dataset;
+
+      const input = document.getElementById( `permalink-${id}` );
+
+      updateSLOPermalink( post, input.value, idx );
     } );
   } );
 };

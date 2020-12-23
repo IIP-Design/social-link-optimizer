@@ -438,7 +438,7 @@ class Settings {
         $link    = get_permalink( $post_id );
 
         $link_text    = __( 'Social link optimizer page created at', 'gpalab-slo' );
-        $instructions = __( 'You can configure the page using the fields below. Use the "Change permalink" field to change the page URL.', 'gpalab-slo' );
+        $instructions = __( 'You can configure the page using the fields below. Use the "Change permalink" field below to change the page URL.', 'gpalab-slo' );
 
         echo '<p class="gpalab-slo-tabpanel-text">' . esc_html( $link_text ) . ': <a href="' . esc_url( $link ) . '">' . esc_url( $link ) . '.</a>';
         echo '</br>' . esc_html( $instructions ) . '</p>';
@@ -463,7 +463,8 @@ class Settings {
       echo esc_html__( 'Change permalink:', 'gpalab-slo' );
       echo '<div>';
       echo '<input class="regular-text" id="' . esc_attr( 'permalink-' . $id ) . '" name="permalink" type="text" value=' . esc_attr( get_post_field( 'post_name', $post_id ) ) . '>';
-      echo '<button class="button button-secondary slo-permalink">' . esc_html__( 'Update Permalink', 'gpalab-slo' ) . '</button>';
+      echo '<button class="button button-secondary slo-permalink" data-id=' . esc_attr( $id ) . ' data-post=' . esc_attr( $post_id ) . ' type="button">';
+      echo esc_html__( 'Update Permalink', 'gpalab-slo' ) . '</button>';
       echo '</div>';
       echo '</label>';
 
