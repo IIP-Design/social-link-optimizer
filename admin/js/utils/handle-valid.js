@@ -7,9 +7,10 @@ import { getInvalidFields, getLiveRegionInvalidMessage } from './handle-invalid'
  */
 export const handleFieldValidation = e => {
   const { target } = e;
+  const isRequiredField = !!target.attributes.getNamedItem( 'required' );
 
-  // Field remains invalid if empty spaces are entered.
-  if ( target.value.trim() === '' ) {
+  // Return early if empty spaces are entered or if not a required field
+  if ( target.value.trim() === '' || !isRequiredField ) {
     return;
   }
 

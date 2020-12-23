@@ -211,9 +211,10 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 var handleFieldValidation = function handleFieldValidation(e) {
-  var target = e.target; // Field remains invalid if empty spaces are entered.
+  var target = e.target;
+  var isRequiredField = !!target.attributes.getNamedItem('required'); // Return early if empty spaces are entered or if not a required field
 
-  if (target.value.trim() === '') {
+  if (target.value.trim() === '' || !isRequiredField) {
     return;
   } // Reset styling, custom tooltip, etc.
 
