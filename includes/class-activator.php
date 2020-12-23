@@ -39,6 +39,7 @@ class Activator {
    */
   private static function initialize_options() {
     add_option( 'gpalab-slo-settings', array() );
+    add_option( 'gpalab-slo-pages', array() );
   }
 
   /**
