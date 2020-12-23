@@ -1,3 +1,8 @@
+.gpalab-slo-hr {
+  margin: 0.5rem auto 1rem;
+  width: 95%;
+}
+
 .gpalab-slo-tab {
   background-color: #f1f1f1;
   border: 1px solid #ccd0d4;
@@ -81,7 +86,7 @@
 .gpalab-slo-label-secondary {
   align-items: center;
   display: grid;
-  grid-template-columns: 18% 1fr;
+  grid-template-columns: 150px 1fr;
   margin: 0.5rem 1rem;
 }
 

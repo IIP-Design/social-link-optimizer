@@ -440,43 +440,55 @@ class Settings {
       $index = str_replace( 'gpalab-slo-settings-', '', $key );
       $id    = $missions[ $index ]['id'];
 
+      // Render out link to the mission's SLO page.
       if ( isset( $missions[ $index ]['page'] ) ) {
         $post_id = esc_html( $missions[ $index ]['page'] );
         $link    = get_permalink( $post_id );
 
-        $link_text    = __( 'Social link optimizer page created at', 'gpalab-slo' );
-        $instructions = __( 'You can configure the page using the fields below. Use the "Change permalink" field below to change the page URL.', 'gpalab-slo' );
+        $link_text = __( 'Social link optimizer page created at', 'gpalab-slo' );
+        $details   = __( 'You can configure the page using the fields below. Use the "Change permalink" field below to change the page URL.', 'gpalab-slo' );
 
-        echo '<p class="gpalab-slo-tabpanel-text">' . esc_html( $link_text ) . ': <a href="' . esc_url( $link ) . '">' . esc_url( $link ) . '.</a>';
-        echo '</br>' . esc_html( $instructions ) . '</p>';
+        ?>
+        <p class="gpalab-slo-tabpanel-text">
+          <?php echo esc_html( $link_text ); ?>:
+            <a href="<?php echo esc_url( $link ); ?>">
+              <?php echo esc_url( $link ); ?>
+            </a>.
+          </br>
+          <?php echo esc_html( $details ); ?>
+        </p>
+        <?php
       }
 
       // Hidden input field to store the mission id.
-      echo '<input type="hidden" name=' . esc_attr( 'gpalab-slo-settings[' . $index . '][id]' ) . ' value=' . esc_attr( $id ) . '>';
-      echo '<input type="hidden" name=' . esc_attr( 'gpalab-slo-settings[' . $index . '][page]' ) . ' value=' . esc_attr( $post_id ) . '>';
+      ?>
+      <input
+        name=<?php echo esc_attr( 'gpalab-slo-settings[' . $index . '][id]' ); ?>
+        type="hidden"
+        value=<?php echo esc_attr( $id ); ?>
+      >
+      <input
+        name=<?php echo esc_attr( 'gpalab-slo-settings[' . $index . '][page]' ); ?>
+        type="hidden"
+        value=<?php echo esc_attr( $post_id ); ?>
+      >
+      <?php
 
       // Render out all the input fields.
       $this->custom_do_settings_fields( $page, $section['id'] );
 
-      echo '<div class="gpalab-slo-settings-form-controls">';
-      echo '<button class="button button-secondary" id="slo-add-mission" type="button" >' . esc_html__( 'Add a Mission', 'gpalab-slo' ) . '</button>';
-      submit_button();
-      echo '</div>';
+      // Render out the Add Mission & Submit buttons.
+      ?>
+      <div class="gpalab-slo-settings-form-controls">
+        <button class="button button-secondary" id="slo-add-mission" type="button" >
+          <?php echo esc_html__( 'Add a Mission', 'gpalab-slo' ); ?>
+        </button>
+        <?php submit_button(); ?>
+      </div>
+      <?php
 
-      echo '<hr style="width:95%;margin:0.5rem auto 1rem">';
-      echo '<strong class="gpalab-slo-danger">' . esc_html__( 'Danger Zone', 'gpalab-slo' ) . '</strong>';
-      echo '<p style="text-align:center">' . esc_html__( 'Warning, altering the below settings can have destructive results. Proceed with caution', 'gpalab-slo' ) . '</p>';
-      echo '<label class="gpalab-slo-label-secondary" for="' . esc_attr( 'permalink-' . $id ) . '">';
-      echo esc_html__( 'Change permalink:', 'gpalab-slo' );
-      echo '<div>';
-      echo '<input class="regular-text" id="' . esc_attr( 'permalink-' . $id ) . '" name="permalink" type="text" value=' . esc_attr( get_post_field( 'post_name', $post_id ) ) . '>';
-      echo '<button class="button button-secondary slo-permalink" data-id=' . esc_attr( $id ) . ' data-post=' . esc_attr( $post_id ) . ' type="button">';
-      echo esc_html__( 'Update Permalink', 'gpalab-slo' ) . '</button>';
-      echo '</div>';
-      echo '</label>';
-
-      // Button to remove the current section from the settings array.
-      echo '<button class="button button-link-delete slo-remove-mission" data-id=' . esc_attr( $id ) . ' type="button">' . esc_html__( 'Remove This Mission', 'gpalab-slo' ) . '</button>';
+      // Render out the danger section.
+      $this->render_danger_section( $id, $post_id );
 
       echo '</section>';
     }
@@ -510,6 +522,54 @@ class Settings {
       call_user_func( $field['callback'], $field['args'] );
       echo '</label>';
     }
+  }
+
+  /**
+   * Render out the section containing dangerous operations on the settings page.
+   *
+   * @param string $id        The id of the current mission.
+   * @param string $post_id   The WordPress post id of the SLO page for the given mission.
+   */
+  private function render_danger_section( $id, $post_id ) {
+    $title       = __( 'Danger Zone', 'gpalab-slo' );
+    $warning     = __( 'Warning, altering the below settings can have destructive results. Proceed with caution.', 'gpalab-slo' );
+    $perma_label = __( 'Change permalink:', 'gpalab-slo' );
+    $perma_btn   = __( 'Update Permalink', 'gpalab-slo' );
+    $remove_btn  = __( 'Remove This Mission', 'gpalab-slo' );
+
+    ?>
+    <hr class="gpalab-slo-hr">
+    <strong class="gpalab-slo-danger"><?php echo esc_html( $title ); ?></strong>
+    <p style="text-align:center"><?php echo esc_html( $warning ); ?></p>
+    <label class="gpalab-slo-label-secondary" for=<?php echo esc_attr( 'permalink-' . $id ); ?>>
+      <?php echo esc_html( $perma_label ); ?>
+      <div>
+        <input
+          class="regular-text"
+          id=<?php echo esc_attr( 'permalink-' . $id ); ?>
+          name="permalink"
+          type="text"
+          value=<?php echo esc_attr( get_post_field( 'post_name', $post_id ) ); ?>
+        >
+        <button
+          class="button button-secondary slo-permalink"
+          data-id=<?php echo esc_attr( $id ); ?>
+          data-post=<?php echo esc_attr( $post_id ); ?>
+          type="button"
+        >
+          <?php echo esc_html( $perma_btn ); ?>
+        </button>
+      </div>
+    </label>
+    <!-- Button to remove the current section from the settings array. -->
+    <button
+      class="button button-link-delete slo-remove-mission"
+      data-id=<?php echo esc_attr( $id ); ?>
+      type="button"
+    >
+      <?php echo esc_html( $remove_btn ); ?>
+    </button>
+    <?php
   }
 
   /**
