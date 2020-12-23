@@ -130,7 +130,7 @@ class CPT {
   public function gpalab_slo_custom_meta() {
     add_meta_box(
       'gpalab_slo_link',
-      __( 'Add a Link to This Social Post', 'gpalab-slo' ),
+      __( 'Add a Link to This Social Post (required)', 'gpalab-slo' ),
       array( $this, 'add_link_input' ),
       'gpalab-social-link',
       'normal',
@@ -139,7 +139,7 @@ class CPT {
 
     add_meta_box(
       'gpalab_slo_mission',
-      __( 'Select Mission', 'gpalab-slo' ),
+      __( 'Select Mission (required)', 'gpalab-slo' ),
       array( $this, 'add_mission_select' ),
       'gpalab-social-link',
       'side',
@@ -186,9 +186,10 @@ class CPT {
 
     ?>
 
+    <p id="instructions">Example: https://www.website.com</p>
     <p style="display: flex; align-items: center;">
       <label
-        for="gpalab_slo_link"
+        for="gpalab_slo_link_field"
         class="gpa-lab-social-links-row-title"
         style="margin-right: 0.5rem;"
       >
@@ -196,10 +197,11 @@ class CPT {
       </label>
       <input
         type="text"
-        name="gpalab_slo_link" 
-        id="gpalab_slo_link"
+        name="gpalab_slo_link"
+        id="gpalab_slo_link_field"
         style="flex-grow: 1;"
         value="<?php echo esc_url( $link, array( 'http', 'https' ) ); ?>"
+        required
       />
     </p>
 
@@ -238,13 +240,14 @@ class CPT {
     ?>
 
     <label
-      for="<?php echo esc_attr( $meta ); ?>"
+      for="<?php echo esc_attr( $meta ) . '_field'; ?>"
       style="margin-right: 0.5rem;"
     >
       <?php esc_html_e( 'Select a mission:', 'gpalab-slo' ); ?>
       <select
-        id="<?php echo esc_attr( $meta ); ?>"
+        id="<?php echo esc_attr( $meta ) . '_field'; ?>"
         name="<?php echo esc_attr( $meta ); ?>"
+        required
       >
         <option value="" <?php selected( $selected, '' ); ?>>
           <?php echo esc_html( $empty_label ); ?>
@@ -298,7 +301,7 @@ class CPT {
 
     <p style="display: flex; align-items: center;">
       <label
-        for="gpalab_slo_archive"
+        for="gpalab_slo_archive_field"
         class="gpalab-slo-archive-meta-title"
         style="margin-right: 0.5rem;"
       >
@@ -307,7 +310,7 @@ class CPT {
       <input
         type="checkbox"
         name="gpalab_slo_archive"
-        id="gpalab_slo_archive"
+        id="gpalab_slo_archive_field"
         value="true"
         <?php checked( $checkbox_value, 'true' ); ?>
       />
