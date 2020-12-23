@@ -130,7 +130,6 @@ class SLO {
     $this->loader->add_action( 'init', $plugin_admin, 'register_admin_scripts_styles' );
     $this->loader->add_action( 'init', $plugin_admin, 'register_slo_mission_meta' );
     $this->loader->add_action( 'admin_notices', $plugin_admin, 'localize_admin_script_globals' );
-    $this->loader->add_action( 'init', $plugin_validation, 'register_validation_scripts_styles' );
 
     // Ajax hooks.
     $this->loader->add_action( 'wp_ajax_gpalab_add_slo_mission', $plugin_ajax, 'handle_mission_addition' );
@@ -187,6 +186,7 @@ class SLO {
     }
 
     // Required form fields validation hooks.
+    $this->loader->add_action( 'init', $plugin_validation, 'register_validation_scripts_styles' );
     $this->loader->add_action( 'admin_enqueue_scripts', $plugin_validation, 'enqueue_slo_validation' );
   }
 
