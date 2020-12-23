@@ -121,14 +121,6 @@ class Settings {
     if ( isset( $missions ) ) {
 
       foreach ( $missions as $key => $mission ) {
-        register_setting(
-          'gpalab-slo',
-          'gpalab-slo-settings-' . $key,
-          array(
-            'sanitize_callback' => 'sanitize_text_field',
-          )
-        );
-
         add_settings_section(
           'gpalab-slo-settings-' . $key,
           __( 'Manage Mission Social Link Pages:', 'gpalab-slo' ),
