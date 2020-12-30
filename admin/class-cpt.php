@@ -518,4 +518,47 @@ class CPT {
       $wp_admin_bar->remove_node( 'view' );
     }
   }
+
+  /**
+   * Register the 'Archived' post status;
+   *
+   * @since 0.0.1
+   */
+  public function register_archive_status() {
+    /* translators: %s: the number of archived items */
+    $count = _n_noop( 'Archived <span class="count">(%s)</span>', 'Archived <span class="count">(%s)</span>', 'gpalab-slo' );
+
+    register_post_status(
+      'archived',
+      array(
+        'label'                     => __( 'Archived', 'gpalab-slo' ),
+        'label_count'               => $count,
+        'exclude_from_search'       => true,
+        'public'                    => false,
+        'show_in_admin_all_list'    => true,
+        'show_in_admin_status_list' => true,
+      )
+    );
+  }
+
+  /**
+   * Populate the status dropdown in the Publish metabox with an 'Archived' option.
+   *
+   * @since 0.0.1
+   */
+  public function add_archived_to_status_dropdown() {
+    global $post;
+
+    // Do not add the archive status unless the post is a gpalab social link.
+    if ( 'gpalab-social-link' !== $post->post_type ) {
+      return false;
+    }
+
+    echo '<script>';
+    echo 'jQuery(document).ready( function() { jQuery( \'select[name="post_status"]\' ).append( \'<option value="archived">Archived</option>\' );';
+    if ( 'archived' === $post->post_status ) {
+      echo "jQuery( '#post-status-display' ).text( 'Archived' ); jQuery('select[name=\"post_status\"]' ).val('archived');";
+    }
+    echo ' }); </script>';
+  }
 }
