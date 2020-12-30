@@ -534,7 +534,7 @@ class CPT {
         'label'                     => __( 'Archived', 'gpalab-slo' ),
         'label_count'               => $count,
         'exclude_from_search'       => true,
-        'public'                    => false,
+        'public'                    => true,
         'show_in_admin_all_list'    => true,
         'show_in_admin_status_list' => true,
       )

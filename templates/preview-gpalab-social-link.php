@@ -85,16 +85,13 @@ require 'template-parts/header-slo.php';
 
             <?php
 
-            // If the current post is not published, render it at the top of
-            // the grid/list, this allows for the previewing of draft links.
-            if ( 'publish' !== get_post_status( get_the_ID() ) ) {
-              // Retrieve the current link post id.
-              $current_post = get_the_ID();
+            // Get the current post status.
+            $post_status = get_post_status( get_the_ID() );
 
-              // Ignore if the link is set to be archived.
-              if ( 'true' !== get_post_meta( $current_post, 'gpalab_slo_archive', true ) ) {
-                require 'template-parts/social-link-item.php';
-              }
+            // If the current post is not published or archived, render it at the top of
+            // the grid/list, this allows for the previewing of draft links.
+            if ( 'publish' !== $post_status && 'archived' !== $post_status ) {
+              require 'template-parts/social-link-item.php';
             };
 
             // Return the remaining links on the preview page.

@@ -26,11 +26,8 @@ if ( $the_query->have_posts() ) {
   while ( $the_query->have_posts() ) {
     $the_query->the_post();
 
-    // Retrieve the current link post id.
-    $current_post = get_the_ID();
-
     // Skip archived items.
-    if ( 'true' === get_post_meta( $current_post, 'gpalab_slo_archive', true ) ) {
+    if ( 'archived' === get_post_status( get_the_ID() ) ) {
       continue;
     }
 
