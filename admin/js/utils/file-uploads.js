@@ -3,13 +3,50 @@ import { __ } from '@wordpress/i18n';
 /**
  * Updates the value of a mission's hidden avatar field to the selected image id.
  *
- * @param {int} id
+ * @param {string} filename The name of the uploaded file.
+ * @param {int} id The attachment id of the selected mission avatar.
  * @param {string} missionId The id value of the current mission.
  */
-const updateHiddenField = ( id, missionId ) => {
+const updateAvatarSection = ( filename, id, missionId ) => {
+  // Update the value of a mission's hidden avatar field to the selected image id.
   const field = document.getElementById( `slo-avatar-${missionId}` );
 
   field.value = id;
+
+  // Hide the preview image upon change.
+  const preview = document.getElementById( `slo-avatar-preview-${missionId}` );
+
+  if ( preview ) {
+    preview.style.display = 'none';
+  }
+
+  // Update the text of the selection button.
+  const select = document.getElementById( `slo-avatar-manager-${missionId}` );
+
+  if ( !filename ) {
+    select.value = __( 'Select an avatar image', 'gpalab-slo' );
+  } else {
+    select.value = __( 'Change avatar image', 'gpalab-slo' );
+  }
+
+  // Update the text of the avatar placeholder.
+  const placeholder = document.getElementById( `slo-avatar-placeholder-${missionId}` );
+
+  if ( placeholder && filename ) {
+    placeholder.innerText = filename;
+  } else if ( placeholder ) {
+    placeholder.style.display = 'block';
+    placeholder.innerText = __( 'No avatar added', 'gpalab-slo' );
+  }
+
+  // Toggle the visibility of the remove avatar button.
+  const remove = document.getElementById( `slo-avatar-remove-${missionId}` );
+
+  if ( filename ) {
+    remove.style.display = 'block';
+  } else {
+    remove.style.display = 'none';
+  }
 };
 
 /**
@@ -24,9 +61,10 @@ const onClose = ( frame, missionId ) => {
     .get( 'selection' )
     .first();
 
+  const filename = selection?.attributes?.filename;
   const id = selection?.attributes?.id;
 
-  updateHiddenField( id, missionId );
+  updateAvatarSection( filename, id, missionId );
 };
 
 /**
@@ -86,4 +124,8 @@ export const mediaUploader = ( e, id ) => {
   imageFrame.on( 'open', () => onOpen( imageFrame, id ) );
 
   imageFrame.open();
+};
+
+export const removeMedia = id => {
+  updateAvatarSection( '', '', id );
 };

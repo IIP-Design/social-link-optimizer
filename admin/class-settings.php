@@ -550,6 +550,8 @@ class Settings {
       ? __( 'Select an avatar image', 'gpalab-slo' )
       : __( 'Change avatar image', 'gpalab-slo' );
 
+    $remove_style = empty( $mission['avatar'] ) || 'undefined' === $mission['avatar'] ? 'display:none' : 'display:block'
+
     ?>
     <input
       type="hidden"
@@ -561,6 +563,7 @@ class Settings {
       <?php echo esc_html( $media_label ); ?>
       <div class="gpalab-slo-settings-avatar-controls">
         <?php
+        $image = null;
         if ( intval( $avatar ) > 0 ) {
           $image = wp_get_attachment_image(
             $avatar,
@@ -571,12 +574,17 @@ class Settings {
               'id'    => 'slo-avatar-preview-' . $id,
             )
           );
-        } else {
-          $image = '<p class="gpalab-slo-avatar-placeholder">' . __( 'No avatar added', 'gpalab-slo' ) . '</p>';
         }
 
         echo wp_kses( $image, 'post' );
         ?>
+        <p
+          class="gpalab-slo-avatar-placeholder"
+          id=<?php echo esc_attr( 'slo-avatar-placeholder-' . $id ); ?>
+          style=<?php echo esc_attr( $avatar && 'undefined' !== $avatar ? 'display:none;' : 'display:block' ); ?>
+        >
+          <?php esc_html_e( 'No avatar added', 'gpalab-slo' ); ?>
+        </p>
         <input
           type='button'
           class="button-primary gpalab-slo-avatar-media-manager"
@@ -584,6 +592,15 @@ class Settings {
           id=<?php echo esc_attr( 'slo-avatar-manager-' . $id ); ?>
           value="<?php echo esc_attr( $btn_text ); ?>"
         />
+        <button
+          type='button'
+          class="button-secondary gpalab-slo-avatar-remove"
+          data-id=<?php echo esc_attr( $id ); ?>
+          id=<?php echo esc_attr( 'slo-avatar-remove-' . $id ); ?>
+          style=<?php echo esc_attr( $remove_style ); ?>
+        />
+          <?php esc_attr_e( 'Remove avatar image', 'gpalab-slo' ); ?>
+        </button>
       </div>
     </label>
     <?php

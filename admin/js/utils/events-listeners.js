@@ -1,5 +1,5 @@
 import { addSLOMission, removeSLOMission, updateSLOPermalink } from './ajax';
-import { mediaUploader } from './file-uploads';
+import { mediaUploader, removeMedia } from './file-uploads';
 import { selectTab, switchTab } from './tab-nav';
 
 /**
@@ -78,14 +78,25 @@ export const eventListeners = () => {
     } );
   } );
 
-  // Add event listeners to the activate avatar media library uploader.
-  const uploadAvatar = document.querySelectorAll( '.gpalab-slo-avatar-media-manager ' );
+  // Add event listeners to activate avatar media library uploader buttons.
+  const uploadAvatar = document.querySelectorAll( '.gpalab-slo-avatar-media-manager' );
 
   uploadAvatar.forEach( btn => {
     btn.addEventListener( 'click', e => {
       const { id } = e.target.dataset;
 
       mediaUploader( e, id );
+    } );
+  } );
+
+  // Add event listeners to the buttons used to remove a selected avatar image.
+  const removeAvatar = document.querySelectorAll( '.gpalab-slo-avatar-remove' );
+
+  removeAvatar.forEach( btn => {
+    btn.addEventListener( 'click', e => {
+      const { id } = e.target.dataset;
+
+      removeMedia( id );
     } );
   } );
 };

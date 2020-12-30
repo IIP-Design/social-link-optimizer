@@ -113,8 +113,9 @@
   margin: 1rem 0 1.5rem;
 }
 
+button.gpalab-slo-avatar-remove.button-secondary,
 input.gpalab-slo-avatar-media-manager.button-primary {
-  margin-left: 2rem;
+  margin-left: 1.5rem;
 }
 
 button.button.button-link-delete.slo-remove-mission {
