@@ -86,13 +86,18 @@ require 'template-parts/header-slo.php';
             <?php
 
             // Get the current post status.
-            $post_status = get_post_status( get_the_ID() );
+            $post_status   = get_post_status( get_the_ID() );
+            $draft_preview = false;
 
             // If the current post is not published or archived, render it at the top of
             // the grid/list, this allows for the previewing of draft links.
             if ( 'publish' !== $post_status && 'archived' !== $post_status ) {
               require 'template-parts/social-link-item.php';
             };
+
+            if ( 'draft' === $post_status ) {
+              $draft_preview = true;
+            }
 
             // Return the remaining links on the preview page.
             require 'template-parts/social-link-list.php';

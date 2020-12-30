@@ -15,7 +15,7 @@ $args    = array(
   'meta_key'       => 'gpalab_slo_mission',
   'meta_value'     => $selected_mission,
   'meta_compare'   => '=',
-  'posts_per_page' => 18,
+  'posts_per_page' => $draft_preview ? 17 : 18, // Adjust the query if previewing a draft link.
   'paged'          => $globals,
 );
 // phpcs:enable
