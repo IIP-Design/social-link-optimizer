@@ -105,6 +105,10 @@ require 'template-parts/header-slo.php';
           </ul>
 
           <?php
+
+          // Add the load-more button when appropriate.
+          require 'template-parts/load-more.php';
+
         } else {
           the_content( __( 'Continue reading', 'gpalab-slo' ) );
         }
