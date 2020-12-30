@@ -469,6 +469,9 @@ class Settings {
       // Render out all the input fields.
       $this->custom_do_settings_fields( $page, $section['id'] );
 
+      // Render out media uploader to set the mission avatar.
+      $this->render_avatar_uploader( $missions[ $index ], $index, $id );
+
       // Render out the Add Mission & Submit buttons.
       ?>
       <div class="gpalab-slo-settings-form-controls">
@@ -514,6 +517,64 @@ class Settings {
       call_user_func( $field['callback'], $field['args'] );
       echo '</label>';
     }
+  }
+
+  /**
+   * Render out the section that allows users to upload an avatar image.
+   * The selected image id is stored in a hidden field to be submitted when the page is updated.
+   *
+   * @param object $mission   The selected mission's data.
+   * @param string $index     The position of the given mission in the list of missions.
+   * @param string $id        The id of the current mission.
+   *
+   * @since 0.0.1
+   */
+  private function render_avatar_uploader( $mission, $index, $id ) {
+    $avatar      = esc_html( $mission['avatar'] );
+    $media_label = __( 'Mission avatar:', 'gpalab-slo' );
+
+    // Change the text of the upload button if no value saved.
+    $btn_text = empty( $mission['avatar'] ) || 'undefined' === $mission['avatar']
+      ? __( 'Select an avatar image', 'gpalab-slo' )
+      : __( 'Change avatar image', 'gpalab-slo' );
+
+    ?>
+    <input
+      type="hidden"
+      name=<?php echo esc_attr( 'gpalab-slo-settings[' . $index . '][avatar]' ); ?>
+      id=<?php echo esc_attr( 'slo-avatar-' . $id ); ?>
+      value="<?php echo esc_attr( $avatar ); ?>"
+    />
+    <label class="gpalab-slo-label" for=<?php echo esc_attr( 'slo-avatar-manager-' . $id ); ?>>
+      <?php echo esc_html( $media_label ); ?>
+      <div class="gpalab-slo-settings-avatar-controls">
+        <?php
+        if ( intval( $avatar ) > 0 ) {
+          $image = wp_get_attachment_image(
+            $avatar,
+            'thumbnail',
+            false,
+            array(
+              'class' => 'gpalab-slo-avatar-preview',
+              'id'    => 'slo-avatar-preview-' . $id,
+            )
+          );
+        } else {
+          $image = '<p class="gpalab-slo-avatar-placeholder">' . __( 'No avatar added', 'gpalab-slo' ) . '</p>';
+        }
+
+        echo wp_kses( $image, 'post' );
+        ?>
+        <input
+          type='button'
+          class="button-primary gpalab-slo-avatar-media-manager"
+          data-id=<?php echo esc_attr( $id ); ?>
+          id=<?php echo esc_attr( 'slo-avatar-manager-' . $id ); ?>
+          value="<?php echo esc_attr( $btn_text ); ?>"
+        />
+      </div>
+    </label>
+    <?php
   }
 
   /**

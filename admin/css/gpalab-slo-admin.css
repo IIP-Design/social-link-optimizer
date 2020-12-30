@@ -95,6 +95,28 @@
   text-align: center;
 }
 
+.gpalab-slo-avatar-preview {
+  height: 90px;
+  width: auto;
+}
+
+.gpalab-slo-avatar-placeholder {
+  background-color: #f1f1f1;
+  border-radius: 3px;
+  margin: 0;
+  padding: 5.5px 1rem;
+}
+
+.gpalab-slo-settings-avatar-controls {
+  align-items: center;
+  display: flex;
+  margin: 1rem 0 1.5rem;
+}
+
+input.gpalab-slo-avatar-media-manager.button-primary {
+  margin-left: 2rem;
+}
+
 button.button.button-link-delete.slo-remove-mission {
   border-color: #a00a00;
   align-self: flex-start;

@@ -1,4 +1,5 @@
 import { addSLOMission, removeSLOMission, updateSLOPermalink } from './ajax';
+import { mediaUploader } from './file-uploads';
 import { selectTab, switchTab } from './tab-nav';
 
 /**
@@ -72,6 +73,17 @@ export const eventListeners = () => {
       const input = document.getElementById( `permalink-${id}` );
 
       updateSLOPermalink( post, input.value, idx );
+    } );
+  } );
+
+  // Add event listeners to the activate avatar media library uploader.
+  const uploadAvatar = document.querySelectorAll( '.gpalab-slo-avatar-media-manager ' );
+
+  uploadAvatar.forEach( btn => {
+    btn.addEventListener( 'click', e => {
+      const { id } = e.target.dataset;
+
+      mediaUploader( e, id );
     } );
   } );
 };
