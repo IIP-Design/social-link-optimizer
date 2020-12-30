@@ -3,6 +3,7 @@
  * Determines the social link list layout and returns the list heading.
  *
  * @package GPALAB_SLO
+ * @since 0.0.1
  */
 
  // Determine the page layout (i.e., grid or list).

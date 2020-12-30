@@ -3,6 +3,7 @@
  * Renders a list of social link items for SLO page.
  *
  * @package GPALAB_SLO
+ * @since 0.0.1
  */
 
 // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key

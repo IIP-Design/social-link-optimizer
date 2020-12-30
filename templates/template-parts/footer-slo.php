@@ -3,6 +3,7 @@
  * Footer file for GPALab SLO.
  *
  * @package GPALAB_SLO
+ * @since 0.0.1
  */
 
  // Get the path the the plugin's assets.
