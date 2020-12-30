@@ -34,7 +34,7 @@ require 'template-parts/header-slo.php';
       the_post();
       ?>
 
-    <article <?php post_class( 'stack' ); ?> id="post-<?php the_ID(); ?>">
+    <article <?php post_class( 'stack' ); ?>>
 
       <header class="content-header stack">
         
@@ -50,12 +50,17 @@ require 'template-parts/header-slo.php';
         $settings_key  = array_search( $selected_mission, array_column( $slo_settings, 'id' ), true );
         $page_settings = is_numeric( $settings_key ) ? $slo_settings[ $settings_key ] : array();
 
-        $page_title = $selected_mission ? $page_settings['title'] : __( 'All Missions', 'gpalab-slo' );
+        // Render the page mission's identity avatar.
+        require 'template-parts/identity-logo.php';
+
+        // Render the preview page title.
+        $page_title = isset( $selected_mission ) ? $page_settings['title'] : __( 'All Missions', 'gpalab-slo' );
 
         $preview_title = '<h1 class="gpalab-slo-page-title">' . $page_title . ' - Preview</h1>';
 
         echo wp_kses( $preview_title, 'post' );
 
+        // Render the mission social properties.
         require 'template-parts/mission-identity.php';
 
         ?>

@@ -31,12 +31,6 @@ require 'template-parts/header-slo.php';
         
           <?php
 
-          if ( ! empty( get_the_post_thumbnail() ) ) {
-            echo '<div class="identity-logo">';
-            the_post_thumbnail();
-            echo '</div>';
-          }
-
           // Get all mission settings.
           $slo_settings = get_option( 'gpalab-slo-settings' );
 
@@ -47,10 +41,15 @@ require 'template-parts/header-slo.php';
           $settings_key  = array_search( $selected_mission, array_column( $slo_settings, 'id' ), true );
           $page_settings = is_numeric( $settings_key ) ? $slo_settings[ $settings_key ] : array();
 
+          // Render the page mission's identity avatar.
+          require 'template-parts/identity-logo.php';
+
+          // Render the mission title.
           $page_title = isset( $page_settings['title'] ) ? $page_settings['title'] : get_the_title();
 
           echo '<h1 class="gpalab-slo-page-title">' . esc_html( $page_title ) . '</h1>';
 
+          // Render the mission social properties.
           require 'template-parts/mission-identity.php';
 
           ?>
