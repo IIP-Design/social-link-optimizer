@@ -21,25 +21,30 @@ class CPT_List {
    * Add custom columns to the list of social links posts.
    *
    * @param array $defaults  List of default columns.
+   * @return array           List of updated columns.
    *
    * @since 0.0.1
    */
   public function add_custom_columns( $defaults ) {
-    $defaults['gpalab_slo_archive'] = __( 'Archived', 'gpalab-slo' );
-    $defaults['gpalab_slo_mission'] = __( 'Mission', 'gpalab-slo' );
+    $columns = array(
+      'cb'                 => $defaults['cb'],
+      'title'              => $defaults['title'],
+      'gpalab_slo_mission' => __( 'Mission', 'gpalab-slo' ),
+      'date'               => $defaults['date'],
+    );
 
-    return $defaults;
+    return $columns;
   }
 
   /**
    * Make the social links custom post type's columns sortable.
    *
    * @param array $columns  List of default columns.
+   * @return array          List of updated sortable columns.
    *
    * @since 0.0.1
    */
   public function make_custom_columns_sortable( $columns ) {
-    $columns['gpalab_slo_archive'] = __( 'Archived', 'gpalab-slo' );
     $columns['gpalab_slo_mission'] = __( 'Mission', 'gpalab-slo' );
 
     return $columns;
@@ -54,14 +59,6 @@ class CPT_List {
    * @since 0.0.1
    */
   public function populate_custom_columns( $column_name, $post_id ) {
-    // Populate the Archived column.
-    if ( 'gpalab_slo_archive' === $column_name ) {
-      $is_archive     = get_post_meta( $post_id, 'gpalab_slo_archive', true );
-      $human_friendly = 'true' === $is_archive ? 'yes' : 'no';
-
-      echo esc_html( $human_friendly );
-    }
-
     // Populate the Mission column.
     if ( 'gpalab_slo_mission' === $column_name ) {
       // Get all missions.
@@ -81,7 +78,7 @@ class CPT_List {
   /**
    * Filters the social links query by mission.
    *
-   * @param array $query  WordPress query arguments.
+   * @param object $query  WordPress query arguments.
    *
    * @since 0.0.1
    */
@@ -170,6 +167,7 @@ class CPT_List {
    *
    * @param array  $actions  List of action links.
    * @param object $post     WordPress post Object.
+   * @return array           The updated list of action links.
    *
    * @since 0.0.1
    */
