@@ -475,10 +475,22 @@ class Settings {
       // Render out the Add Mission & Submit buttons.
       ?>
       <div class="gpalab-slo-settings-form-controls">
-        <button class="button button-secondary" id="slo-add-mission" type="button" >
+        <button
+          class="button button-secondary slo-add-mission"
+          id=<?php echo esc_attr( 'slo-add-mission-' . $id ); ?>
+          type="button"
+        >
           <?php echo esc_html__( 'Add a Mission', 'gpalab-slo' ); ?>
         </button>
-        <?php submit_button(); ?>
+        <?php
+          submit_button(
+            __( 'Update Mission', 'gpalab-slo' ),
+            'primary',
+            'submit',
+            true,
+            array( 'id' => 'slo-submit-' . $id )
+          );
+        ?>
       </div>
       <?php
 
@@ -582,6 +594,8 @@ class Settings {
    *
    * @param string $id        The id of the current mission.
    * @param string $post_id   The WordPress post id of the SLO page for the given mission.
+   *
+   * @since 0.0.1
    */
   private function render_danger_section( $id, $post_id ) {
     $title       = __( 'Danger Zone', 'gpalab-slo' );
@@ -630,6 +644,8 @@ class Settings {
    *
    * @param array $links  List of plugin action links.
    * @return array        List of plugin action links with added settings link.
+   *
+   * @since 0.0.1
    */
   public function add_settings_link( $links ) {
     $query_params = array(
