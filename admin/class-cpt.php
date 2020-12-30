@@ -146,15 +146,6 @@ class CPT {
       'default'
     );
 
-    add_meta_box(
-      'gpalab_slo_archive',
-      __( 'Archive', 'gpalab-slo' ),
-      array( $this, 'add_archive_checkbox' ),
-      'gpalab-social-link',
-      'side',
-      'low'
-    );
-
     /**
      * The following metaboxes are not used in editing the social link posts,
      * but can cause confusion for users unfamiliar with WordPress.
@@ -276,50 +267,6 @@ class CPT {
   }
 
   /**
-   * Renders the custom metabox used to indicate that a link should be archived.
-   *
-   * @param object $post  WordPress post Object.
-   *
-   * @since 0.0.1
-   */
-  public function add_archive_checkbox( $post ) {
-    wp_nonce_field( basename( __FILE__ ), 'gpalab_slo_nonce' );
-
-    $is_archived    = get_post_meta( $post->ID, 'gpalab_slo_archive', true );
-    $checkbox_value = ( isset( $is_archived ) && 'true' === $is_archived ) ? 'true' : 'false';
-
-    ?>
-
-    <p>
-      <?php
-      echo wp_kses(
-        __( 'Archive this item if you do <strong>not</strong> want it displayed on the social bio page.', 'gpalab-slo' ),
-        array( 'strong' => array() )
-      );
-      ?>
-    </p>
-
-    <p style="display: flex; align-items: center;">
-      <label
-        for="gpalab_slo_archive_field"
-        class="gpalab-slo-archive-meta-title"
-        style="margin-right: 0.5rem;"
-      >
-        <?php esc_html_e( 'Set as archive:', 'gpalab-slo' ); ?>
-      </label>
-      <input
-        type="checkbox"
-        name="gpalab_slo_archive"
-        id="gpalab_slo_archive_field"
-        value="true"
-        <?php checked( $checkbox_value, 'true' ); ?>
-      />
-    </p>
-
-    <?php
-  }
-
-  /**
    * Save the custom meta data.
    *
    * @param int $post_id   WordPress post id.
@@ -360,16 +307,6 @@ class CPT {
         'gpalab_slo_mission',
         sanitize_text_field( wp_unslash( $_POST['gpalab_slo_mission'] ) )
       );
-    }
-
-    if ( isset( $_POST['gpalab_slo_archive'] ) ) {
-      update_post_meta(
-        $post_id,
-        'gpalab_slo_archive',
-        sanitize_text_field( wp_unslash( $_POST['gpalab_slo_archive'] ) )
-      );
-    } else {
-      delete_post_meta( $post_id, 'gpalab_slo_archive' );
     }
   }
 
