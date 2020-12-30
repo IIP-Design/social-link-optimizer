@@ -11,6 +11,7 @@
 $globals = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 $args    = array(
   'post_type'      => 'gpalab-social-link',
+  'post_status'    => 'publish', // Skip archived items.
   'meta_key'       => 'gpalab_slo_mission',
   'meta_value'     => $selected_mission,
   'meta_compare'   => '=',
@@ -25,11 +26,6 @@ if ( $the_query->have_posts() ) {
 
   while ( $the_query->have_posts() ) {
     $the_query->the_post();
-
-    // Skip archived items.
-    if ( 'archived' === get_post_status( get_the_ID() ) ) {
-      continue;
-    }
 
     require 'social-link-item.php';
   }
