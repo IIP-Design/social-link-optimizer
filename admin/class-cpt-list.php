@@ -231,7 +231,7 @@ class CPT_List {
    *
    * @since 0.0.1
    */
-  public function disable_link_actions( $actions = array(), $post = null ) {
+  public function edit_link_actions( $actions = array(), $post = null ) {
 
     // If the page template is not an gpalab-social-link post, return all actions.
     if ( 'gpalab-social-link' !== $post->post_type ) {
@@ -248,8 +248,38 @@ class CPT_List {
       unset( $actions['inline hide-if-no-js'] );
     }
 
+    // If on the list of all or published links, add a link to archive the given link.
+    if ( 'archived' !== get_query_var( 'post_status' ) && 'trash' !== get_query_var( 'post_status' ) ) {
+      if ( ! isset( $actions['archive'] ) ) {
+        $nonce = wp_create_nonce( 'gpalab-archive-link' );
+        $url   = admin_url( "edit.php?post_type=gpalab-social-link&update_id={$post->ID}&_wpnonce=$nonce" );
+
+        $actions['archive'] = '<a href=' . esc_url( $url ) . '>' . esc_html__( 'Archive', 'gpalab-slo' ) . '</a>';
+      }
+    }
+
     // Return the set of links without the Edit, Quick Edit, or Trash actions.
     return $actions;
+  }
+
+  /**
+   * Handle archive the given link when the archive link is clicked.
+   *
+   * @since 0.0.1
+   */
+  public function handle_archive_link() {
+    $nonce = isset( $_REQUEST['_wpnonce'] )
+      ? sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) )
+      : null;
+
+    if ( wp_verify_nonce( $nonce, 'gpalab-archive-link' ) && isset( $_REQUEST['update_id'] ) ) {
+      wp_update_post(
+        array(
+          'ID'          => sanitize_text_field( wp_unslash( $_REQUEST['update_id'] ) ),
+          'post_status' => 'archived',
+        )
+      );
+    }
   }
 
   /**
