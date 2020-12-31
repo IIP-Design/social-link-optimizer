@@ -157,7 +157,6 @@ class SLO {
     $this->loader->add_filter( 'parse_query', $plugin_cpt_list, 'filter_social_links_by_mission' );
     $this->loader->add_filter( 'post_row_actions', $plugin_cpt_list, 'edit_link_actions', 10, 2 );
     $this->loader->add_action( 'load-edit.php', $plugin_cpt_list, 'handle_archive_link' );
-    $this->loader->add_action( 'pre_get_posts', $plugin_cpt_list, 'exclude_archived_links' );
     $this->loader->add_filter( 'bulk_actions-edit-gpalab-social-link', $plugin_cpt_list, 'add_custom_bulk_actions' );
     $this->loader->add_filter( 'handle_bulk_actions-edit-gpalab-social-link', $plugin_cpt_list, 'handle_bulk_archive', 10, 3 );
     $this->loader->add_action( 'admin_notices', $plugin_cpt_list, 'show_archive_notice' );

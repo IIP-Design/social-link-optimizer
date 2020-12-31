@@ -472,7 +472,7 @@ class CPT {
         'label_count'               => $count,
         'exclude_from_search'       => true,
         'public'                    => true,
-        'show_in_admin_all_list'    => true,
+        'show_in_admin_all_list'    => false,
         'show_in_admin_status_list' => true,
       )
     );
