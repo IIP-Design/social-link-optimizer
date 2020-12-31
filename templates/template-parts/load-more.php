@@ -1,6 +1,6 @@
 <?php
 /**
- * Renders an identity logo for SLO page.
+ * Renders a load more button for SLO page.
  *
  * @package GPALAB_SLO
  * @since 0.0.1
