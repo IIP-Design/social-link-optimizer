@@ -163,6 +163,66 @@ class CPT_List {
   }
 
   /**
+   * Add the ability to archive multiple links at once.
+   *
+   * @param array $bulk_actions   A list of available actions to apply to selected posts.
+   * @return array                The list of available actions with an 'archive' option added.
+   *
+   * @since 0.0.1
+   */
+  public function add_custom_bulk_actions( $bulk_actions ) {
+    if ( 'archived' !== get_query_var( 'post_status' ) && 'trash' !== get_query_var( 'post_status' ) ) {
+      $bulk_actions['archive'] = __( 'Archive Links', 'gpalab-slo' );
+    }
+
+    return $bulk_actions;
+  }
+
+  /**
+   * Archives the selected posts when the 'Archive Links' bulk action is selected.
+   *
+   * @param string $redirect_url  The URL the user will be sent to upon completion of the action.
+   * @param string $action        The selected bulk action.
+   * @param array  $post_ids      The list of selected posts.
+   * @return string               The update redirect URL the user will go upon completion.
+   *
+   * @since 0.0.1
+   */
+  public function handle_bulk_archive( $redirect_url, $action, $post_ids ) {
+    if ( 'archive' === $action ) {
+      foreach ( $post_ids as $post_id ) {
+        wp_update_post(
+          array(
+            'ID'          => $post_id,
+            'post_status' => 'archived',
+          )
+        );
+      }
+      $redirect_url = add_query_arg( 'archived-links', count( $post_ids ), $redirect_url );
+    }
+
+    return $redirect_url;
+  }
+
+  /**
+   * Shows a notification when social links are archived.
+   *
+   * @since 0.0.1
+   */
+  public function show_archive_notice() {
+    /* translators: %d: the number of links that were archived */
+    $notice = __( 'Archived %d links.', 'gpalab-slo' );
+
+    // phpcs:disable WordPress.Security.NonceVerification.Recommended
+    if ( ! empty( $_REQUEST['archived-links'] ) ) {
+      $num_changed = (int) $_REQUEST['archived-links'];
+
+      printf( '<div id="message" class="updated notice is-dismissable"><p>' . esc_html( $notice ) . '</p></div>', esc_html( $num_changed ) );
+    }
+    // phpcs:enable
+  }
+
+  /**
    * Removes the View and Quick Edit action buttons from social link posts.
    *
    * @param array  $actions  List of action links.
