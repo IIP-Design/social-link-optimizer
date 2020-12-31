@@ -156,6 +156,7 @@ class SLO {
     $this->loader->add_action( 'restrict_manage_posts', $plugin_cpt_list, 'add_mission_filter_dropdown' );
     $this->loader->add_filter( 'parse_query', $plugin_cpt_list, 'filter_social_links_by_mission' );
     $this->loader->add_filter( 'post_row_actions', $plugin_cpt_list, 'disable_link_actions', 10, 2 );
+    $this->loader->add_action( 'pre_get_posts', $plugin_cpt_list, 'exclude_archived_links' );
 
     // Settings page hooks.
     $this->loader->add_action( 'admin_menu', $plugin_settings, 'add_settings_page' );

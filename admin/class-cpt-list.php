@@ -191,4 +191,31 @@ class CPT_List {
     // Return the set of links without the Edit, Quick Edit, or Trash actions.
     return $actions;
   }
+
+  /**
+   * Modifies the main WordPress query to remove archived links from the all social links list.
+   *
+   * @param object $query  The main WordPress query.
+   * @return object        An updated WP query excluding archived social links.
+   *
+   * @since 0.0.1
+   */
+  public function exclude_archived_links( $query ) {
+    if ( ! is_admin() ) {
+      return $query;
+    }
+
+    global $pagenow;
+
+    if (
+      'edit.php' === $pagenow &&
+      get_query_var( 'post_type' ) &&
+      'gpalab-social-link' === get_query_var( 'post_type' ) &&
+      ! get_query_var( 'post_status' )
+    ) {
+      $query->set( 'post_status', array( 'draft', 'future', 'pending', 'publish' ) );
+    }
+
+    return $query;
+  }
 }
