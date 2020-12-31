@@ -73,12 +73,78 @@ class Dashboard {
     );
 
     ?>
-    <div>
+    <div class="inside">
       <a href="<?php echo esc_url( $url ); ?>">
         <p><?php echo esc_html( $listing ); ?></p>
       </a>
       <p><?php echo esc_html( $preferred ); ?></p>
+      <form class="initial-form hide-if-no-js">
+      <div style="margin:0.75rem 0;">
+        <?php $this->add_mission_select( $selected ); ?>
+      </div>
+      <?php
+        submit_button(
+          __( 'Set Your Mission', 'gpalab-slo' ),
+          'primary',
+          'submit',
+          true,
+          array( 'id' => 'gpalab-slo-set-mission' )
+        );
+      ?>
+      </form>
     </div> 
     <?php
+  }
+
+  /**
+   * Renders the contents of the legacy metabox.
+   *
+   * @param string $selected   The unique identifier for the selected mission.
+   *
+   * @since 0.0.1
+   */
+  private function add_mission_select( $selected ) {
+    // Load in possible HTTP responses.
+    include_once GPALAB_SLO_DIR . 'admin/class-cpt.php';
+    $cpt = new CPT( $this->plugin_name, $this->version );
+
+    $missions = get_option( 'gpalab-slo-settings' );
+
+    $cpt->populate_mission_select( $selected, $missions, 'gpalab_slo_preferred_mission' );
+  }
+
+  /**
+   * Loads the JavaScript required by the SLO dashboard widget.
+   *
+   * @param string $hook   Name of the current page.
+   *
+   * @since 0.0.1
+   */
+  public function enqueue_widget_scripts( $hook ) {
+    if ( 'index.php' === $hook ) {
+
+      $script_asset = require GPALAB_SLO_DIR . 'admin/build/gpalab-slo-dashboard.asset.php';
+
+      wp_enqueue_script(
+        'gpalab-slo-dashboard-js',
+        GPALAB_SLO_URL . 'admin/build/gpalab-slo-dashboard.js',
+        plugin_dir_url( __FILE__ ) . 'path/to/script.js',
+        $script_asset['dependencies'],
+        $script_asset['version'],
+        true
+      );
+
+      // Pass required PHP values as variables to admin JS.
+      wp_localize_script(
+        'gpalab-slo-dashboard-js',
+        'gpalabSloDashboard',
+        array(
+          'ajaxUrl'          => admin_url( 'admin-ajax.php' ),
+          'dashNonce'        => wp_create_nonce( 'gpalab_slo_dashboard_nonce' ),
+          'currentUser'      => get_current_user_id(),
+          'currentSelection' => get_user_meta( get_current_user_id(), 'gpalab_slo_preferred_mission', true ),
+        )
+      );
+    }
   }
 }

@@ -136,6 +136,7 @@ class SLO {
     // Ajax hooks.
     $this->loader->add_action( 'wp_ajax_gpalab_add_slo_mission', $plugin_ajax, 'handle_mission_addition' );
     $this->loader->add_action( 'wp_ajax_gpalab_remove_slo_mission', $plugin_ajax, 'handle_mission_removal' );
+    $this->loader->add_action( 'wp_ajax_gpalab_slo_user_mission', $plugin_ajax, 'handle_user_mission_selection' );
 
     // Custom post type archive page hooks.
     $this->loader->add_action( 'init', $plugin_archive, 'register_slo_gutenberg_plugins' );
@@ -165,6 +166,7 @@ class SLO {
 
     // Adds a widget to the WordPress user dashboard.
     $this->loader->add_action( 'wp_dashboard_setup', $plugin_dashboard, 'slo_dashboard_widget' );
+    $this->loader->add_action( 'admin_enqueue_scripts', $plugin_dashboard, 'enqueue_widget_scripts' );
 
     // Settings page hooks.
     $this->loader->add_action( 'admin_menu', $plugin_settings, 'add_settings_page' );
