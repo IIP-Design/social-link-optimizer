@@ -37,6 +37,11 @@ class Dashboard {
    * Adds a Social Link Optimizer widget to the user's dashboard.
    */
   public function slo_dashboard_widget() {
+    // Only show the widget if user can edit social links.
+    if ( ! current_user_can( 'gpalab_slo_edit_links' ) ) {
+      return;
+    }
+
     wp_add_dashboard_widget(
       'gpalab-slo-dashboard-widget',
       __( 'Social Link Optimizer', 'gpalab-slo' ),
