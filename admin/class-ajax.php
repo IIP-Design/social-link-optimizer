@@ -182,6 +182,7 @@ class Ajax {
     );
 
     wp_update_post( $args );
+    update_post_meta( $post_id, '_wp_page_template', 'archive-gpalab-social-link.php' );
   }
 
   /**
