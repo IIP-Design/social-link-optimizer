@@ -1,3 +1,4 @@
+import { ready } from './utils/document-ready';
 import {
   addRequiredTitleLabel,
   debounce,
@@ -16,18 +17,6 @@ const initializeEventListeners = () => {
 
   form.addEventListener( 'input', debounceFieldValidation );
   form.addEventListener( 'invalid', handleInvalidField, true );
-};
-
-/**
- * Document ready
- * @param {function} callback
- */
-const ready = callback => {
-  if ( document.readyState !== 'loading' ) {
-    return callback();
-  }
-
-  document.addEventListener( 'DOMContentLoaded', callback );
 };
 
 ready( () => {
