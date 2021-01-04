@@ -80,7 +80,7 @@ class Dashboard {
     ?>
     <div class="inside">
       <a href="<?php echo esc_url( $url ); ?>">
-        <p><?php echo esc_html( $listing ); ?></p>
+        <?php echo esc_html( $listing ); ?>
       </a>
       <p><?php echo esc_html( $preferred ); ?></p>
       <form class="initial-form hide-if-no-js">
