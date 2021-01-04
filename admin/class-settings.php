@@ -53,6 +53,7 @@ class Settings {
       return;
     }
 
+    wp_enqueue_media();
     wp_enqueue_script( 'gpalab-slo-admin-js' );
     wp_enqueue_style( 'gpalab-slo-admin-css' );
   }
