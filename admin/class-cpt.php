@@ -235,7 +235,7 @@ class CPT {
    */
   public function populate_mission_select( $selected, $missions, $meta ) {
     // Show 'All Posts' as the default option for the SLO page template dropdown.
-    $empty_label = '_gpalab_slo_mission_select' === $meta ? __( 'All Posts', 'gpalab-slo' ) : '';
+    $empty_label = '_gpalab_slo_mission_select' !== $meta ? __( 'All Missions', 'gpalab-slo' ) : '';
 
     ?>
 

@@ -185,6 +185,40 @@ class Ajax {
   }
 
   /**
+   * Saves the mission that a given user would like to see when visiting the Social Links page.
+   *
+   * @since 0.0.1
+   */
+  public function handle_user_mission_selection() {
+    // The following rules are handled by the slo_verify_nonce function and hence can be safely ignored.
+    // phpcs:disable WordPress.Security.NonceVerification.Missing
+    // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+    // phpcs:disable WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+    // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+    $this->slo_verify_nonce( $_POST['security'] );
+
+    $mission = null;
+    $user    = null;
+
+    if ( isset( $_POST['mission_id'] ) ) {
+      $mission = sanitize_text_field( wp_unslash( $_POST['mission_id'] ) );
+    }
+
+    if ( isset( $_POST['user_id'] ) ) {
+      $user = sanitize_text_field( wp_unslash( $_POST['user_id'] ) );
+    }
+    // phpcs:enable
+
+    if ( ! empty( $user ) ) {
+      update_user_meta(
+        $user,
+        'gpalab_slo_preferred_mission',
+        $mission
+      );
+    }
+  }
+
+  /**
    * Checks that a security nonce is set, valid, and from a permitted referrer.
    *
    * @param string $security   A nonce provided in the Ajax call.

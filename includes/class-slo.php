@@ -99,6 +99,7 @@ class SLO {
     require_once GPALAB_SLO_DIR . 'admin/class-ajax.php';
     require_once GPALAB_SLO_DIR . 'admin/class-cpt.php';
     require_once GPALAB_SLO_DIR . 'admin/class-cpt-list.php';
+    require_once GPALAB_SLO_DIR . 'admin/class-dashboard.php';
     require_once GPALAB_SLO_DIR . 'admin/class-permissions.php';
     require_once GPALAB_SLO_DIR . 'admin/class-settings.php';
     require_once GPALAB_SLO_DIR . 'admin/class-ure.php';
@@ -119,6 +120,7 @@ class SLO {
     $plugin_ajax       = new SLO\Ajax( $this->get_plugin_name(), $this->get_version() );
     $plugin_cpt        = new SLO\CPT( $this->get_plugin_name(), $this->get_version() );
     $plugin_cpt_list   = new SLO\CPT_List( $this->get_plugin_name(), $this->get_version() );
+    $plugin_dashboard  = new SLO\Dashboard( $this->get_plugin_name(), $this->get_version() );
     $plugin_roles      = new SLO\Permissions( $this->get_plugin_name(), $this->get_version() );
     $plugin_settings   = new SLO\Settings( $this->get_plugin_name(), $this->get_version() );
     $plugin_ure        = new SLO\URE( $this->get_plugin_name(), $this->get_version() );
@@ -133,6 +135,7 @@ class SLO {
     // Ajax hooks.
     $this->loader->add_action( 'wp_ajax_gpalab_add_slo_mission', $plugin_ajax, 'handle_mission_addition' );
     $this->loader->add_action( 'wp_ajax_gpalab_remove_slo_mission', $plugin_ajax, 'handle_mission_removal' );
+    $this->loader->add_action( 'wp_ajax_gpalab_slo_user_mission', $plugin_ajax, 'handle_user_mission_selection' );
     $this->loader->add_action( 'wp_ajax_gpalab_update_slo_permalink', $plugin_ajax, 'handle_permalink_update' );
 
     // Custom post type hooks.
@@ -154,6 +157,10 @@ class SLO {
     $this->loader->add_action( 'restrict_manage_posts', $plugin_cpt_list, 'add_mission_filter_dropdown' );
     $this->loader->add_filter( 'parse_query', $plugin_cpt_list, 'filter_social_links_by_mission' );
     $this->loader->add_filter( 'post_row_actions', $plugin_cpt_list, 'disable_link_actions', 10, 2 );
+
+    // Adds a widget to the WordPress user dashboard.
+    $this->loader->add_action( 'wp_dashboard_setup', $plugin_dashboard, 'slo_dashboard_widget' );
+    $this->loader->add_action( 'admin_enqueue_scripts', $plugin_dashboard, 'enqueue_widget_scripts' );
 
     // Settings page hooks.
     $this->loader->add_action( 'admin_menu', $plugin_settings, 'add_settings_page' );
