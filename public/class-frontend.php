@@ -138,6 +138,11 @@ class Frontend {
       array( 'class' => 'gpalab-slo-thumbnail' )
     );
 
+    // Skip the item if it lacks an image and the layout is set to grid.
+    if ( $is_grid && empty( $thumbnail ) ) {
+      return;
+    }
+
     $item_photo = $this->linkify( $thumbnail, get_permalink() );
 
     $hide_visually_class = $is_grid ? 'hide-visually' : '';

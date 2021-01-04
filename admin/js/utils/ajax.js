@@ -63,6 +63,38 @@ export const removeSLOMission = async ( id, index ) => {
 };
 
 /**
+ * Set a given user's default mission.
+ *
+ * @param {string} id     The id of the mission to associate with the user.
+ * @param {number} index  The index of the tab that should show after reload.
+ */
+export const setPreferredMission = async missionId => {
+  // Get values provided to the client by the server
+  const fromPHP = window?.gpalabSloDashboard || {};
+
+  const formData = new FormData();
+
+  formData.append( 'action', 'gpalab_slo_user_mission' );
+  formData.append( 'security', fromPHP.dashNonce );
+  formData.append( 'mission_id', missionId );
+  formData.append( 'user_id', fromPHP.currentUser );
+
+  try {
+    const response = await fetch( fromPHP.ajaxUrl, {
+      method: 'POST',
+      body: formData,
+    } );
+
+    const result = await response.json();
+
+    console.log( result );
+    window.location.reload();
+  } catch ( err ) {
+    console.error( err );
+  }
+};
+
+/**
  * Update the post_name (i.e. permalink) of a given WordPress post.
  *
  * @param {string} postId     The id of a WordPress SLO page.
