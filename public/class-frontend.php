@@ -61,7 +61,7 @@ class Frontend {
     }
 
     // Scripts.
-    if ( ! $is_slo_template ) {
+    if ( ! $is_slo_template && ! $is_slo_preview ) {
       return;
     }
 

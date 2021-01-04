@@ -146,15 +146,6 @@ class CPT {
       'default'
     );
 
-    add_meta_box(
-      'gpalab_slo_archive',
-      __( 'Archive', 'gpalab-slo' ),
-      array( $this, 'add_archive_checkbox' ),
-      'gpalab-social-link',
-      'side',
-      'low'
-    );
-
     /**
      * The following metaboxes are not used in editing the social link posts,
      * but can cause confusion for users unfamiliar with WordPress.
@@ -276,50 +267,6 @@ class CPT {
   }
 
   /**
-   * Renders the custom metabox used to indicate that a link should be archived.
-   *
-   * @param object $post  WordPress post Object.
-   *
-   * @since 0.0.1
-   */
-  public function add_archive_checkbox( $post ) {
-    wp_nonce_field( basename( __FILE__ ), 'gpalab_slo_nonce' );
-
-    $is_archived    = get_post_meta( $post->ID, 'gpalab_slo_archive', true );
-    $checkbox_value = ( isset( $is_archived ) && 'true' === $is_archived ) ? 'true' : 'false';
-
-    ?>
-
-    <p>
-      <?php
-      echo wp_kses(
-        __( 'Archive this item if you do <strong>not</strong> want it displayed on the social bio page.', 'gpalab-slo' ),
-        array( 'strong' => array() )
-      );
-      ?>
-    </p>
-
-    <p style="display: flex; align-items: center;">
-      <label
-        for="gpalab_slo_archive_field"
-        class="gpalab-slo-archive-meta-title"
-        style="margin-right: 0.5rem;"
-      >
-        <?php esc_html_e( 'Set as archive:', 'gpalab-slo' ); ?>
-      </label>
-      <input
-        type="checkbox"
-        name="gpalab_slo_archive"
-        id="gpalab_slo_archive_field"
-        value="true"
-        <?php checked( $checkbox_value, 'true' ); ?>
-      />
-    </p>
-
-    <?php
-  }
-
-  /**
    * Save the custom meta data.
    *
    * @param int $post_id   WordPress post id.
@@ -360,16 +307,6 @@ class CPT {
         'gpalab_slo_mission',
         sanitize_text_field( wp_unslash( $_POST['gpalab_slo_mission'] ) )
       );
-    }
-
-    if ( isset( $_POST['gpalab_slo_archive'] ) ) {
-      update_post_meta(
-        $post_id,
-        'gpalab_slo_archive',
-        sanitize_text_field( wp_unslash( $_POST['gpalab_slo_archive'] ) )
-      );
-    } else {
-      delete_post_meta( $post_id, 'gpalab_slo_archive' );
     }
   }
 
@@ -517,5 +454,48 @@ class CPT {
     if ( is_admin() && 'gpalab-social-link' === get_current_screen()->post_type ) {
       $wp_admin_bar->remove_node( 'view' );
     }
+  }
+
+  /**
+   * Register the 'Archived' post status;
+   *
+   * @since 0.0.1
+   */
+  public function register_archive_status() {
+    /* translators: %s: the number of archived items */
+    $count = _n_noop( 'Archived <span class="count">(%s)</span>', 'Archived <span class="count">(%s)</span>', 'gpalab-slo' );
+
+    register_post_status(
+      'archived',
+      array(
+        'label'                     => __( 'Archived', 'gpalab-slo' ),
+        'label_count'               => $count,
+        'exclude_from_search'       => true,
+        'public'                    => true,
+        'show_in_admin_all_list'    => false,
+        'show_in_admin_status_list' => true,
+      )
+    );
+  }
+
+  /**
+   * Populate the status dropdown in the Publish metabox with an 'Archived' option.
+   *
+   * @since 0.0.1
+   */
+  public function add_archived_to_status_dropdown() {
+    global $post;
+
+    // Do not add the archive status unless the post is a gpalab social link.
+    if ( 'gpalab-social-link' !== $post->post_type ) {
+      return false;
+    }
+
+    echo '<script>';
+    echo 'jQuery(document).ready( function() { jQuery( \'select[name="post_status"]\' ).append( \'<option value="archived">Archived</option>\' );';
+    if ( 'archived' === $post->post_status ) {
+      echo "jQuery( '#post-status-display' ).text( 'Archived' ); jQuery('select[name=\"post_status\"]' ).val('archived');";
+    }
+    echo ' }); </script>';
   }
 }

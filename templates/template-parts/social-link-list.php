@@ -11,10 +11,11 @@
 $globals = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 $args    = array(
   'post_type'      => 'gpalab-social-link',
+  'post_status'    => 'publish', // Skip archived items.
   'meta_key'       => 'gpalab_slo_mission',
   'meta_value'     => $selected_mission,
   'meta_compare'   => '=',
-  'posts_per_page' => 18,
+  'posts_per_page' => $draft_preview ? 17 : 18, // Adjust the query if previewing a draft link.
   'paged'          => $globals,
 );
 // phpcs:enable
@@ -25,14 +26,6 @@ if ( $the_query->have_posts() ) {
 
   while ( $the_query->have_posts() ) {
     $the_query->the_post();
-
-    // Retrieve the current link post id.
-    $current_post = get_the_ID();
-
-    // Skip archived items.
-    if ( 'true' === get_post_meta( $current_post, 'gpalab_slo_archive', true ) ) {
-      continue;
-    }
 
     require 'social-link-item.php';
   }

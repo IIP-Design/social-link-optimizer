@@ -21,25 +21,30 @@ class CPT_List {
    * Add custom columns to the list of social links posts.
    *
    * @param array $defaults  List of default columns.
+   * @return array           List of updated columns.
    *
    * @since 0.0.1
    */
   public function add_custom_columns( $defaults ) {
-    $defaults['gpalab_slo_archive'] = __( 'Archived', 'gpalab-slo' );
-    $defaults['gpalab_slo_mission'] = __( 'Mission', 'gpalab-slo' );
+    $columns = array(
+      'cb'                 => $defaults['cb'],
+      'title'              => $defaults['title'],
+      'gpalab_slo_mission' => __( 'Mission', 'gpalab-slo' ),
+      'date'               => $defaults['date'],
+    );
 
-    return $defaults;
+    return $columns;
   }
 
   /**
    * Make the social links custom post type's columns sortable.
    *
    * @param array $columns  List of default columns.
+   * @return array          List of updated sortable columns.
    *
    * @since 0.0.1
    */
   public function make_custom_columns_sortable( $columns ) {
-    $columns['gpalab_slo_archive'] = __( 'Archived', 'gpalab-slo' );
     $columns['gpalab_slo_mission'] = __( 'Mission', 'gpalab-slo' );
 
     return $columns;
@@ -54,14 +59,6 @@ class CPT_List {
    * @since 0.0.1
    */
   public function populate_custom_columns( $column_name, $post_id ) {
-    // Populate the Archived column.
-    if ( 'gpalab_slo_archive' === $column_name ) {
-      $is_archive     = get_post_meta( $post_id, 'gpalab_slo_archive', true );
-      $human_friendly = 'true' === $is_archive ? 'yes' : 'no';
-
-      echo esc_html( $human_friendly );
-    }
-
     // Populate the Mission column.
     if ( 'gpalab_slo_mission' === $column_name ) {
       // Get all missions.
@@ -81,7 +78,7 @@ class CPT_List {
   /**
    * Filters the social links query by mission.
    *
-   * @param array $query  WordPress query arguments.
+   * @param object $query  WordPress query arguments.
    *
    * @since 0.0.1
    */
@@ -166,14 +163,75 @@ class CPT_List {
   }
 
   /**
+   * Add the ability to archive multiple links at once.
+   *
+   * @param array $bulk_actions   A list of available actions to apply to selected posts.
+   * @return array                The list of available actions with an 'archive' option added.
+   *
+   * @since 0.0.1
+   */
+  public function add_custom_bulk_actions( $bulk_actions ) {
+    if ( 'archived' !== get_query_var( 'post_status' ) && 'trash' !== get_query_var( 'post_status' ) ) {
+      $bulk_actions['archive'] = __( 'Archive Links', 'gpalab-slo' );
+    }
+
+    return $bulk_actions;
+  }
+
+  /**
+   * Archives the selected posts when the 'Archive Links' bulk action is selected.
+   *
+   * @param string $redirect_url  The URL the user will be sent to upon completion of the action.
+   * @param string $action        The selected bulk action.
+   * @param array  $post_ids      The list of selected posts.
+   * @return string               The update redirect URL the user will go upon completion.
+   *
+   * @since 0.0.1
+   */
+  public function handle_bulk_archive( $redirect_url, $action, $post_ids ) {
+    if ( 'archive' === $action ) {
+      foreach ( $post_ids as $post_id ) {
+        wp_update_post(
+          array(
+            'ID'          => $post_id,
+            'post_status' => 'archived',
+          )
+        );
+      }
+      $redirect_url = add_query_arg( 'archived-links', count( $post_ids ), $redirect_url );
+    }
+
+    return $redirect_url;
+  }
+
+  /**
+   * Shows a notification when social links are archived.
+   *
+   * @since 0.0.1
+   */
+  public function show_archive_notice() {
+    /* translators: %d: the number of links that were archived */
+    $notice = __( 'Archived %d links.', 'gpalab-slo' );
+
+    // phpcs:disable WordPress.Security.NonceVerification.Recommended
+    if ( ! empty( $_REQUEST['archived-links'] ) ) {
+      $num_changed = (int) $_REQUEST['archived-links'];
+
+      printf( '<div id="message" class="updated notice is-dismissable"><p>' . esc_html( $notice ) . '</p></div>', esc_html( $num_changed ) );
+    }
+    // phpcs:enable
+  }
+
+  /**
    * Removes the View and Quick Edit action buttons from social link posts.
    *
    * @param array  $actions  List of action links.
    * @param object $post     WordPress post Object.
+   * @return array           The updated list of action links.
    *
    * @since 0.0.1
    */
-  public function disable_link_actions( $actions = array(), $post = null ) {
+  public function edit_link_actions( $actions = array(), $post = null ) {
 
     // If the page template is not an gpalab-social-link post, return all actions.
     if ( 'gpalab-social-link' !== $post->post_type ) {
@@ -190,7 +248,37 @@ class CPT_List {
       unset( $actions['inline hide-if-no-js'] );
     }
 
+    // If on the list of all or published links, add a link to archive the given link.
+    if ( 'archived' !== get_query_var( 'post_status' ) && 'trash' !== get_query_var( 'post_status' ) ) {
+      if ( ! isset( $actions['archive'] ) ) {
+        $nonce = wp_create_nonce( 'gpalab-archive-link' );
+        $url   = admin_url( "edit.php?post_type=gpalab-social-link&update_id={$post->ID}&_wpnonce=$nonce" );
+
+        $actions['archive'] = '<a href=' . esc_url( $url ) . '>' . esc_html__( 'Archive', 'gpalab-slo' ) . '</a>';
+      }
+    }
+
     // Return the set of links without the Edit, Quick Edit, or Trash actions.
     return $actions;
+  }
+
+  /**
+   * Handle archive the given link when the archive link is clicked.
+   *
+   * @since 0.0.1
+   */
+  public function handle_archive_link() {
+    $nonce = isset( $_REQUEST['_wpnonce'] )
+      ? sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) )
+      : null;
+
+    if ( wp_verify_nonce( $nonce, 'gpalab-archive-link' ) && isset( $_REQUEST['update_id'] ) ) {
+      wp_update_post(
+        array(
+          'ID'          => sanitize_text_field( wp_unslash( $_REQUEST['update_id'] ) ),
+          'post_status' => 'archived',
+        )
+      );
+    }
   }
 }

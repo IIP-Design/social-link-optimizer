@@ -140,6 +140,7 @@ class SLO {
 
     // Custom post type hooks.
     $this->loader->add_action( 'init', $plugin_cpt, 'gpalab_slo_cpt', 0 );
+    $this->loader->add_action( 'init', $plugin_cpt, 'register_archive_status' );
     $this->loader->add_action( 'add_meta_boxes', $plugin_cpt, 'gpalab_slo_custom_meta' );
     $this->loader->add_action( 'save_post', $plugin_cpt, 'gpalab_slo_meta_save' );
     $this->loader->add_action( 'do_meta_boxes', $plugin_cpt, 'gpalab_slo_image_meta_box' );
@@ -149,6 +150,7 @@ class SLO {
     $this->loader->add_action( 'admin_head', $plugin_cpt, 'hide_unused_elements' );
     $this->loader->add_filter( 'post_updated_messages', $plugin_cpt, 'social_link_updated_messages', 10, 1 );
     $this->loader->add_action( 'admin_bar_menu', $plugin_cpt, 'remove_view_from_admin_bar', 999 );
+    $this->loader->add_action( 'post_submitbox_misc_actions', $plugin_cpt, 'add_archived_to_status_dropdown' );
 
     // Hooks to manage the All Links page.
     $this->loader->add_action( 'manage_gpalab-social-link_posts_custom_column', $plugin_cpt_list, 'populate_custom_columns', 10, 2 );
@@ -156,7 +158,11 @@ class SLO {
     $this->loader->add_filter( 'manage_edit-gpalab-social-link_sortable_columns', $plugin_cpt_list, 'make_custom_columns_sortable' );
     $this->loader->add_action( 'restrict_manage_posts', $plugin_cpt_list, 'add_mission_filter_dropdown' );
     $this->loader->add_filter( 'parse_query', $plugin_cpt_list, 'filter_social_links_by_mission' );
-    $this->loader->add_filter( 'post_row_actions', $plugin_cpt_list, 'disable_link_actions', 10, 2 );
+    $this->loader->add_filter( 'post_row_actions', $plugin_cpt_list, 'edit_link_actions', 10, 2 );
+    $this->loader->add_action( 'load-edit.php', $plugin_cpt_list, 'handle_archive_link' );
+    $this->loader->add_filter( 'bulk_actions-edit-gpalab-social-link', $plugin_cpt_list, 'add_custom_bulk_actions' );
+    $this->loader->add_filter( 'handle_bulk_actions-edit-gpalab-social-link', $plugin_cpt_list, 'handle_bulk_archive', 10, 3 );
+    $this->loader->add_action( 'admin_notices', $plugin_cpt_list, 'show_archive_notice' );
 
     // Adds a widget to the WordPress user dashboard.
     $this->loader->add_action( 'wp_dashboard_setup', $plugin_dashboard, 'slo_dashboard_widget' );
