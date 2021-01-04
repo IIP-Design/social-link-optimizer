@@ -177,8 +177,9 @@ class Ajax {
     // phpcs:enable
 
     $args = array(
-      'ID'        => $post_id,
-      'post_name' => $post_name,
+      'ID'         => $post_id,
+      'post_name'  => $post_name,
+      'post_title' => ucwords( str_replace( array( '-' ), ' ', $post_name ) ),
     );
 
     wp_update_post( $args );
