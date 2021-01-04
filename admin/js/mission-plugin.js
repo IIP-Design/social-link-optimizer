@@ -1,3 +1,6 @@
+/**
+ * @deprecated
+ */
 import { registerPlugin } from '@wordpress/plugins';
 
 import MissionPanel from './components/MissionPanel';

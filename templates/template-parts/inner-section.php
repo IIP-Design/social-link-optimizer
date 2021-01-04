@@ -3,6 +3,7 @@
  * Renders a single social link item for SLO page.
  *
  * @package GPALAB_SLO
+ * @since 0.0.1
  */
 
 ?>

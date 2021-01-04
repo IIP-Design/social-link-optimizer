@@ -93,3 +93,36 @@ export const setPreferredMission = async missionId => {
     console.error( err );
   }
 };
+
+/**
+ * Update the post_name (i.e. permalink) of a given WordPress post.
+ *
+ * @param {string} postId     The id of a WordPress SLO page.
+ * @param {string} permalink  The new permalink value to be saved.
+ * @param {string} index      The index of the current tab.
+ */
+export const updateSLOPermalink = async ( postId, permalink, index ) => {
+  // Get values provided to the client by the server
+  const fromPHP = window?.gpalabSloAdmin || {};
+
+  const formData = new FormData();
+
+  formData.append( 'action', 'gpalab_update_slo_permalink' );
+  formData.append( 'security', fromPHP.sloNonce );
+  formData.append( 'permalink', permalink );
+  formData.append( 'post_id', postId );
+
+  try {
+    const response = await fetch( fromPHP.ajaxUrl, {
+      method: 'POST',
+      body: formData,
+    } );
+
+    const result = await response.json();
+
+    console.log( result );
+    reloadInTab( index );
+  } catch ( err ) {
+    console.error( err );
+  }
+};

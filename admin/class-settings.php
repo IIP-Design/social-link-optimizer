@@ -53,6 +53,7 @@ class Settings {
       return;
     }
 
+    wp_enqueue_media();
     wp_enqueue_script( 'gpalab-slo-admin-js' );
     wp_enqueue_style( 'gpalab-slo-admin-css' );
   }
@@ -69,13 +70,20 @@ class Settings {
       <?php
       settings_errors();
 
-      $missions = get_option( 'gpalab-slo-settings' );
-      $title    = __( 'Manage Mission Social Link Pages:', 'gpalab-slo' );
+      $missions    = get_option( 'gpalab-slo-settings' );
+      $title       = __( 'Manage Mission Social Link Pages:', 'gpalab-slo' );
+      $no_missions = __( 'No missions have been added.', 'gpalab-slo' );
 
       // Create the tabs for the tabbed container.
       if ( isset( $missions ) ) {
         echo '<h2>' . esc_html( $title ) . '</h2>';
         echo '<ul class="gpalab-slo-tab-container" role="tablist">';
+
+        if ( empty( $missions ) ) {
+          echo '<p>' . esc_html( $no_missions ) . '</p>';
+          echo '<button class="button button-secondary slo-add-mission" id="slo-add-mission" style="margin-left:1rem;align-self: center;" type="button" >';
+          echo esc_html__( 'Add a Mission', 'gpalab-slo' ) . '</button>';
+        }
 
         foreach ( $missions as $key => $mission ) {
           $tab  = '<li class="gpalab-slo-tab" ';
@@ -98,12 +106,6 @@ class Settings {
           settings_fields( 'gpalab-slo' );
           $this->custom_do_settings_sections( 'gpalab-slo' );
         ?>
-        <button class="button button-secondary" id="slo-add-mission" type="button" >
-          Add Mission
-        </button>
-        <?php
-          submit_button();
-        ?>
       </form>
     </div>
     <?php
@@ -117,24 +119,14 @@ class Settings {
   public function populate_settings_page() {
     $missions = get_option( 'gpalab-slo-settings' );
 
-    $populate = $this->generate_tab_panels();
-
     if ( isset( $missions ) ) {
 
       foreach ( $missions as $key => $mission ) {
-        register_setting(
-          'gpalab-slo',
-          'gpalab-slo-settings-' . $key,
-          array(
-            'sanitize_callback' => 'sanitize_text_field',
-          )
-        );
-
         add_settings_section(
           'gpalab-slo-settings-' . $key,
           __( 'Manage Mission Social Link Pages:', 'gpalab-slo' ),
           function() {
-            return $populate;
+            return $this->generate_tab_panels();
           },
           'gpalab-slo'
         );
@@ -158,7 +150,7 @@ class Settings {
 
         add_settings_field(
           $title_id,
-          __( 'Mission name:', 'gpalab-slo' ),
+          __( 'Mission name (used as page title):', 'gpalab-slo' ),
           array( $this, 'add_input' ),
           'gpalab-slo',
           'gpalab-slo-settings-' . $key,
@@ -328,12 +320,13 @@ class Settings {
     $field  = $args['field'];
     $key    = $args['key'];
     $option = $args['option'];
+    $type   = ! empty( $args['type'] ) ? $args['type'] : 'text';
 
     $id    = $field . '_' . $key;
     $value = isset( $option[ $field ] ) ? $option[ $field ] : '';
 
     // Generate the markup for the input field.
-    $input .= '<input class="regular-text" type="text" ';
+    $input  = '<input type="' . $type . '" ';
     $input .= 'name="gpalab-slo-settings[' . $key . '][' . $field . ']" ';
     $input .= 'id="' . $id . '" ';
     $input .= 'value="' . $value . '" >';
@@ -376,14 +369,14 @@ class Settings {
     $input .= 'id="' . $id . '_grid" ';
     $input .= ( 'grid' === $checked ) ? 'checked ' : '';
     $input .= 'value="grid" >';
-    $input .= 'Three column grid</label>';
+    $input .= __( 'Three column grid', 'gpalab-slo' ) . '</label>';
     $input .= '<label for="' . $id . '_list">';
     $input .= '<input type="radio" ';
     $input .= 'name="gpalab-slo-settings[' . $key . '][' . $field . ']" ';
     $input .= 'id="' . $id . '_list" ';
     $input .= ( 'list' === $checked ) ? 'checked ' : '';
     $input .= 'value="list" >';
-    $input .= 'Vertical list</label>';
+    $input .= __( 'Vertical list', 'gpalab-slo' ) . '</label>';
     $input .= '</div>';
 
     // Identify which HTML elements to allow.
@@ -431,7 +424,7 @@ class Settings {
       }
 
       if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ) {
-          continue;
+        continue;
       }
 
       $missions = get_option( 'gpalab-slo-settings' );
@@ -440,14 +433,70 @@ class Settings {
       $index = str_replace( 'gpalab-slo-settings-', '', $key );
       $id    = $missions[ $index ]['id'];
 
+      // Render out link to the mission's SLO page.
+      if ( isset( $missions[ $index ]['page'] ) ) {
+        $post_id = esc_html( $missions[ $index ]['page'] );
+        $link    = get_permalink( $post_id );
+
+        $link_text = __( 'Social link optimizer page created at', 'gpalab-slo' );
+        $details   = __( 'You can configure the page using the fields below. Use the "Change permalink" field below to change the page URL.', 'gpalab-slo' );
+
+        ?>
+        <p class="gpalab-slo-tabpanel-text">
+          <?php echo esc_html( $link_text ); ?>:
+            <a href="<?php echo esc_url( $link ); ?>">
+              <?php echo esc_url( $link ); ?>
+            </a>.
+          </br>
+          <?php echo esc_html( $details ); ?>
+        </p>
+        <?php
+      }
+
       // Hidden input field to store the mission id.
-      echo '<input type="hidden" name=' . esc_attr( 'gpalab-slo-settings[' . $index . '][id]' ) . ' value=' . esc_attr( $id ) . '>';
+      ?>
+      <input
+        name=<?php echo esc_attr( 'gpalab-slo-settings[' . $index . '][id]' ); ?>
+        type="hidden"
+        value=<?php echo esc_attr( $id ); ?>
+      >
+      <input
+        name=<?php echo esc_attr( 'gpalab-slo-settings[' . $index . '][page]' ); ?>
+        type="hidden"
+        value=<?php echo esc_attr( $post_id ); ?>
+      >
+      <?php
 
       // Render out all the input fields.
       $this->custom_do_settings_fields( $page, $section['id'] );
 
-      // Button to remove the current section from the settings array.
-      echo '<button class="button button-secondary slo-remove-mission" data-id=' . esc_attr( $id ) . ' type="button">Remove This Mission</button>';
+      // Render out media uploader to set the mission avatar.
+      $this->render_avatar_uploader( $missions[ $index ], $index, $id );
+
+      // Render out the Add Mission & Submit buttons.
+      ?>
+      <div class="gpalab-slo-settings-form-controls">
+        <button
+          class="button button-secondary slo-add-mission"
+          id=<?php echo esc_attr( 'slo-add-mission-' . $id ); ?>
+          type="button"
+        >
+          <?php echo esc_html__( 'Add a Mission', 'gpalab-slo' ); ?>
+        </button>
+        <?php
+          submit_button(
+            __( 'Update Mission', 'gpalab-slo' ),
+            'primary',
+            'submit',
+            true,
+            array( 'id' => 'slo-submit-' . $id )
+          );
+        ?>
+      </div>
+      <?php
+
+      // Render out the danger section.
+      $this->render_danger_section( $id, $post_id );
 
       echo '</section>';
     }
@@ -484,10 +533,137 @@ class Settings {
   }
 
   /**
+   * Render out the section that allows users to upload an avatar image.
+   * The selected image id is stored in a hidden field to be submitted when the page is updated.
+   *
+   * @param object $mission   The selected mission's data.
+   * @param string $index     The position of the given mission in the list of missions.
+   * @param string $id        The id of the current mission.
+   *
+   * @since 0.0.1
+   */
+  private function render_avatar_uploader( $mission, $index, $id ) {
+    $avatar      = esc_html( $mission['avatar'] );
+    $media_label = __( 'Mission avatar:', 'gpalab-slo' );
+
+    // Change the text of the upload button if no value saved.
+    $btn_text = empty( $mission['avatar'] ) || 'undefined' === $mission['avatar']
+      ? __( 'Select an avatar image', 'gpalab-slo' )
+      : __( 'Change avatar image', 'gpalab-slo' );
+
+    $remove_style = empty( $mission['avatar'] ) || 'undefined' === $mission['avatar'] ? 'display:none' : 'display:block'
+
+    ?>
+    <input
+      type="hidden"
+      name=<?php echo esc_attr( 'gpalab-slo-settings[' . $index . '][avatar]' ); ?>
+      id=<?php echo esc_attr( 'slo-avatar-' . $id ); ?>
+      value="<?php echo esc_attr( $avatar ); ?>"
+    />
+    <label class="gpalab-slo-label" for=<?php echo esc_attr( 'slo-avatar-manager-' . $id ); ?>>
+      <?php echo esc_html( $media_label ); ?>
+      <div class="gpalab-slo-settings-avatar-controls">
+        <?php
+        $image = null;
+        if ( intval( $avatar ) > 0 ) {
+          $image = wp_get_attachment_image(
+            $avatar,
+            'thumbnail',
+            false,
+            array(
+              'class' => 'gpalab-slo-avatar-preview',
+              'id'    => 'slo-avatar-preview-' . $id,
+            )
+          );
+        }
+
+        echo wp_kses( $image, 'post' );
+        ?>
+        <p
+          class="gpalab-slo-avatar-placeholder"
+          id=<?php echo esc_attr( 'slo-avatar-placeholder-' . $id ); ?>
+          style=<?php echo esc_attr( $avatar && 'undefined' !== $avatar ? 'display:none;' : 'display:block' ); ?>
+        >
+          <?php esc_html_e( 'No avatar added', 'gpalab-slo' ); ?>
+        </p>
+        <input
+          type='button'
+          class="button-primary gpalab-slo-avatar-media-manager"
+          data-id=<?php echo esc_attr( $id ); ?>
+          id=<?php echo esc_attr( 'slo-avatar-manager-' . $id ); ?>
+          value="<?php echo esc_attr( $btn_text ); ?>"
+        />
+        <button
+          type='button'
+          class="button-secondary gpalab-slo-avatar-remove"
+          data-id=<?php echo esc_attr( $id ); ?>
+          id=<?php echo esc_attr( 'slo-avatar-remove-' . $id ); ?>
+          style=<?php echo esc_attr( $remove_style ); ?>
+        />
+          <?php esc_attr_e( 'Remove avatar image', 'gpalab-slo' ); ?>
+        </button>
+      </div>
+    </label>
+    <?php
+  }
+
+  /**
+   * Render out the section containing dangerous operations on the settings page.
+   *
+   * @param string $id        The id of the current mission.
+   * @param string $post_id   The WordPress post id of the SLO page for the given mission.
+   *
+   * @since 0.0.1
+   */
+  private function render_danger_section( $id, $post_id ) {
+    $title       = __( 'Danger Zone', 'gpalab-slo' );
+    $warning     = __( 'Warning, altering the below settings can have destructive results. Proceed with caution.', 'gpalab-slo' );
+    $perma_label = __( 'Change permalink:', 'gpalab-slo' );
+    $perma_btn   = __( 'Update Permalink', 'gpalab-slo' );
+    $remove_btn  = __( 'Remove This Mission', 'gpalab-slo' );
+
+    ?>
+    <hr class="gpalab-slo-hr">
+    <strong class="gpalab-slo-danger"><?php echo esc_html( $title ); ?></strong>
+    <p style="text-align:center"><?php echo esc_html( $warning ); ?></p>
+    <label class="gpalab-slo-label-secondary" for=<?php echo esc_attr( 'permalink-' . $id ); ?>>
+      <?php echo esc_html( $perma_label ); ?>
+      <div>
+        <input
+          class="regular-text"
+          id=<?php echo esc_attr( 'permalink-' . $id ); ?>
+          name="permalink"
+          type="text"
+          value=<?php echo esc_attr( get_post_field( 'post_name', $post_id ) ); ?>
+        >
+        <button
+          class="button button-secondary slo-permalink"
+          data-id=<?php echo esc_attr( $id ); ?>
+          data-post=<?php echo esc_attr( $post_id ); ?>
+          type="button"
+        >
+          <?php echo esc_html( $perma_btn ); ?>
+        </button>
+      </div>
+    </label>
+    <!-- Button to remove the current section from the settings array. -->
+    <button
+      class="button button-link-delete slo-remove-mission"
+      data-id=<?php echo esc_attr( $id ); ?>
+      type="button"
+    >
+      <?php echo esc_html( $remove_btn ); ?>
+    </button>
+    <?php
+  }
+
+  /**
    * Adds a link to the plugin's settings page on the Installed Plugins page.
    *
    * @param array $links  List of plugin action links.
    * @return array        List of plugin action links with added settings link.
+   *
+   * @since 0.0.1
    */
   public function add_settings_link( $links ) {
     $query_params = array(

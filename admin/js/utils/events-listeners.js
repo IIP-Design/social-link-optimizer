@@ -1,4 +1,5 @@
-import { addSLOMission, removeSLOMission } from './ajax';
+import { addSLOMission, removeSLOMission, updateSLOPermalink } from './ajax';
+import { mediaUploader, removeMedia } from './file-uploads';
 import { selectTab, switchTab } from './tab-nav';
 
 /**
@@ -38,10 +39,12 @@ export const eventListeners = () => {
   } );
 
   // Add event listener to the Add Mission button.
-  const addMissionBtn = document.getElementById( 'slo-add-mission' );
+  const addMissionBtn = document.querySelectorAll( '.slo-add-mission' );
 
-  addMissionBtn.addEventListener( 'click', () => {
-    addSLOMission( tabBtns.length );
+  addMissionBtn.forEach( btn => {
+    btn.addEventListener( 'click', () => {
+      addSLOMission( tabBtns.length );
+    } );
   } );
 
   // Add event listeners to the Remove This Mission buttons.
@@ -59,6 +62,41 @@ export const eventListeners = () => {
       const indexAfterRemoval = index > 0 ? index - 1 : 0;
 
       removeSLOMission( id, indexAfterRemoval );
+    } );
+  } );
+
+  // Add event listeners to the Update Permalink buttons.
+  const updatePermalinkBtns = document.querySelectorAll( '.slo-permalink' );
+
+  updatePermalinkBtns.forEach( ( btn, idx ) => {
+    btn.addEventListener( 'click', e => {
+      const { id, post } = e.target.dataset;
+
+      const input = document.getElementById( `permalink-${id}` );
+
+      updateSLOPermalink( post, input.value, idx );
+    } );
+  } );
+
+  // Add event listeners to activate avatar media library uploader buttons.
+  const uploadAvatar = document.querySelectorAll( '.gpalab-slo-avatar-media-manager' );
+
+  uploadAvatar.forEach( btn => {
+    btn.addEventListener( 'click', e => {
+      const { id } = e.target.dataset;
+
+      mediaUploader( e, id );
+    } );
+  } );
+
+  // Add event listeners to the buttons used to remove a selected avatar image.
+  const removeAvatar = document.querySelectorAll( '.gpalab-slo-avatar-remove' );
+
+  removeAvatar.forEach( btn => {
+    btn.addEventListener( 'click', e => {
+      const { id } = e.target.dataset;
+
+      removeMedia( id );
     } );
   } );
 };

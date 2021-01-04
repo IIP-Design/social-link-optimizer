@@ -1,3 +1,8 @@
+.gpalab-slo-hr {
+  margin: 0.5rem auto 1rem;
+  width: 95%;
+}
+
 .gpalab-slo-tab {
   background-color: #f1f1f1;
   border: 1px solid #ccd0d4;
@@ -10,6 +15,18 @@
 .gpalab-slo-tab-container {
   display: flex;
   margin: 1rem 0 0;
+}
+
+.gpalab-slo-settings-form-controls {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0.5rem 1.5rem;
+}
+
+.gpalab-slo-settings-form-controls p.submit {
+  margin: 0;
+  padding: 0;
 }
 
 .gpalab-slo-tab-container > li:first-of-type {
@@ -55,14 +72,58 @@
   padding: 1rem;
 }
 
+.gpalab-slo-tabpanel-text {
+  text-align: center;
+}
+
 .gpalab-slo-label {
   align-items: center;
   display: grid;
-  grid-template-columns: 20% 1fr;
-  margin: 0.5rem 0;
+  grid-template-columns: 25% 1fr;
+  margin: 0.5rem 1rem;
 }
 
-.slo-remove-mission {
+.gpalab-slo-label-secondary {
+  align-items: center;
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  margin: 0.5rem 1rem;
+}
+
+.gpalab-slo-danger {
+  color: #a00a00;
+  text-align: center;
+}
+
+.gpalab-slo-avatar-preview {
+  height: 90px;
+  width: auto;
+}
+
+.gpalab-slo-avatar-placeholder {
+  background-color: #f1f1f1;
+  border-radius: 3px;
+  margin: 0;
+  padding: 5.5px 1rem;
+}
+
+.gpalab-slo-settings-avatar-controls {
+  align-items: center;
+  display: flex;
+  margin: 1rem 0 1.5rem;
+}
+
+button.gpalab-slo-avatar-remove.button-secondary,
+input.gpalab-slo-avatar-media-manager.button-primary {
+  margin-left: 1.5rem;
+}
+
+button.button.button-link-delete.slo-remove-mission {
+  border-color: #a00a00;
   align-self: flex-start;
-  margin: 0.5rem 0;
+  margin: 1rem 1rem 0.5rem;
+}
+
+button.button.button-secondary.slo-permalink {
+  margin-left: 2rem;
 }
