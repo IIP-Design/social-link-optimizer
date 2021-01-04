@@ -80,7 +80,7 @@ class Settings {
 
         if ( empty( $missions ) ) {
           echo '<p>' . esc_html( $no_missions ) . '</p>';
-          echo '<button class="button button-secondary" id="slo-add-mission" style="margin-left:1rem;align-self: center;" type="button" >';
+          echo '<button class="button button-secondary slo-add-mission" id="slo-add-mission" style="margin-left:1rem;align-self: center;" type="button" >';
           echo esc_html__( 'Add a Mission', 'gpalab-slo' ) . '</button>';
         }
 
