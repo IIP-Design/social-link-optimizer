@@ -18,6 +18,21 @@ const addStyleHooks = ( str = '', cls = 'new-item' ) => {
 };
 
 /**
+ * Update the aria live region for new items added.
+ */
+const updateLiveRegion = () => {
+  const liveRegion = document.getElementById( 'gpalab-slo-live' );
+
+  if ( liveRegion ) {
+    liveRegion.textContent = 'Additional social link items added.';
+
+    setTimeout( () => {
+      liveRegion.textContent = '';
+    }, 500 );
+  }
+};
+
+/**
  * Send an AJAX request to load more social links.
  * @param {object} e event object
  */
@@ -51,6 +66,7 @@ const handleLoadMore = async function( e ) {
     const fragment = createFragment( resultWithStyleHooks );
 
     socialLinksList.appendChild( fragment );
+    updateLiveRegion();
     fromPHP.current_page++;
 
     // Remove load more button if last page

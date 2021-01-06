@@ -70,11 +70,13 @@ require 'template-parts/header-slo.php';
 
           ?>
 
-          <ul class="gpalab-slo-content-list list-reset <?php echo esc_html( $layout ); ?>" aria-describedby="instructions" role="status" aria-live="polite">
+          <ul class="gpalab-slo-content-list list-reset <?php echo esc_html( $layout ); ?>" aria-describedby="instructions">
 
             <?php require 'template-parts/social-link-list.php'; ?>
 
           </ul>
+
+          <p id="gpalab-slo-live" class="hide-visually" role="status" aria-live="polite"></p>
 
           <?php
 
