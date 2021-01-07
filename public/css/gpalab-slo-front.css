@@ -21,10 +21,9 @@ html {
   --alto: #D6D6D6;
   --deep-cerulean-blue: #007CAD;
   --astral-blue: #3472A1;
-  --danube-blue: #5187C6;
   --chambray-blue: #416393;
+  --regal-blue: #003875;
   --whale-blue: #06284C;
-  --midnight-blue: #001935;
   --dark: #0000004D;
 
   box-sizing: border-box;
@@ -120,14 +119,7 @@ a:active {
   font-family: var(--font-primary);
   line-height: 1.5;
   text-rendering: optimizeSpeed;
-  background:
-    transparent
-    linear-gradient(
-      359deg,
-      var(--danube-blue) 0%,
-      var(--midnight-blue) 100%
-    )
-    0% 0% no-repeat padding-box;
+  background-color: var(--regal-blue) !important;
 }
 
 .skip-to-content {
