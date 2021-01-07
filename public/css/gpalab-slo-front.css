@@ -251,7 +251,8 @@ a:active {
 }
 
 .gpalab-slo-content-list.list > li .title {
-  font-size: var(--length-1-125);
+  font-family: var(--font-safe);
+  font-size: var(--length-1-375);
   text-align: center;
   text-transform: uppercase;
   overflow-wrap: break-word;
