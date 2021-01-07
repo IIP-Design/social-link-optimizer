@@ -485,7 +485,7 @@ class Settings {
         </button>
         <?php
           submit_button(
-            __( 'Update Mission', 'gpalab-slo' ),
+            __( 'Save Changes', 'gpalab-slo' ),
             'primary',
             'submit',
             true,

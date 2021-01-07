@@ -77,7 +77,7 @@ class CPT {
       'not_found'             => __( 'Not found', 'gpalab-slo' ),
       'not_found_in_trash'    => __( 'Not found in Trash', 'gpalab-slo' ),
       'featured_image'        => __( 'Linked Image', 'gpalab-slo' ),
-      'set_featured_image'    => __( 'Add an image to the grid', 'gpalab-slo' ),
+      'set_featured_image'    => __( 'Add image to the grid', 'gpalab-slo' ),
       'remove_featured_image' => __( 'Remove image', 'gpalab-slo' ),
       'use_featured_image'    => __( 'Use as grid image', 'gpalab-slo' ),
       'insert_into_item'      => __( 'Insert into item', 'gpalab-slo' ),
