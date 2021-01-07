@@ -317,10 +317,11 @@ class Settings {
    * @since 0.0.1
    */
   public function add_input( $args ) {
-    $field  = $args['field'];
-    $key    = $args['key'];
-    $option = $args['option'];
-    $type   = ! empty( $args['type'] ) ? $args['type'] : 'text';
+    $field       = $args['field'];
+    $key         = $args['key'];
+    $option      = $args['option'];
+    $placeholder = ! empty( $args['placeholder'] ) ? 'placeholder="' . $args['placeholder'] . '" ' : '';
+    $type        = ! empty( $args['type'] ) ? $args['type'] : 'text';
 
     $id    = $field . '_' . $key;
     $value = isset( $option[ $field ] ) ? $option[ $field ] : '';
@@ -329,16 +330,18 @@ class Settings {
     $input  = '<input type="' . $type . '" ';
     $input .= 'name="gpalab-slo-settings[' . $key . '][' . $field . ']" ';
     $input .= 'id="' . $id . '" ';
+    $input .= $placeholder;
     $input .= 'value="' . $value . '" >';
 
     // Identify which HTML elements to allow.
     $elements = array(
       'input' => array(
-        'class' => array(),
-        'id'    => array(),
-        'name'  => array(),
-        'type'  => array(),
-        'value' => array(),
+        'class'       => array(),
+        'id'          => array(),
+        'name'        => array(),
+        'placeholder' => array(),
+        'type'        => array(),
+        'value'       => array(),
       ),
     );
 
