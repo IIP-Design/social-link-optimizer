@@ -47,7 +47,7 @@ require 'template-parts/header-slo.php';
           // Render the mission title.
           $page_title = isset( $page_settings['title'] ) ? $page_settings['title'] : get_the_title();
 
-          echo '<h1 class="gpalab-slo-page-title">' . esc_html( $page_title ) . '</h1>';
+          echo '<h1 id="gpalab-slo-page-title" class="gpalab-slo-page-title">' . esc_html( $page_title ) . '</h1>';
 
           // Render the mission social properties.
           require 'template-parts/mission-identity.php';

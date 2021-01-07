@@ -13,7 +13,7 @@ if ( isset( $url ) && '' !== $url ) {
   $url_host  = rtrim( str_replace( $protocols, '', $url ), '/' );
 
   $markup  = '<p class="mission-website">';
-  $markup .= '<a href=' . esc_html( $url ) . '>';
+  $markup .= '<a href=' . esc_html( $url ) . ' aria-labelledby="gpalab-slo-page-title">';
   $markup .= $url_host;
   $markup .= '</a>';
   $markup .= '</p>';
