@@ -149,8 +149,7 @@ class Frontend {
     // Retrieve the thumbnail alt and create an accessible name.
     $thumbnail_id  = get_post_thumbnail_id( $post_id );
     $thumbnail_alt = get_post_meta( $thumbnail_id, '_wp_attachment_image_alt', true );
-    $has_alt       = '' !== $thumbnail_alt;
-    $a11y_name     = ( ! $has_alt ) ? $item_title : '';
+    $a11y_name     = ( '' === $thumbnail_alt ) ? $item_title : '';
 
     $item_photo = $this->linkify( $thumbnail, get_permalink(), $a11y_name );
 
