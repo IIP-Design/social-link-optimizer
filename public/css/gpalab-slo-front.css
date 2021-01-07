@@ -19,7 +19,7 @@ html {
   --white: #FFFFFF;
   --wild-sand: #F6F6F6;
   --alto: #D6D6D6;
-  --pacific-blue: #008FC6;
+  --deep-cerulean-blue: #007CAD;
   --astral-blue: #3472A1;
   --danube-blue: #5187C6;
   --chambray-blue: #416393;
@@ -271,7 +271,7 @@ a:active {
   border-radius: var(--length-1);
   padding: var(--length-1-5);
   text-decoration: none;
-  background: var(--pacific-blue) 0% 0% no-repeat;
+  background: var(--deep-cerulean-blue) 0% 0% no-repeat;
   box-shadow: 0 var(--length-0-25) var(--length-0-625) var(--dark);
   transition: background 150ms linear;
 }
