@@ -1,3 +1,5 @@
+const REGEX = /<[lL][iI]>/g;
+
 /**
  * Create a DocumentFragment.
  * @param {string} tagString string of html tags
@@ -11,10 +13,35 @@ const createFragment = tagString => (
  * @param {string} str string of html tags
  * @param {string} cls class value(s) to add
  */
-const addStyleHooks = ( str = '', cls = 'new-item' ) => {
-  const regex = /<[lL][iI]>/g;
+const addStyleHooks = ( str = '', cls = 'new-item' ) => (
+  str.replace( REGEX, `<li class="${cls}">` )
+);
 
-  return str.replace( regex, `<li class="${cls}">` );
+/**
+ * Update the aria live region for new items added.
+ * @param {number} count number of loaded items
+ */
+const updateLiveRegion = count => {
+  const liveRegion = document.getElementById( 'gpalab-slo-live' );
+  const msg = `${count} social link item${count > 1 ? 's' : ''} added.`;
+
+  if ( liveRegion ) {
+    liveRegion.textContent = msg;
+
+    setTimeout( () => {
+      liveRegion.textContent = '';
+    }, 2000 );
+  }
+};
+
+/**
+ * Return the number of loaded items.
+ * @param {string} tagString string of html tags
+ */
+const getCount = tagString => {
+  const count = tagString.match( REGEX );
+
+  return count?.length || 0;
 };
 
 /**
@@ -47,10 +74,12 @@ const handleLoadMore = async function( e ) {
   try {
     const response = await fetch( fromPHP.ajaxUrl, options );
     const result = await response.text();
+    const count = getCount( result );
     const resultWithStyleHooks = addStyleHooks( result );
     const fragment = createFragment( resultWithStyleHooks );
 
     socialLinksList.appendChild( fragment );
+    updateLiveRegion( count );
     fromPHP.current_page++;
 
     // Remove load more button if last page

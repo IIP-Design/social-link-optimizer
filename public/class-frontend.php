@@ -112,9 +112,12 @@ class Frontend {
    *
    * @param string $element   The element to be placed within a link.
    * @param string $url       The wrapping url.
+   * @param string $a11y_name An accessible name (optional).
    */
-  private function linkify( $element, $url ) {
-    return '<a href="' . esc_url( $url ) . '">' . $element . '</a>';
+  private function linkify( $element, $url, $a11y_name = '' ) {
+    $a11y_element = $a11y_name ? wp_kses( '<span class="hide-visually">' . $a11y_name . '</span>', 'post' ) : $a11y_name;
+
+    return '<a href="' . esc_url( $url ) . '">' . $a11y_element . $element . '</a>';
   }
 
   /**
@@ -143,7 +146,12 @@ class Frontend {
       return;
     }
 
-    $item_photo = $this->linkify( $thumbnail, get_permalink() );
+    // Retrieve the thumbnail alt and create an accessible name.
+    $thumbnail_id  = get_post_thumbnail_id( $post_id );
+    $thumbnail_alt = get_post_meta( $thumbnail_id, '_wp_attachment_image_alt', true );
+    $a11y_name     = ( '' === $thumbnail_alt ) ? $item_title : '';
+
+    $item_photo = $this->linkify( $thumbnail, get_permalink(), $a11y_name );
 
     $hide_visually_class = $is_grid ? 'hide-visually' : '';
 

@@ -12,6 +12,7 @@ export const eventListeners = () => {
   // Handle clicking on tab.
   tabBtns.forEach( btn => {
     btn.addEventListener( 'click', e => {
+      e.preventDefault();
       const { id } = e.target.dataset;
 
       selectTab( id );
