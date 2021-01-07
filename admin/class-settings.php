@@ -80,22 +80,40 @@ class Settings {
         echo '<ul class="gpalab-slo-tab-container" role="tablist">';
 
         if ( empty( $missions ) ) {
-          echo '<p>' . esc_html( $no_missions ) . '</p>';
-          echo '<button class="button button-secondary slo-add-mission" id="slo-add-mission" style="margin-left:1rem;align-self: center;" type="button" >';
-          echo esc_html__( 'Add a Mission', 'gpalab-slo' ) . '</button>';
+          ?>
+          <p><?php echo esc_html( $no_missions ); ?> </p>
+          <button
+            class="button button-secondary slo-add-mission"
+            id="slo-add-mission"
+            style="margin-left:1rem;align-self: center;"
+            type="button"
+          >
+            <?php esc_html_e( 'Add a Mission', 'gpalab-slo' ); ?>
+          </button>
+          <?php
         }
 
         foreach ( $missions as $key => $mission ) {
-          $tab  = '<li class="gpalab-slo-tab" ';
-          $tab .= 'role="presentation" >';
-          $tab .= '<a class="gpalab-slo-tab-button" ';
-          $tab .= 'href="#gpalab-slo-tab-' . $key . '" ';
-          $tab .= 'id="gpalab-slo-tab-' . $key . '" ';
-          $tab .= 'data-id="' . $key . '" ';
-          $tab .= 'role="tab">' . esc_html( $mission['title'] ) . '</a>';
-          $tab .= '</li>';
-
-          echo wp_kses( $tab, 'post' );
+          ?>
+          <li class="gpalab-slo-tab" role="presentation" >
+            <a
+              class="gpalab-slo-tab-button"
+              href=<?php echo esc_attr( '#gpalab-slo-tab-' . $key ); ?>
+              id=<?php echo esc_attr( 'gpalab-slo-tab-' . $key ); ?>
+              data-id=<?php echo esc_attr( $key ); ?>
+              role="tab"
+              <?php echo empty( $mission['title'] ) ? 'style="font-style: italic;"' : ''; ?>
+            >
+              <?php
+              if ( ! empty( $mission['title'] ) ) {
+                echo esc_html( $mission['title'] );
+              } else {
+                echo esc_html__( 'untitled', 'gpalab-slo' );
+              }
+              ?>
+            </a>
+          </li>
+          <?php
         }
 
         echo '</ul>';
@@ -155,10 +173,11 @@ class Settings {
           'gpalab-slo',
           'gpalab-slo-settings-' . $key,
           array(
-            'label_for' => $title_id,
-            'key'       => $key,
-            'field'     => 'title',
-            'option'    => $mission,
+            'label_for'   => $title_id,
+            'key'         => $key,
+            'field'       => 'title',
+            'option'      => $mission,
+            'placeholder' => 'Add Mission Title',
           )
         );
 
@@ -327,26 +346,15 @@ class Settings {
     $value = isset( $option[ $field ] ) ? $option[ $field ] : '';
 
     // Generate the markup for the input field.
-    $input  = '<input type="' . $type . '" ';
-    $input .= 'name="gpalab-slo-settings[' . $key . '][' . $field . ']" ';
-    $input .= 'id="' . $id . '" ';
-    $input .= $placeholder;
-    $input .= 'value="' . $value . '" >';
-
-    // Identify which HTML elements to allow.
-    $elements = array(
-      'input' => array(
-        'class'       => array(),
-        'id'          => array(),
-        'name'        => array(),
-        'placeholder' => array(),
-        'type'        => array(),
-        'value'       => array(),
-      ),
-    );
-
-    // Sanitize the input field before rendering on the settings page.
-    echo wp_kses( $input, $elements );
+    ?>
+    <input
+      id=<?php echo esc_attr( $id ); ?>
+      name=<?php echo esc_attr( 'gpalab-slo-settings[' . $key . '][' . $field . ']' ); ?>
+      <?php echo wp_kses( $placeholder, 'post' ); ?>
+      type=<?php echo esc_attr( $type ); ?>
+      value=<?php echo esc_attr( $value ); ?>
+    >
+    <?php
   }
 
   /**
