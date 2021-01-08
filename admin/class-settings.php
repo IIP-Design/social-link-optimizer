@@ -37,7 +37,10 @@ class Settings {
 
     register_setting(
       'gpalab-slo',
-      'gpalab-slo-settings'
+      'gpalab-slo-settings',
+      array(
+        'sanitize_callback' => array( $this, 'sanitize_option_values' ),
+      )
     );
   }
 
@@ -442,8 +445,8 @@ class Settings {
         ?>
         <p class="gpalab-slo-tabpanel-text">
           <?php echo esc_html( $link_text ); ?>:
-            <a href="<?php echo esc_url( $link ); ?>">
-              <?php echo esc_url( $link ); ?>
+            <a href="<?php echo esc_url( $link, array( 'http', 'https' ) ); ?>">
+              <?php echo esc_url( $link, array( 'http', 'https' ) ); ?>
             </a>.
           </br>
           <?php echo esc_html( $details ); ?>
@@ -687,5 +690,70 @@ class Settings {
     );
 
     return $links;
+  }
+
+  /**
+   * Sanitize the data provided in the mission settings page before saving to the DB.
+   *
+   * @param array $settings   A list of mission data objects to be sanitized.
+   *
+   * @since 0.0.1
+   */
+  public function sanitize_option_values( $settings ) {
+    $sanitized_settings = array();
+
+    if ( isset( $settings ) ) {
+      foreach ( $settings as $setting ) {
+        $sanitized = array();
+
+        $sanitized['id']        = sanitize_text_field( $setting['id'] );
+        $sanitized['page']      = sanitize_text_field( $setting['page'] );
+        $sanitized['title']     = sanitize_text_field( $setting['title'] );
+        $sanitized['website']   = $this->enforce_https( $setting['website'] );
+        $sanitized['type']      = sanitize_text_field( $setting['type'] );
+        $sanitized['facebook']  = $this->enforce_https( $setting['facebook'] );
+        $sanitized['flickr']    = $this->enforce_https( $setting['flickr'] );
+        $sanitized['instagram'] = $this->enforce_https( $setting['instagram'] );
+        $sanitized['linkedin']  = $this->enforce_https( $setting['linkedin'] );
+        $sanitized['twitter']   = $this->enforce_https( $setting['twitter'] );
+        $sanitized['whatsapp']  = $this->enforce_https( $setting['whatsapp'] );
+        $sanitized['youtube']   = $this->enforce_https( $setting['youtube'] );
+        $sanitized['avatar']    = sanitize_text_field( $setting['avatar'] );
+
+        array_push( $sanitized_settings, $sanitized );
+      }
+    }
+
+    return $sanitized_settings;
+  }
+
+  /**
+   * Ensures that a url uses https as the protocol and sanitizes it.
+   *
+   * @param string $url  The url string to be checked for https and sanitized.
+   *
+   * @since 0.0.1
+   */
+  public function enforce_https( $url ) {
+    if ( empty( $url ) ) {
+
+      return '';
+
+    } elseif ( substr( $url, 0, 5 ) === 'https' ) {
+
+      return esc_url_raw( $url, array( 'https' ) );
+
+    } elseif ( substr( $url, 0, 5 ) === 'http:' ) {
+
+      // Convert http to https.
+      $https = str_replace( 'http:', 'https:', $url );
+      return esc_url_raw( $https, array( 'https' ) );
+
+    } else {
+
+      // Add https if no protocol provided.
+      return esc_url_raw( 'https://' . $url );
+
+    }
   }
 }
