@@ -115,7 +115,7 @@ class Settings {
         echo '</ul>';
       }
       ?>
-    <form method="post" action="options.php">
+    <form id="post" method="post" action="options.php">
         <?php
           settings_fields( 'gpalab-slo' );
           $this->custom_do_settings_sections( 'gpalab-slo' );
@@ -174,6 +174,7 @@ class Settings {
             'field'       => 'title',
             'option'      => $mission,
             'placeholder' => 'Add Mission Title',
+            'required'    => true,
           )
         );
 
@@ -347,6 +348,7 @@ class Settings {
       id=<?php echo esc_attr( $id ); ?>
       name=<?php echo esc_attr( 'gpalab-slo-settings[' . $key . '][' . $field . ']' ); ?>
       <?php echo wp_kses( $placeholder, 'post' ); ?>
+      <?php echo true === $args['required'] ? 'required ' : ''; ?>
       type=<?php echo esc_attr( $type ); ?>
       value="<?php echo esc_attr( $value ); ?>"
     >
