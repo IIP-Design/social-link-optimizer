@@ -47,7 +47,7 @@ foreach ( $social_accts as $key => $value ) {
 
   if ( isset( $value ) && '' !== $value ) {
     $acct  = '<li><a href=' . esc_attr( $value ) . '>';
-    $acct .= '<img src=' . esc_attr( $assets_dir . $key . '.svg' ) . ' alt="" height="24" width="24" class="social-icon">';
+    $acct .= '<img src=' . esc_attr( $assets_dir . $key . '.svg' ) . ' alt="" height="30" width="30" class="social-icon">';
     $acct .= '<span class="hide-visually">' . esc_html( $key ) . '</span>';
     $acct .= '</a></li>';
 

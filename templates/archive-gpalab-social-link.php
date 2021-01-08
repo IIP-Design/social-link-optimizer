@@ -13,9 +13,14 @@
 
 require 'template-parts/header-slo.php';
 
+// Get the id of the selected mission for the current page.
+$selected_mission = get_post_meta( get_the_ID(), '_gpalab_slo_mission_select', true );
+
+// Get the remaining page data (using the $selected_mission value above).
+require 'template-parts/page-settings.php';
 ?>
 
-<main id="gpalab-slo-main-content" role="main">
+<main id="gpalab-slo-main-content" class="<?php echo ( $is_grid ) ? 'grid' : 'list'; ?>" role="main">
 
   <?php
 
@@ -30,17 +35,6 @@ require 'template-parts/header-slo.php';
       <header class="content-header stack">
         
           <?php
-
-          // Get all mission settings.
-          $slo_settings = get_option( 'gpalab-slo-settings' );
-
-          // Get the id of the selected mission for the current page.
-          $selected_mission = get_post_meta( get_the_ID(), '_gpalab_slo_mission_select', true );
-
-          // Search for selected mission among the mission sessions and return it's data.
-          $settings_key  = array_search( $selected_mission, array_column( $slo_settings, 'id' ), true );
-          $page_settings = is_numeric( $settings_key ) ? $slo_settings[ $settings_key ] : array();
-
           // Render the page mission's identity avatar.
           require 'template-parts/identity-logo.php';
 

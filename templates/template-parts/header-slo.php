@@ -23,7 +23,7 @@
 
   <body <?php body_class(); ?> id="gpalab-slo" tabindex="-1">
     <a href="#instagram-posts" class="skip-to-content" role="navigation" aria-label="skip to instagram content">
-      Skip to Instagram content
+      <?php echo esc_html__( 'Skip to Instagram content', 'gpalab-slo' ); ?>
     </a>
 
     <header id="gpalab-slo-site-header" role="banner">
