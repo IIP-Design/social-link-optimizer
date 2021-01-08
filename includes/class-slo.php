@@ -144,6 +144,7 @@ class SLO {
     $this->loader->add_action( 'add_meta_boxes', $plugin_cpt, 'gpalab_slo_custom_meta' );
     $this->loader->add_action( 'save_post', $plugin_cpt, 'gpalab_slo_meta_save' );
     $this->loader->add_action( 'do_meta_boxes', $plugin_cpt, 'gpalab_slo_image_meta_box' );
+    $this->loader->add_filter( 'admin_post_thumbnail_html', $plugin_cpt, 'gpalab_slo_image_meta_box_helper_text', 10, 1 );
     $this->loader->add_filter( 'post_type_link', $plugin_cpt, 'gpalab_slo_filter_permalink', 10, 2 );
     $this->loader->add_filter( 'single_template', $plugin_cpt, 'preview_link_template' );
     $this->loader->add_filter( 'preview_post_link', $plugin_cpt, 'hijack_slo_preview' );
