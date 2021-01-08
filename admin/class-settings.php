@@ -173,7 +173,7 @@ class Settings {
             'key'         => $key,
             'field'       => 'title',
             'option'      => $mission,
-            'placeholder' => 'Add Mission Title',
+            'placeholder' => __( 'Add Mission Title', 'gpalab-slo' ),
             'required'    => true,
           )
         );
