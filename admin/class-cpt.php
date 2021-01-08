@@ -347,6 +347,28 @@ class CPT {
   }
 
   /**
+   * Add image dimensions helper text to the image meta box.
+   *
+   * @param string $content Admin post thumbnail HTML markup.
+   * @return string         The metabox content with helper text.
+   *
+   * @since 0.0.1
+   */
+  public function gpalab_slo_image_meta_box_helper_text( $content ) {
+    global $post_type;
+
+    $is_social_link = 'gpalab-social-link' === $post_type;
+
+    if ( ! $is_social_link ) {
+      return $content;
+    }
+
+    $helper_text = '<p>' . esc_html__( 'For optimal resolution: image should be at least 1080 &times; 1080 (width &times; height) with an aspect ratio of 1:1 (square), 1.91:1 (landscape), and 4:5 (portrait).', 'gpalab-slo' ) . '</p>';
+
+    return $helper_text . $content;
+  }
+
+  /**
    * When loading gpalab-social-link posts, load the post template provided by the plugin.
    *
    * @param string $single   The path to the appropriate single template.
