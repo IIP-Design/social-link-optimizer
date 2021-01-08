@@ -69,7 +69,10 @@ class Settings {
   private function create_admin_page() {
     ?>
     <div class="wrap">
-      <h1><?php esc_html_e( 'Social Link Settings', 'gpalab-slo' ); ?></h1>
+      <h1 class="wp-heading-inline"><?php esc_html_e( 'Social Link Settings', 'gpalab-slo' ); ?></h1>
+      <button class="page-title-action" id="slo-add-mission" type="button">
+        <?php esc_html_e( 'Add a Mission', 'gpalab-slo' ); ?>
+      </button>
       <?php
       settings_errors();
 
@@ -83,17 +86,7 @@ class Settings {
         echo '<ul class="gpalab-slo-tab-container" role="tablist">';
 
         if ( empty( $missions ) ) {
-          ?>
-          <p><?php echo esc_html( $no_missions ); ?> </p>
-          <button
-            class="button button-secondary slo-add-mission"
-            id="slo-add-mission"
-            style="margin-left:1rem;align-self: center;"
-            type="button"
-          >
-            <?php esc_html_e( 'Add a Mission', 'gpalab-slo' ); ?>
-          </button>
-          <?php
+          echo '<p>' . esc_html( $no_missions ) . '</p>';
         }
 
         foreach ( $missions as $key => $mission ) {
@@ -477,13 +470,6 @@ class Settings {
       // Render out the Add Mission & Submit buttons.
       ?>
       <div class="gpalab-slo-settings-form-controls">
-        <button
-          class="button button-secondary slo-add-mission"
-          id=<?php echo esc_attr( 'slo-add-mission-' . $id ); ?>
-          type="button"
-        >
-          <?php echo esc_html__( 'Add a Mission', 'gpalab-slo' ); ?>
-        </button>
         <?php
           submit_button(
             __( 'Save Changes', 'gpalab-slo' ),
@@ -589,7 +575,7 @@ class Settings {
         </p>
         <input
           type='button'
-          class="button-primary gpalab-slo-avatar-media-manager"
+          class="button-secondary gpalab-slo-avatar-media-manager"
           data-id=<?php echo esc_attr( $id ); ?>
           id=<?php echo esc_attr( 'slo-avatar-manager-' . $id ); ?>
           value="<?php echo esc_attr( $btn_text ); ?>"
