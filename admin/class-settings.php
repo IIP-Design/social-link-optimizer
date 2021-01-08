@@ -352,7 +352,7 @@ class Settings {
       name=<?php echo esc_attr( 'gpalab-slo-settings[' . $key . '][' . $field . ']' ); ?>
       <?php echo wp_kses( $placeholder, 'post' ); ?>
       type=<?php echo esc_attr( $type ); ?>
-      value=<?php echo esc_attr( $value ); ?>
+      value="<?php echo esc_attr( $value ); ?>"
     >
     <?php
   }
@@ -373,43 +373,30 @@ class Settings {
     $checked = isset( $option[ $field ] ) ? $option[ $field ] : 'grid';
 
     // Generate the markup for the type toggle field.
-    $input  = '<div class="gpalab-slo-type-toggle">';
-    $input .= '<label for="' . $id . '_grid">';
-    $input .= '<input type="radio" ';
-    $input .= 'name="gpalab-slo-settings[' . $key . '][' . $field . ']" ';
-    $input .= 'id="' . $id . '_grid" ';
-    $input .= ( 'grid' === $checked ) ? 'checked ' : '';
-    $input .= 'value="grid" >';
-    $input .= __( 'Three column grid', 'gpalab-slo' ) . '</label>';
-    $input .= '<label for="' . $id . '_list">';
-    $input .= '<input type="radio" ';
-    $input .= 'name="gpalab-slo-settings[' . $key . '][' . $field . ']" ';
-    $input .= 'id="' . $id . '_list" ';
-    $input .= ( 'list' === $checked ) ? 'checked ' : '';
-    $input .= 'value="list" >';
-    $input .= __( 'Vertical list', 'gpalab-slo' ) . '</label>';
-    $input .= '</div>';
-
-    // Identify which HTML elements to allow.
-    $elements = array(
-      'div'   => array(
-        'class' => array(),
-      ),
-      'input' => array(
-        'checked' => array(),
-        'class'   => array(),
-        'id'      => array(),
-        'name'    => array(),
-        'type'    => array(),
-        'value'   => array(),
-      ),
-      'label' => array(
-        'for' => array(),
-      ),
-    );
-
-    // Sanitize the input field before rendering on the settings page.
-    echo wp_kses( $input, $elements );
+    ?>
+    <div class="gpalab-slo-type-toggle">
+      <label for=<?php echo esc_attr( $id . '_grid' ); ?>>
+        <input
+          <?php echo ( 'grid' === $checked ? 'checked ' : '' ); ?>
+          id=<?php echo esc_attr( $id . '_grid' ); ?>
+          name=<?php echo esc_attr( 'gpalab-slo-settings[' . $key . '][' . $field . ']' ); ?>
+          type="radio"
+          value="grid"
+        >
+          <?php echo esc_html__( 'Three column grid', 'gpalab-slo' ); ?>
+        </label>
+        <label for=<?php echo esc_attr( $id . '_list' ); ?>>
+          <input
+            <?php echo ( 'list' === $checked ? 'checked ' : '' ); ?>
+            id=<?php echo esc_attr( $id . '_list' ); ?>
+            name=<?php echo esc_attr( 'gpalab-slo-settings[' . $key . '][' . $field . ']' ); ?>
+            type="radio"
+            value="list"
+          >
+        <?php echo esc_html__( 'Vertical list', 'gpalab-slo' ); ?>
+      </label>
+    </div>
+    <?php
   }
 
   /**
