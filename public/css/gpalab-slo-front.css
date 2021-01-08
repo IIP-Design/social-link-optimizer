@@ -344,6 +344,10 @@ a:active {
   padding: var(--length-1-125);
 }
 
+main.list + #gpalab-slo-site-footer {
+  max-width: var(--length-40);
+}
+
 #gpalab-slo-site-footer > .back-to-top {
   display: grid;
   place-content: center;

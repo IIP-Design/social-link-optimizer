@@ -6,11 +6,6 @@
  * @since 0.0.1
  */
 
- // Determine the page layout (i.e., grid or list).
- $layout  = ( isset( $page_settings['type'] ) && '' !== $page_settings['type'] )
- ? $page_settings['type']
- : 'grid';
- $is_grid = 'grid' === $layout;
 ?>
 
 <!-- Set up list/grid of social links -->
