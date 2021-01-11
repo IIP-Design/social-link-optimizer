@@ -549,8 +549,10 @@ class Settings {
       id=<?php echo esc_attr( 'slo-avatar-' . $id ); ?>
       value="<?php echo esc_attr( $avatar ); ?>"
     />
-    <label class="gpalab-slo-label" for=<?php echo esc_attr( 'slo-avatar-manager-' . $id ); ?>>
-      <?php echo esc_html( $media_label ); ?>
+    <div class="gpalab-slo-label">
+      <label for=<?php echo esc_attr( 'slo-avatar-manager-' . $id ); ?>>
+        <?php echo esc_html( $media_label ); ?>
+      </label>
       <div class="gpalab-slo-settings-avatar-controls">
         <?php
         $image = null;
@@ -592,7 +594,7 @@ class Settings {
           <?php esc_attr_e( 'Remove avatar image', 'gpalab-slo' ); ?>
         </button>
       </div>
-    </label>
+    </div>
     <?php
   }
 
