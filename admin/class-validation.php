@@ -70,5 +70,10 @@ class Validation {
       wp_enqueue_script( 'gpalab-slo-validation-js' );
       wp_enqueue_style( 'gpalab-slo-validation-css' );
     }
+
+    if ( 'gpalab-social-link_page_gpalab-slo-settings' === $hook ) {
+      wp_enqueue_script( 'gpalab-slo-validation-js' );
+      wp_enqueue_style( 'gpalab-slo-validation-css' );
+    }
   }
 }

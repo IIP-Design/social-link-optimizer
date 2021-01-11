@@ -40,12 +40,10 @@ export const eventListeners = () => {
   } );
 
   // Add event listener to the Add Mission button.
-  const addMissionBtn = document.querySelectorAll( '.slo-add-mission' );
+  const addMissionBtn = document.getElementById( 'slo-add-mission' );
 
-  addMissionBtn.forEach( btn => {
-    btn.addEventListener( 'click', () => {
-      addSLOMission( tabBtns.length );
-    } );
+  addMissionBtn.addEventListener( 'click', () => {
+    addSLOMission( tabBtns.length );
   } );
 
   // Add event listeners to the Remove This Mission buttons.

@@ -20,7 +20,7 @@
 .gpalab-slo-settings-form-controls {
   align-items: center;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin: 1rem 0.5rem 1.5rem;
 }
 
@@ -114,7 +114,7 @@
 }
 
 button.gpalab-slo-avatar-remove.button-secondary,
-input.gpalab-slo-avatar-media-manager.button-primary {
+input.gpalab-slo-avatar-media-manager.button-secondary {
   margin-left: 1.5rem;
 }
 

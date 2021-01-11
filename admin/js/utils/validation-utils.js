@@ -4,7 +4,9 @@
 export const addRequiredTitleLabel = () => {
   const titleLabel = document.getElementById( 'title-prompt-text' );
 
-  titleLabel.textContent += ' (required)';
+  if ( titleLabel ) {
+    titleLabel.textContent += ' (required)';
+  }
 };
 
 /**
@@ -12,7 +14,11 @@ export const addRequiredTitleLabel = () => {
  * @param {string} selector CSS selector
  */
 export const setRequiredAttribute = selector => {
-  document.querySelector( selector ).setAttribute( 'required', '' );
+  const el = document.querySelector( selector );
+
+  if ( el ) {
+    el.setAttribute( 'required', '' );
+  }
 };
 
 /**

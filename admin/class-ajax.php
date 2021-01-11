@@ -40,7 +40,7 @@ class Ajax {
 
     $new_mission['id']        = $mission_id;
     $new_mission['page']      = $slo_page_id;
-    $new_mission['title']     = 'New';
+    $new_mission['title']     = '';
     $new_mission['type']      = 'grid';
     $new_mission['facebook']  = '';
     $new_mission['flickr']    = '';

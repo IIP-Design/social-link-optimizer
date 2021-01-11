@@ -37,7 +37,10 @@ class Settings {
 
     register_setting(
       'gpalab-slo',
-      'gpalab-slo-settings'
+      'gpalab-slo-settings',
+      array(
+        'sanitize_callback' => array( $this, 'sanitize_option_values' ),
+      )
     );
   }
 
@@ -66,7 +69,10 @@ class Settings {
   private function create_admin_page() {
     ?>
     <div class="wrap">
-      <h1><?php esc_html_e( 'Social Link Settings', 'gpalab-slo' ); ?></h1>
+      <h1 class="wp-heading-inline"><?php esc_html_e( 'Social Link Settings', 'gpalab-slo' ); ?></h1>
+      <button class="page-title-action" id="slo-add-mission" type="button">
+        <?php esc_html_e( 'Add a Mission', 'gpalab-slo' ); ?>
+      </button>
       <?php
       settings_errors();
 
@@ -81,27 +87,35 @@ class Settings {
 
         if ( empty( $missions ) ) {
           echo '<p>' . esc_html( $no_missions ) . '</p>';
-          echo '<button class="button button-secondary slo-add-mission" id="slo-add-mission" style="margin-left:1rem;align-self: center;" type="button" >';
-          echo esc_html__( 'Add a Mission', 'gpalab-slo' ) . '</button>';
         }
 
         foreach ( $missions as $key => $mission ) {
-          $tab  = '<li class="gpalab-slo-tab" ';
-          $tab .= 'role="presentation" >';
-          $tab .= '<a class="gpalab-slo-tab-button" ';
-          $tab .= 'href="#gpalab-slo-tab-' . $key . '" ';
-          $tab .= 'id="gpalab-slo-tab-' . $key . '" ';
-          $tab .= 'data-id="' . $key . '" ';
-          $tab .= 'role="tab">' . esc_html( $mission['title'] ) . '</a>';
-          $tab .= '</li>';
-
-          echo wp_kses( $tab, 'post' );
+          ?>
+          <li class="gpalab-slo-tab" role="presentation" >
+            <a
+              class="gpalab-slo-tab-button"
+              href=<?php echo esc_attr( '#gpalab-slo-tab-' . $key ); ?>
+              id=<?php echo esc_attr( 'gpalab-slo-tab-' . $key ); ?>
+              data-id=<?php echo esc_attr( $key ); ?>
+              role="tab"
+              <?php echo empty( $mission['title'] ) ? 'style="font-style: italic;"' : ''; ?>
+            >
+              <?php
+              if ( ! empty( $mission['title'] ) ) {
+                echo esc_html( $mission['title'] );
+              } else {
+                echo esc_html__( 'untitled', 'gpalab-slo' );
+              }
+              ?>
+            </a>
+          </li>
+          <?php
         }
 
         echo '</ul>';
       }
       ?>
-    <form method="post" action="options.php">
+    <form id="post" method="post" action="options.php">
         <?php
           settings_fields( 'gpalab-slo' );
           $this->custom_do_settings_sections( 'gpalab-slo' );
@@ -155,10 +169,12 @@ class Settings {
           'gpalab-slo',
           'gpalab-slo-settings-' . $key,
           array(
-            'label_for' => $title_id,
-            'key'       => $key,
-            'field'     => 'title',
-            'option'    => $mission,
+            'label_for'   => $title_id,
+            'key'         => $key,
+            'field'       => 'title',
+            'option'      => $mission,
+            'placeholder' => __( 'Add Mission Title', 'gpalab-slo' ),
+            'required'    => true,
           )
         );
 
@@ -317,33 +333,26 @@ class Settings {
    * @since 0.0.1
    */
   public function add_input( $args ) {
-    $field  = $args['field'];
-    $key    = $args['key'];
-    $option = $args['option'];
-    $type   = ! empty( $args['type'] ) ? $args['type'] : 'text';
+    $field       = $args['field'];
+    $key         = $args['key'];
+    $option      = $args['option'];
+    $placeholder = ! empty( $args['placeholder'] ) ? 'placeholder="' . $args['placeholder'] . '" ' : '';
+    $type        = ! empty( $args['type'] ) ? $args['type'] : 'text';
 
     $id    = $field . '_' . $key;
     $value = isset( $option[ $field ] ) ? $option[ $field ] : '';
 
     // Generate the markup for the input field.
-    $input  = '<input type="' . $type . '" ';
-    $input .= 'name="gpalab-slo-settings[' . $key . '][' . $field . ']" ';
-    $input .= 'id="' . $id . '" ';
-    $input .= 'value="' . $value . '" >';
-
-    // Identify which HTML elements to allow.
-    $elements = array(
-      'input' => array(
-        'class' => array(),
-        'id'    => array(),
-        'name'  => array(),
-        'type'  => array(),
-        'value' => array(),
-      ),
-    );
-
-    // Sanitize the input field before rendering on the settings page.
-    echo wp_kses( $input, $elements );
+    ?>
+    <input
+      id=<?php echo esc_attr( $id ); ?>
+      name=<?php echo esc_attr( 'gpalab-slo-settings[' . $key . '][' . $field . ']' ); ?>
+      <?php echo wp_kses( $placeholder, 'post' ); ?>
+      <?php echo true === $args['required'] ? 'required ' : ''; ?>
+      type=<?php echo esc_attr( $type ); ?>
+      value="<?php echo esc_attr( $value ); ?>"
+    >
+    <?php
   }
 
   /**
@@ -362,43 +371,30 @@ class Settings {
     $checked = isset( $option[ $field ] ) ? $option[ $field ] : 'grid';
 
     // Generate the markup for the type toggle field.
-    $input  = '<div class="gpalab-slo-type-toggle">';
-    $input .= '<label for="' . $id . '_grid">';
-    $input .= '<input type="radio" ';
-    $input .= 'name="gpalab-slo-settings[' . $key . '][' . $field . ']" ';
-    $input .= 'id="' . $id . '_grid" ';
-    $input .= ( 'grid' === $checked ) ? 'checked ' : '';
-    $input .= 'value="grid" >';
-    $input .= __( 'Three column grid', 'gpalab-slo' ) . '</label>';
-    $input .= '<label for="' . $id . '_list">';
-    $input .= '<input type="radio" ';
-    $input .= 'name="gpalab-slo-settings[' . $key . '][' . $field . ']" ';
-    $input .= 'id="' . $id . '_list" ';
-    $input .= ( 'list' === $checked ) ? 'checked ' : '';
-    $input .= 'value="list" >';
-    $input .= __( 'Vertical list', 'gpalab-slo' ) . '</label>';
-    $input .= '</div>';
-
-    // Identify which HTML elements to allow.
-    $elements = array(
-      'div'   => array(
-        'class' => array(),
-      ),
-      'input' => array(
-        'checked' => array(),
-        'class'   => array(),
-        'id'      => array(),
-        'name'    => array(),
-        'type'    => array(),
-        'value'   => array(),
-      ),
-      'label' => array(
-        'for' => array(),
-      ),
-    );
-
-    // Sanitize the input field before rendering on the settings page.
-    echo wp_kses( $input, $elements );
+    ?>
+    <div class="gpalab-slo-type-toggle">
+      <label for=<?php echo esc_attr( $id . '_grid' ); ?>>
+        <input
+          <?php echo ( 'grid' === $checked ? 'checked ' : '' ); ?>
+          id=<?php echo esc_attr( $id . '_grid' ); ?>
+          name=<?php echo esc_attr( 'gpalab-slo-settings[' . $key . '][' . $field . ']' ); ?>
+          type="radio"
+          value="grid"
+        >
+          <?php echo esc_html__( 'Three column grid', 'gpalab-slo' ); ?>
+        </label>
+        <label for=<?php echo esc_attr( $id . '_list' ); ?>>
+          <input
+            <?php echo ( 'list' === $checked ? 'checked ' : '' ); ?>
+            id=<?php echo esc_attr( $id . '_list' ); ?>
+            name=<?php echo esc_attr( 'gpalab-slo-settings[' . $key . '][' . $field . ']' ); ?>
+            type="radio"
+            value="list"
+          >
+        <?php echo esc_html__( 'Vertical list', 'gpalab-slo' ); ?>
+      </label>
+    </div>
+    <?php
   }
 
   /**
@@ -444,8 +440,8 @@ class Settings {
         ?>
         <p class="gpalab-slo-tabpanel-text">
           <?php echo esc_html( $link_text ); ?>:
-            <a href="<?php echo esc_url( $link ); ?>">
-              <?php echo esc_url( $link ); ?>
+            <a href="<?php echo esc_url( $link, array( 'http', 'https' ) ); ?>">
+              <?php echo esc_url( $link, array( 'http', 'https' ) ); ?>
             </a>.
           </br>
           <?php echo esc_html( $details ); ?>
@@ -476,16 +472,9 @@ class Settings {
       // Render out the Add Mission & Submit buttons.
       ?>
       <div class="gpalab-slo-settings-form-controls">
-        <button
-          class="button button-secondary slo-add-mission"
-          id=<?php echo esc_attr( 'slo-add-mission-' . $id ); ?>
-          type="button"
-        >
-          <?php echo esc_html__( 'Add a Mission', 'gpalab-slo' ); ?>
-        </button>
         <?php
           submit_button(
-            __( 'Update Mission', 'gpalab-slo' ),
+            __( 'Save Changes', 'gpalab-slo' ),
             'primary',
             'submit',
             true,
@@ -588,7 +577,7 @@ class Settings {
         </p>
         <input
           type='button'
-          class="button-primary gpalab-slo-avatar-media-manager"
+          class="button-secondary gpalab-slo-avatar-media-manager"
           data-id=<?php echo esc_attr( $id ); ?>
           id=<?php echo esc_attr( 'slo-avatar-manager-' . $id ); ?>
           value="<?php echo esc_attr( $btn_text ); ?>"
@@ -689,5 +678,70 @@ class Settings {
     );
 
     return $links;
+  }
+
+  /**
+   * Sanitize the data provided in the mission settings page before saving to the DB.
+   *
+   * @param array $settings   A list of mission data objects to be sanitized.
+   *
+   * @since 0.0.1
+   */
+  public function sanitize_option_values( $settings ) {
+    $sanitized_settings = array();
+
+    if ( isset( $settings ) ) {
+      foreach ( $settings as $setting ) {
+        $sanitized = array();
+
+        $sanitized['id']        = sanitize_text_field( $setting['id'] );
+        $sanitized['page']      = sanitize_text_field( $setting['page'] );
+        $sanitized['title']     = sanitize_text_field( $setting['title'] );
+        $sanitized['website']   = $this->enforce_https( $setting['website'] );
+        $sanitized['type']      = sanitize_text_field( $setting['type'] );
+        $sanitized['facebook']  = $this->enforce_https( $setting['facebook'] );
+        $sanitized['flickr']    = $this->enforce_https( $setting['flickr'] );
+        $sanitized['instagram'] = $this->enforce_https( $setting['instagram'] );
+        $sanitized['linkedin']  = $this->enforce_https( $setting['linkedin'] );
+        $sanitized['twitter']   = $this->enforce_https( $setting['twitter'] );
+        $sanitized['whatsapp']  = $this->enforce_https( $setting['whatsapp'] );
+        $sanitized['youtube']   = $this->enforce_https( $setting['youtube'] );
+        $sanitized['avatar']    = sanitize_text_field( $setting['avatar'] );
+
+        array_push( $sanitized_settings, $sanitized );
+      }
+    }
+
+    return $sanitized_settings;
+  }
+
+  /**
+   * Ensures that a url uses https as the protocol and sanitizes it.
+   *
+   * @param string $url  The url string to be checked for https and sanitized.
+   *
+   * @since 0.0.1
+   */
+  public function enforce_https( $url ) {
+    if ( empty( $url ) ) {
+
+      return '';
+
+    } elseif ( substr( $url, 0, 5 ) === 'https' ) {
+
+      return esc_url_raw( $url, array( 'https' ) );
+
+    } elseif ( substr( $url, 0, 5 ) === 'http:' ) {
+
+      // Convert http to https.
+      $https = str_replace( 'http:', 'https:', $url );
+      return esc_url_raw( $https, array( 'https' ) );
+
+    } else {
+
+      // Add https if no protocol provided.
+      return esc_url_raw( 'https://' . $url );
+
+    }
   }
 }

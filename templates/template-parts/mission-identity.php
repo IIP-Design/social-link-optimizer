@@ -46,12 +46,20 @@ $assets_dir = GPALAB_SLO_URL . 'public/assets/';
 foreach ( $social_accts as $key => $value ) {
 
   if ( isset( $value ) && '' !== $value ) {
-    $acct  = '<li><a href=' . esc_attr( $value ) . '>';
-    $acct .= '<img src=' . esc_attr( $assets_dir . $key . '.svg' ) . ' alt="" height="30" width="30" class="social-icon">';
-    $acct .= '<span class="hide-visually">' . esc_html( $key ) . '</span>';
-    $acct .= '</a></li>';
-
-    echo wp_kses( $acct, 'post' );
+    ?>
+    <li>
+      <a href=<?php echo esc_url( $value, array( 'https' ) ); ?>>
+        <img
+          class="social-icon"
+          src=<?php echo esc_attr( $assets_dir . $key . '.svg' ); ?>
+          alt=""
+          height="30"
+          width="30"
+        >
+        <span class="hide-visually"><?php echo esc_html( $key ); ?></span>
+      </a>
+    </li>
+    <?php
   }
 }
 ?>

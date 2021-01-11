@@ -77,7 +77,7 @@ class CPT {
       'not_found'             => __( 'Not found', 'gpalab-slo' ),
       'not_found_in_trash'    => __( 'Not found in Trash', 'gpalab-slo' ),
       'featured_image'        => __( 'Linked Image', 'gpalab-slo' ),
-      'set_featured_image'    => __( 'Add an image to the grid', 'gpalab-slo' ),
+      'set_featured_image'    => __( 'Add image to the grid', 'gpalab-slo' ),
       'remove_featured_image' => __( 'Remove image', 'gpalab-slo' ),
       'use_featured_image'    => __( 'Use as grid image', 'gpalab-slo' ),
       'insert_into_item'      => __( 'Insert into item', 'gpalab-slo' ),
@@ -226,7 +226,12 @@ class CPT {
    */
   public function populate_mission_select( $selected, $missions, $meta ) {
     // Show 'All Posts' as the default option for the SLO page template dropdown.
-    $empty_label = '_gpalab_slo_mission_select' !== $meta ? __( 'All Missions', 'gpalab-slo' ) : '';
+    $label = __( 'All Missions', 'gpalab-slo' );
+
+    // Show and empty string as the default value if on a social link edit screen.
+    if ( 'gpalab_slo_mission' === $meta ) {
+      $label = '';
+    }
 
     ?>
 
@@ -241,7 +246,7 @@ class CPT {
         required
       >
         <option value="" <?php selected( $selected, '' ); ?>>
-          <?php echo esc_html( $empty_label ); ?>
+          <?php echo esc_html( $label ); ?>
         </option>
         <?php
         foreach ( $missions as $mission ) {
