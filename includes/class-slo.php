@@ -152,6 +152,7 @@ class SLO {
     $this->loader->add_filter( 'post_updated_messages', $plugin_cpt, 'social_link_updated_messages', 10, 1 );
     $this->loader->add_action( 'admin_bar_menu', $plugin_cpt, 'remove_view_from_admin_bar', 999 );
     $this->loader->add_action( 'post_submitbox_misc_actions', $plugin_cpt, 'add_archived_to_status_dropdown' );
+    $this->loader->add_filter( 'display_post_states', $plugin_cpt, 'add_archived_to_display_post_states', 10, 1 );
 
     // Hooks to manage the All Links page.
     $this->loader->add_action( 'manage_gpalab-social-link_posts_custom_column', $plugin_cpt_list, 'populate_custom_columns', 10, 2 );
