@@ -546,7 +546,7 @@ class CPT {
     }
 
     // Add archived status and label to states array.
-    $states['archived'] = 'Archived';
+    $states['archived'] = __( 'Archived', 'gpalab-slo' );
 
     return $states;
   }
