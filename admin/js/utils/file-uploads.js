@@ -8,17 +8,33 @@ import { __ } from '@wordpress/i18n';
  * @param {string} missionId The id value of the current mission.
  */
 const updateAvatarSection = ( filename, id, missionId ) => {
-  // Update the value of a mission's hidden avatar field to the selected image id.
+  // Get the mission's hidden avatar field, preview image, and placeholder text.
   const field = document.getElementById( `slo-avatar-${missionId}` );
+  const preview = document.getElementById( `slo-avatar-preview-${missionId}` );
+  const placeholder = document.getElementById( `slo-avatar-placeholder-${missionId}` );
 
-  field.value = id;
+  // eslint-disable-next-line eqeqeq -- loose comparison is fine since the field value is an int and the response is a string
+  const imageUpdated = field.value != id;
 
   // Hide the preview image upon change.
-  const preview = document.getElementById( `slo-avatar-preview-${missionId}` );
-
-  if ( preview ) {
+  if ( preview && imageUpdated ) {
     preview.style.display = 'none';
   }
+
+  // Update the text of the avatar placeholder.
+  if ( placeholder && filename ) {
+    if ( imageUpdated ) {
+      placeholder.style.display = 'block';
+    }
+
+    placeholder.innerText = filename;
+  } else if ( placeholder ) {
+    placeholder.style.display = 'block';
+    placeholder.innerText = __( 'No avatar added', 'gpalab-slo' );
+  }
+
+  // Update the value of a mission's hidden avatar field to the selected image id.
+  field.value = id;
 
   // Update the text of the selection button.
   const select = document.getElementById( `slo-avatar-manager-${missionId}` );
@@ -27,16 +43,6 @@ const updateAvatarSection = ( filename, id, missionId ) => {
     select.value = __( 'Select an avatar image', 'gpalab-slo' );
   } else {
     select.value = __( 'Change avatar image', 'gpalab-slo' );
-  }
-
-  // Update the text of the avatar placeholder.
-  const placeholder = document.getElementById( `slo-avatar-placeholder-${missionId}` );
-
-  if ( placeholder && filename ) {
-    placeholder.innerText = filename;
-  } else if ( placeholder ) {
-    placeholder.style.display = 'block';
-    placeholder.innerText = __( 'No avatar added', 'gpalab-slo' );
   }
 
   // Toggle the visibility of the remove avatar button.
