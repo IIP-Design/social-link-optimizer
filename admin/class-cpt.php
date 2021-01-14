@@ -525,4 +525,29 @@ class CPT {
     }
     echo ' }); </script>';
   }
+
+  /**
+   * Add the 'Archived' post status to display post states.
+   *
+   * @param array $states Post display states.
+   * @return array        Post display states.
+   *
+   * @since 0.0.1
+   */
+  public function add_archived_to_display_post_states( $states ) {
+    global $post;
+
+    $post_type   = $post->post_type;
+    $post_status = $post->post_status;
+
+    // Return default states.
+    if ( 'gpalab-social-link' !== $post_type || 'archived' !== $post_status ) {
+      return $states;
+    }
+
+    // Add archived status and label to states array.
+    $states['archived'] = __( 'Archived', 'gpalab-slo' );
+
+    return $states;
+  }
 }

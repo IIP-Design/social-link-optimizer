@@ -66,7 +66,8 @@ class Frontend {
     }
 
     $paged   = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-    $mission = get_post_meta( get_the_ID(), '_gpalab_slo_mission_select', true );
+    $field   = $is_slo_preview ? 'gpalab_slo_mission' : '_gpalab_slo_mission_select';
+    $mission = get_post_meta( get_the_ID(), $field, true );
     // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key
     // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_value
     $args = array(
