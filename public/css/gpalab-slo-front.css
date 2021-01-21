@@ -5,6 +5,7 @@ html {
 
   --length-0-125: calc(var(--length-1) * 0.125);
   --length-0-25: calc(var(--length-1) * 0.25);
+  --length-0-5: calc(var(--length-1) * 0.5);
   --length-0-625: calc(var(--length-1) * 0.625);
   --length-0-875: calc(var(--length-1) * 0.875);
   --length-1: 1rem;
@@ -18,13 +19,12 @@ html {
   --length-50: calc(var(--length-1) * 50);
 
   --white: #FFFFFF;
-  --wild-sand: #F6F6F6;
-  --alto: #D6D6D6;
+  --iron: #CDD1D6;
   --pacific-blue: #008FC6;
   --astral-blue: #3472A1;
   --chambray-blue: #416393;
   --whale-blue: #06284C;
-  --dark: #0000004D;
+  --dark: #00000029;
   --downriver-blue: #0A2240;
 
   box-sizing: border-box;
@@ -299,20 +299,25 @@ a:active {
   border: var(--length-0-125) solid transparent;
   border-radius: var(--length-0-625);
   padding: var(--length-0-875);
-  color: var(--white);
+  color: var(--iron);
   font-family: var(--font-safe);
   font-size: var(--length-1-125);
   font-weight: 700;
   text-transform: uppercase;
   background-color: var(--whale-blue);
+  box-shadow: 0px var(--length-0-25) var(--length-0-5) var(--dark);
   cursor: pointer;
   transition: background-color 150ms linear, color 150ms linear;
 }
 
 .load-more-container > #load-more:hover,
 .load-more-container > #load-more:focus {
-  color: var(--alto);
+  color: var(--white);
   text-decoration: underline;
+}
+
+.load-more-container > #load-more:focus {
+  box-shadow: 0 0 0 var(--length-0-125) var(--white);
 }
 
 /* Loaded items */
