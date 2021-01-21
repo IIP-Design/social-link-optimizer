@@ -10,6 +10,7 @@ html {
   --length-0-875: calc(var(--length-1) * 0.875);
   --length-1: 1rem;
   --length-1-125: calc(var(--length-1) * 1.125);
+  --length-1-25: calc(var(--length-1) * 1.25);
   --length-1-375: calc(var(--length-1) * 1.375);
   --length-1-5: calc(var(--length-1) * 1.5);
   --length-3-5: calc(var(--length-1) * 3.5);
@@ -20,8 +21,8 @@ html {
 
   --white: #FFFFFF;
   --iron: #CDD1D6;
-  --pacific-blue: #008FC6;
-  --astral-blue: #3472A1;
+  --royal-blue: #3474DA;
+  --azure-blue: #2C5EAD;
   --chambray-blue: #416393;
   --whale-blue: #06284C;
   --dark: #00000029;
@@ -259,7 +260,7 @@ a:active {
 
 .gpalab-slo-content-list.list > li .title {
   font-family: var(--font-safe);
-  font-size: var(--length-1-375);
+  font-size: var(--length-1-25);
   text-align: center;
   text-transform: uppercase;
   overflow-wrap: break-word;
@@ -271,7 +272,7 @@ a:active {
   border-radius: var(--length-1);
   padding: var(--length-1-5);
   text-decoration: none;
-  background: var(--pacific-blue) 0% 0% no-repeat;
+  background: var(--royal-blue) 0% 0% no-repeat;
   box-shadow: 0 var(--length-0-25) var(--length-0-625) var(--dark);
   transition: background 150ms linear;
 }
@@ -279,7 +280,7 @@ a:active {
 .gpalab-slo-content-list.list > li .title :hover,
 .gpalab-slo-content-list.list > li .title :focus,
 .gpalab-slo-content-list.list > li .title :active {
-  background-color: var(--astral-blue);
+  background-color: var(--azure-blue);
 }
 
 .gpalab-slo-content-list.list > li .title :focus {
