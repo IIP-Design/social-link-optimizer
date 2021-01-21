@@ -23,7 +23,6 @@ html {
   --iron: #CDD1D6;
   --royal-blue: #3474DA;
   --azure-blue: #2C5EAD;
-  --chambray-blue: #416393;
   --whale-blue: #06284C;
   --dark: #00000029;
   --downriver-blue: #0A2240;
@@ -129,9 +128,9 @@ a:active {
   top: var(--length-0-625);
   left: var(--length-0-625);
   z-index: 100000; /* display above admin toolbar, if present */
-  border: var(--length-0-125) solid var(--chambray-blue);
+  border: var(--length-0-125) solid var(--whale-blue);
   padding: var(--length-0-875);
-  color: var(--chambray-blue);
+  color: var(--whale-blue);
   font-family: var(--font-secondary);
   font-size: var(--length-0-875);
   transform: translateY(-125%);
