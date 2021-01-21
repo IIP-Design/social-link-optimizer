@@ -23,9 +23,9 @@ html {
   --pacific-blue: #008FC6;
   --astral-blue: #3472A1;
   --chambray-blue: #416393;
-  --regal-blue: #003875;
   --whale-blue: #06284C;
   --dark: #0000004D;
+  --downriver-blue: #0A2240;
 
   box-sizing: border-box;
   scroll-behavior: smooth;
@@ -120,7 +120,7 @@ a:active {
   font-family: var(--font-primary);
   line-height: 1.5;
   text-rendering: optimizeSpeed;
-  background-color: var(--regal-blue) !important;
+  background-color: var(--downriver-blue) !important;
 }
 
 .skip-to-content {
