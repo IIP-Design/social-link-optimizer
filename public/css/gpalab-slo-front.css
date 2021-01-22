@@ -267,6 +267,7 @@ a:active {
 }
 
 .gpalab-slo-content-list.list > li .title {
+  color: var(--gallery);
   font-family: var(--font-primary);
   font-size: var(--length-1-25);
   font-weight: 600;
