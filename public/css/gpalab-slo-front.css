@@ -5,6 +5,7 @@ html {
 
   --length-0-125: calc(var(--length-1) * 0.125);
   --length-0-25: calc(var(--length-1) * 0.25);
+  --length-0-5: calc(var(--length-1) * 0.5);
   --length-0-625: calc(var(--length-1) * 0.625);
   --length-0-875: calc(var(--length-1) * 0.875);
   --length-1: 1rem;
@@ -309,7 +310,7 @@ a:active {
   grid-column: 2;
   border: var(--length-0-125) solid transparent;
   border-radius: var(--length-0-625);
-  padding: var(--length-0-875);
+  padding: var(--length-0-5) var(--length-0-875);
   color: var(--san-juan-blue);
   font-family: var(--font-secondary);
   font-size: var(--length-1-125);
