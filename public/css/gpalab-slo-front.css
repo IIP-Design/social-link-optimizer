@@ -19,6 +19,8 @@ html {
 
   --white: #FFFFFF;
   --white-ice: #E7F6FB;
+  --gallery: #EFEFEF;
+  --iron: #CDD0D5;
   --royal-blue: #3474DA;
   --azure-blue: #2C5EAD;
   --san-juan-blue: #334477;
@@ -360,7 +362,9 @@ a:active {
   display: inline-flex;
   align-items: center;
   opacity: 0;
+  color: var(--gallery);
   font-family: var(--font-secondary);
+  font-size: var(--length-1-125);
   font-weight: 800;
   text-decoration: none;
   text-transform: uppercase;
@@ -373,6 +377,7 @@ a:active {
 
 #gpalab-slo-site-footer > .back-to-top:hover,
 #gpalab-slo-site-footer > .back-to-top:focus {
+  color: var(--iron);
   text-decoration: underline;
 }
 
