@@ -21,12 +21,12 @@ html {
   --length-50: calc(var(--length-1) * 50);
 
   --white: #FFFFFF;
-  --iron: #CDD1D6;
+  --white-ice: #E7F6FB;
   --royal-blue: #3474DA;
   --azure-blue: #2C5EAD;
-  --whale-blue: #06284C;
-  --dark: #00000029;
+  --san-juan-blue: #334477;
   --downriver-blue: #0A2240;
+  --dark: #0000004D;
 
   box-sizing: border-box;
   scroll-behavior: smooth;
@@ -129,9 +129,9 @@ a:active {
   top: var(--length-0-625);
   left: var(--length-0-625);
   z-index: 100000; /* display above admin toolbar, if present */
-  border: var(--length-0-125) solid var(--whale-blue);
+  border: var(--length-0-125) solid var(--downriver-blue);
   padding: var(--length-0-875);
-  color: var(--whale-blue);
+  color: var(--downriver-blue);
   font-family: var(--font-secondary);
   font-size: var(--length-0-875);
   transform: translateY(-125%);
@@ -301,25 +301,25 @@ a:active {
   border: var(--length-0-125) solid transparent;
   border-radius: var(--length-0-625);
   padding: var(--length-0-875);
-  color: var(--iron);
+  color: var(--san-juan-blue);
   font-family: var(--font-secondary);
   font-size: var(--length-1-125);
   font-weight: 800;
   text-transform: uppercase;
-  background-color: var(--whale-blue);
-  box-shadow: 0px var(--length-0-25) var(--length-0-5) var(--dark);
+  background-color: var(--white-ice);
   cursor: pointer;
   transition: background-color 150ms linear, color 150ms linear;
 }
 
 .load-more-container > #load-more:hover,
 .load-more-container > #load-more:focus {
-  color: var(--white);
+  color: var(--downriver-blue);
   text-decoration: underline;
+  background-color: var(--white);
 }
 
 .load-more-container > #load-more:focus {
-  box-shadow: 0 0 0 var(--length-0-125) var(--white);
+  border-color: var(--downriver-blue);
 }
 
 /* Loaded items */
