@@ -356,8 +356,13 @@ a:active {
   bottom: var(--length-1-5);
   display: flex;
   justify-content: flex-end;
+  margin-left: auto;
   padding-left: var(--length-3-5);
   padding-right: var(--length-3-5);
+  width: intrinsic;
+  width: -moz-max-content;
+  width: -webkit-max-content;
+  width: max-content;
 }
 
 #gpalab-slo-site-footer > .back-to-top {
