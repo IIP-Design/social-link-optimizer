@@ -165,9 +165,18 @@ a:active {
 }
 
 .gpalab-slo-page-title {
+  padding-left: var(--length-0-875);
+  padding-right: var(--length-0-875);
   font-family: var(--font-primary);
   font-size: var(--length-1-75);
   font-weight: 600;
+}
+
+@media (min-width: 540px) {
+  .gpalab-slo-page-title {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 .mission-website {
