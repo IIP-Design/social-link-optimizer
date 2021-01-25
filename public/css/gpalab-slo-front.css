@@ -369,7 +369,7 @@ a:active {
   opacity: 0;
   color: var(--gallery);
   font-family: var(--font-secondary);
-  font-size: var(--length-1-125);
+  font-size: var(--length-1);
   font-weight: 800;
   text-decoration: none;
   text-transform: uppercase;
