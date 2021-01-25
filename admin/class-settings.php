@@ -73,6 +73,7 @@ class Settings {
       <button class="page-title-action" id="slo-add-mission" type="button">
         <?php esc_html_e( 'Add a Mission', 'gpalab-slo' ); ?>
       </button>
+      <hr class="wp-header-end">
       <?php
       settings_errors();
 
