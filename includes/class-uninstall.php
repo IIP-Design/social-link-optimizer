@@ -70,6 +70,7 @@ class Uninstall {
    * @since 0.0.1
    */
   private static function remove_options() {
+    delete_option( 'gpalab-slo-pages' );
     delete_option( 'gpalab-slo-settings' );
   }
 
