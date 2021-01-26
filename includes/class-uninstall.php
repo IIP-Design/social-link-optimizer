@@ -203,7 +203,7 @@ class Uninstall {
     $posts = get_posts( $query_args );
 
     foreach ( $posts as $post ) {
-      wp_delete_post( $post );
+      wp_delete_post( $post, true );
     }
 
     unset( $post );
