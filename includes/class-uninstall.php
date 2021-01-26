@@ -32,8 +32,6 @@ class Uninstall {
 
       self::remove_options();
       self::remove_capabilities();
-      self::delete_slo_page_meta();
-      self::reset_slo_page_templates();
       self::delete_slo_cpts();
       self::delete_slo_pages();
 
@@ -53,8 +51,6 @@ class Uninstall {
 
         self::remove_options();
         self::remove_capabilities();
-        self::delete_slo_page_meta();
-        self::reset_slo_page_templates();
         self::delete_slo_cpts();
         self::delete_slo_pages();
       }
@@ -121,69 +117,6 @@ class Uninstall {
     }
 
     unset( $cap );
-  }
-
-  /**
-   * Find all pages with an associated SLO mission and remove that meta value.
-   *
-   * @since 0.0.1
-   */
-  private static function delete_slo_page_meta() {
-    $posts_per_page = -1;
-
-    // Running plugin clean function can be slow.
-    // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-    $query_args = array(
-      'post_type'      => 'page',
-      'fields'         => 'ids',
-      'no_found_rows'  => true,
-      'posts_per_page' => $posts_per_page,
-      'meta_key'       => '_gpalab_slo_mission_select',
-    );
-    // phpcs:enable
-
-    $query = new \WP_Query( $query_args );
-
-    if ( $query->posts ) {
-      foreach ( $query->posts as $key => $post ) {
-        delete_post_meta( $post, '_gpalab_slo_mission_select' );
-      }
-
-      unset( $post );
-    }
-  }
-
-  /**
-   * Find all pages with using the SLO page template and reset them as default pages.
-   *
-   * @since 0.0.1
-   */
-  private static function reset_slo_page_templates() {
-    $posts_per_page = -1;
-
-    // Running plugin clean function can be slow.
-    // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-    // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_value
-    $query_args = array(
-      'post_type'      => 'page',
-      'fields'         => 'ids',
-      'no_found_rows'  => true,
-      'posts_per_page' => $posts_per_page,
-      'meta_key'       => '_wp_page_template',
-      'meta_value'     => 'archive-gpalab-social-link.php',
-      'meta_compare'   => '=',
-    );
-    // phpcs:enable
-
-    $query = new \WP_Query( $query_args );
-
-    if ( $query->posts ) {
-      foreach ( $query->posts as $key => $post ) {
-        update_post_meta( $post, '_wp_page_template', 'default' );
-      }
-
-      unset( $post );
-    }
   }
 
   /**
