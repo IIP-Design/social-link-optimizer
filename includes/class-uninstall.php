@@ -198,6 +198,7 @@ class Uninstall {
       'no_found_rows'  => true,
       'post_type'      => 'gpalab-social-link',
       'posts_per_page' => $posts_per_page,
+      'post_status'    => get_post_stati(),
     );
 
     $posts = get_posts( $query_args );
