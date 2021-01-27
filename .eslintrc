@@ -1,13 +1,5 @@
 {
   "extends": ["@gpa-lab/eslint-config", "@gpa-lab/eslint-config/react"],
   "ignorePatterns": [ "node_modules/", "admin/build/", "public/build/", "docs/_site/", "vendor/" ],
-  "rules": {
-    "node/no-unpublished-require": [
-      "error", {
-        "allowModules": ["@wordpress/scripts"]
-      }
-    ],
-    "react/jsx-pascal-case": ["error", { "allowAllCaps": true }]
-  },
   "root": true
 }
