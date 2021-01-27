@@ -21,7 +21,7 @@ class Activator {
    *
    * @since 0.0.1
    */
-  public function activate() {
+  public static function activate() {
 
     // Ensure user has the proper permissions.
     if ( ! current_user_can( 'activate_plugins' ) ) {
