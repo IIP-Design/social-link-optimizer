@@ -21,7 +21,7 @@ class Uninstall {
    *
    * @since 0.0.1
    */
-  public function uninstall() {
+  public static function uninstall() {
 
     // Ensure user has the proper permissions.
     if ( ! current_user_can( 'delete_plugins' ) ) {
@@ -124,7 +124,7 @@ class Uninstall {
    *
    * @since 0.0.1
    */
-  private function delete_slo_cpts() {
+  private static function delete_slo_cpts() {
 
     $posts_per_page = -1;
 
@@ -150,7 +150,7 @@ class Uninstall {
    *
    * @since 0.0.1
    */
-  private function delete_slo_pages() {
+  private static function delete_slo_pages() {
 
     $posts_per_page = -1;
 
