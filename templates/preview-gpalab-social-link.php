@@ -20,14 +20,13 @@ if ( ! isset( $_GET['preview'] ) || 'true' !== sanitize_text_field( wp_unslash( 
 }
 // phpcs:enable
 
-require 'template-parts/header-slo.php';
-
 // Get the id of the selected mission for the current link.
 $selected_mission = get_post_meta( get_the_ID(), 'gpalab_slo_mission', true );
 
 // Get the remaining page data (using the $selected_mission value above).
 require 'template-parts/page-settings.php';
 
+require 'template-parts/header-slo.php';
 ?>
 
 <main id="gpalab-slo-main-content" role="main">

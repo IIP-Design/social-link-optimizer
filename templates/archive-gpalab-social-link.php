@@ -11,13 +11,13 @@
   * Renders the social links page template.
   */
 
-require 'template-parts/header-slo.php';
-
 // Get the id of the selected mission for the current page.
 $selected_mission = get_post_meta( get_the_ID(), '_gpalab_slo_mission_select', true );
 
 // Get the remaining page data (using the $selected_mission value above).
 require 'template-parts/page-settings.php';
+
+require 'template-parts/header-slo.php';
 ?>
 
 <main id="gpalab-slo-main-content" class="<?php echo ( $is_grid ) ? 'grid' : 'list'; ?>" role="main">
