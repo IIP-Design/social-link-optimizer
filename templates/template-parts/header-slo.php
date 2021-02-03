@@ -8,7 +8,7 @@
 
 ?><!DOCTYPE html>
 
-<html class="no-js" <?php language_attributes(); ?>>
+<html class="no-js <?php echo esc_attr( $page_theme ); ?>" <?php language_attributes(); ?>>
 
   <head>
 
@@ -21,7 +21,7 @@
 
   </head>
 
-  <body <?php body_class( $page_theme ); ?> id="gpalab-slo" tabindex="-1">
+  <body <?php body_class(); ?> id="gpalab-slo" tabindex="-1">
     <a href="#instagram-posts" class="skip-to-content" role="navigation" aria-label="skip to instagram content">
       <?php echo esc_html__( 'Skip to Instagram content', 'gpalab-slo' ); ?>
     </a>
