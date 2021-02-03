@@ -449,3 +449,36 @@ a:active {
     url('../assets/fonts/open-sans-v18-latin-800.woff') format('woff'),
     url('../assets/fonts/open-sans-v18-latin-800.ttf') format('truetype');
 }
+
+/**
+ * MWP Legacy theme styling
+ */ 
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+    url('../assets/fonts/oswald-v35-latin-regular.woff2') format('woff2'),
+    url('../assets/fonts/oswald-v35-latin-regular.woff') format('woff'),
+    url('../assets/fonts/oswald-v35-latin-regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 700;
+  src: local(''),
+    url('../assets/fonts/oswald-v35-latin-700.woff2') format('woff2'),
+    url('../assets/fonts/oswald-v35-latin-700.woff') format('woff'),
+    url('../assets/fonts/oswald-v35-latin-700.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  src: local(''),
+    url('../assets/fonts/roboto-v20-latin-300.woff2') format('woff2'),
+    url('../assets/fonts/roboto-v20-latin-300.woff') format('woff'),
+    url('../assets/fonts/roboto-v20-latin-300.ttf') format('truetype');
+}
