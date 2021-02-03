@@ -20,4 +20,7 @@ $layout = ( isset( $page_settings['type'] ) && '' !== $page_settings['type'] )
   ? $page_settings['type']
   : 'grid';
 
-$is_grid = 'grid' === $layout;
+$is_grid    = 'grid' === $layout;
+$page_theme = ( isset( $page_settings['theme'] ) && '' !== $page_settings['theme'] )
+  ? $page_settings['theme']
+  : 'mwp-redesign';
