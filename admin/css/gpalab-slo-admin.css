@@ -128,10 +128,10 @@ button.button.button-secondary.slo-permalink {
   margin-left: 2rem;
 }
 
-.gpalab-slo-theme-toggle > [for^="theme_0_mwp_"] {
+.gpalab-slo-theme-toggle > [for^="theme_"] {
   vertical-align: top;
 }
 
-.gpalab-slo-theme-toggle  > [for^="theme_0_mwp_"]:first-child {
+.gpalab-slo-theme-toggle  > [for^="theme_"]:first-child {
   margin-right: 1rem;
 }
