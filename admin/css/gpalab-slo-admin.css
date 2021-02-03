@@ -127,3 +127,11 @@ button.button.button-link-delete.slo-remove-mission {
 button.button.button-secondary.slo-permalink {
   margin-left: 2rem;
 }
+
+.gpalab-slo-theme-toggle > [for^="theme_0_mwp_"] {
+  vertical-align: top;
+}
+
+.gpalab-slo-theme-toggle  > [for^="theme_0_mwp_"]:first-child {
+  margin-right: 1rem;
+}
