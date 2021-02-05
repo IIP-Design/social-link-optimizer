@@ -104,6 +104,10 @@
   margin: 1rem 0 1.5rem;
 }
 
+.slo-remove-mission-explanation {
+  margin: 1.5rem 1rem 0;
+}
+
 button.gpalab-slo-avatar-remove.button-secondary,
 input.gpalab-slo-avatar-media-manager.button-secondary {
   margin-left: 1.5rem;

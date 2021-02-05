@@ -661,11 +661,12 @@ class Settings {
    * @since 0.0.1
    */
   private function render_danger_section( $id, $post_id ) {
-    $title       = __( 'Danger Zone', 'gpalab-slo' );
-    $warning     = __( 'Warning, altering the below settings can have destructive results. Proceed with caution.', 'gpalab-slo' );
-    $perma_label = __( 'Change permalink:', 'gpalab-slo' );
-    $perma_btn   = __( 'Update Permalink', 'gpalab-slo' );
-    $remove_btn  = __( 'Remove This Mission', 'gpalab-slo' );
+    $title               = __( 'Danger Zone', 'gpalab-slo' );
+    $warning             = __( 'Warning, altering the below settings can have destructive results. Proceed with caution.', 'gpalab-slo' );
+    $perma_label         = __( 'Change permalink:', 'gpalab-slo' );
+    $perma_btn           = __( 'Update Permalink', 'gpalab-slo' );
+    $removal_explanation = __( 'Delete this Social Link page (cannot be restored):', 'gpalab-slo' );
+    $remove_btn          = __( 'Remove This Mission', 'gpalab-slo' );
 
     ?>
     <hr class="gpalab-slo-hr">
@@ -691,6 +692,7 @@ class Settings {
         </button>
       </div>
     </label>
+    <p class="slo-remove-mission-explanation"><?php echo esc_html( $removal_explanation ); ?></p>
     <!-- Button to remove the current section from the settings array. -->
     <button
       class="button button-link-delete slo-remove-mission"
