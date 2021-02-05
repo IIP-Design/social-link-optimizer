@@ -66,7 +66,7 @@ class CPT {
       'attributes'            => __( 'Item Attributes', 'gpalab-slo' ),
       'parent_item_colon'     => __( 'Parent Item:', 'gpalab-slo' ),
       'all_items'             => __( 'All Links', 'gpalab-slo' ),
-      'add_new_item'          => __( 'Add New Link', 'gpalab-slo' ),
+      'add_new_item'          => __( 'Add New Social Link', 'gpalab-slo' ),
       'add_new'               => __( 'Add New Link', 'gpalab-slo' ),
       'new_item'              => __( 'New Item', 'gpalab-slo' ),
       'edit_item'             => __( 'Edit Social Link', 'gpalab-slo' ),
