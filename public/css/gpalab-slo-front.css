@@ -399,12 +399,19 @@ a:active {
   position: sticky;
   bottom: var(--length-1-5);
   margin-left: auto;
-  padding-left: var(--length-3-5);
-  padding-right: var(--length-3-5);
+  padding-left: var(--length-1-125);
+  padding-right: var(--length-1-125);
   width: intrinsic;
   width: -moz-max-content;
   width: -webkit-max-content;
   width: max-content;
+}
+
+@media (min-width: 1140px) {
+  #gpalab-slo-site-footer {
+    padding-left: var(--length-3-5);
+    padding-right: var(--length-3-5);
+  }
 }
 
 #gpalab-slo-site-footer > .back-to-top {
