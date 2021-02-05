@@ -490,20 +490,15 @@ class Settings {
 
       // Render out link to the mission's SLO page.
       if ( isset( $missions[ $index ]['page'] ) ) {
-        $post_id = esc_html( $missions[ $index ]['page'] );
-        $link    = get_permalink( $post_id );
-
-        $link_text = __( 'Social link optimizer page created at', 'gpalab-slo' );
-        $details   = __( 'You can configure the page using the fields below. Use the "Change permalink" field below to change the page URL.', 'gpalab-slo' );
-
+        $post_id   = esc_html( $missions[ $index ]['page'] );
+        $link      = get_permalink( $post_id );
+        $link_text = __( 'Social Link page URL', 'gpalab-slo' );
         ?>
         <p class="gpalab-slo-tabpanel-text">
           <?php echo esc_html( $link_text ); ?>:
             <a href="<?php echo esc_url( $link, array( 'http', 'https' ) ); ?>">
               <?php echo esc_url( $link, array( 'http', 'https' ) ); ?>
             </a>.
-          </br>
-          <?php echo esc_html( $details ); ?>
         </p>
         <?php
       }
