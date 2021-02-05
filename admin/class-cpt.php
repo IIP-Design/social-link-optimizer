@@ -470,6 +470,23 @@ class CPT {
   }
 
   /**
+   * Filters the default untrashed message.
+   *
+   * @param array $messages Array of messages.
+   * @param array $counts   Array of item counts for each message.
+   *
+   * @since 0.0.1
+   */
+  public function social_link_untrashed_message( $messages, $counts ) {
+    $messages['gpalab-social-link'] = array(
+      /* translators: %s: count of untrashed social links */
+      'untrashed' => _n( '%s social link restored from the Trash. Go to Edit Social Link to republish.', '%s social link restored from the Trash. Go to Edit Social Link to republish.', $counts['untrashed'] ),
+    );
+
+    return $messages;
+  }
+
+  /**
    * Remove the View link from the admin bar for social links.
    *
    * @param object $wp_admin_bar  List of nodes to appear in the admin bar.

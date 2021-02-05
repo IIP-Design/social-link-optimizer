@@ -150,6 +150,7 @@ class SLO {
     $this->loader->add_filter( 'preview_post_link', $plugin_cpt, 'hijack_slo_preview' );
     $this->loader->add_action( 'admin_head', $plugin_cpt, 'hide_unused_elements' );
     $this->loader->add_filter( 'post_updated_messages', $plugin_cpt, 'social_link_updated_messages', 10, 1 );
+    $this->loader->add_filter( 'bulk_post_updated_messages', $plugin_cpt, 'social_link_untrashed_message', 10, 2 );
     $this->loader->add_action( 'admin_bar_menu', $plugin_cpt, 'remove_view_from_admin_bar', 999 );
     $this->loader->add_action( 'post_submitbox_misc_actions', $plugin_cpt, 'add_archived_to_status_dropdown' );
     $this->loader->add_filter( 'display_post_states', $plugin_cpt, 'add_archived_to_display_post_states', 10, 1 );
