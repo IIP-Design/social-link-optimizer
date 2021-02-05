@@ -172,7 +172,7 @@ class CPT_List {
    */
   public function add_custom_bulk_actions( $bulk_actions ) {
     if ( 'archived' !== get_query_var( 'post_status' ) && 'trash' !== get_query_var( 'post_status' ) ) {
-      $bulk_actions['archive'] = __( 'Archive Links', 'gpalab-slo' );
+      $bulk_actions['archive'] = __( 'Archive', 'gpalab-slo' );
     }
 
     return $bulk_actions;
