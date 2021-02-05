@@ -759,7 +759,7 @@ class Settings {
         $sanitized['page']      = sanitize_text_field( $setting['page'] );
         $sanitized['title']     = sanitize_text_field( $setting['title'] );
         $sanitized['website']   = $this->enforce_https( $setting['website'] );
-        $sanitized['theme']      = sanitize_text_field( $setting['theme'] );
+        $sanitized['theme']     = sanitize_text_field( $setting['theme'] );
         $sanitized['type']      = sanitize_text_field( $setting['type'] );
         $sanitized['facebook']  = $this->enforce_https( $setting['facebook'] );
         $sanitized['flickr']    = $this->enforce_https( $setting['flickr'] );
