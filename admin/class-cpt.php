@@ -454,16 +454,16 @@ class CPT {
 
     $msg['gpalab-social-link'] = array(
       0  => '', // Unused. Messages start at index 1.
-      1  => __( 'Social link updated.', 'gpalab-slo' ),
+      1  => __( 'Social Link updated.', 'gpalab-slo' ),
       2  => __( 'Custom field updated.', 'gpalab-slo' ),
       3  => __( 'Custom field deleted.', 'gpalab-slo' ),
-      4  => __( 'Social link updated.', 'gpalab-slo' ),
+      4  => __( 'Social Link updated.', 'gpalab-slo' ),
       5  => $is_revision,
-      6  => __( 'Social link published.', 'gpalab-slo' ),
-      7  => __( 'Social link saved.', 'gpalab-slo' ),
-      8  => __( 'Social link submitted.', 'gpalab-slo' ),
+      6  => __( 'Social Link published.', 'gpalab-slo' ),
+      7  => __( 'Social Link saved.', 'gpalab-slo' ),
+      8  => __( 'Social Link submitted.', 'gpalab-slo' ),
       9  => sprintf( $scheduled, '<strong>' . $scheduled_date . '</strong>' ),
-      10 => __( 'Social link draft updated.', 'gpalab-slo' ),
+      10 => __( 'Social Link saved as draft.', 'gpalab-slo' ),
     );
 
     return $msg;
