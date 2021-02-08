@@ -8,7 +8,7 @@
 
 ?><!DOCTYPE html>
 
-<html class="no-js" <?php language_attributes(); ?>>
+<html class="no-js <?php echo esc_attr( $page_theme ); ?>" <?php language_attributes(); ?>>
 
   <head>
 

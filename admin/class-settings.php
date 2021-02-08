@@ -211,6 +211,22 @@ class Settings {
           )
         );
 
+        $theme_id = 'theme_' . $key;
+
+        add_settings_field(
+          $theme_id,
+          __( 'Social links page theme:', 'gpalab-slo' ),
+          array( $this, 'add_theme_toggle' ),
+          'gpalab-slo',
+          'gpalab-slo-settings-' . $key,
+          array(
+            'label_for' => $theme_id,
+            'key'       => $key,
+            'field'     => 'theme',
+            'option'    => $mission,
+          )
+        );
+
         $facebook_id = 'facebook_' . $key;
 
         add_settings_field(
@@ -393,6 +409,48 @@ class Settings {
             value="list"
           >
         <?php echo esc_html__( 'Vertical list', 'gpalab-slo' ); ?>
+      </label>
+    </div>
+    <?php
+  }
+
+  /**
+   * Generate a set of radio buttons to toggle the social page theme.
+   *
+   * @param array $args   Data used to individualize input fields and get input value.
+   *
+   * @since 0.0.1
+   */
+  public function add_theme_toggle( $args ) {
+    $field  = $args['field'];
+    $key    = $args['key'];
+    $option = $args['option'];
+
+    $id      = $field . '_' . $key;
+    $checked = isset( $option[ $field ] ) ? $option[ $field ] : 'mwp-redesign';
+
+    // Generate the markup for the theme toggle field.
+    ?>
+    <div class="gpalab-slo-theme-toggle">
+      <label for=<?php echo esc_attr( $id . '_mwp_redesign' ); ?>>
+        <input
+          <?php echo ( 'mwp-redesign' === $checked ? 'checked ' : '' ); ?>
+          id=<?php echo esc_attr( $id . '_mwp_redesign' ); ?>
+          name=<?php echo esc_attr( 'gpalab-slo-settings[' . $key . '][' . $field . ']' ); ?>
+          type="radio"
+          value="mwp-redesign"
+        >
+          <?php echo esc_html__( 'MWP redesign', 'gpalab-slo' ); ?>
+      </label>
+      <label for=<?php echo esc_attr( $id . '_mwp_legacy' ); ?>>
+          <input
+            <?php echo ( 'mwp-legacy' === $checked ? 'checked ' : '' ); ?>
+            id=<?php echo esc_attr( $id . '_mwp_legacy' ); ?>
+            name=<?php echo esc_attr( 'gpalab-slo-settings[' . $key . '][' . $field . ']' ); ?>
+            type="radio"
+            value="mwp-legacy"
+          >
+        <?php echo esc_html__( 'MWP legacy', 'gpalab-slo' ); ?>
       </label>
     </div>
     <?php
@@ -701,6 +759,7 @@ class Settings {
         $sanitized['page']      = sanitize_text_field( $setting['page'] );
         $sanitized['title']     = sanitize_text_field( $setting['title'] );
         $sanitized['website']   = $this->enforce_https( $setting['website'] );
+        $sanitized['theme']     = sanitize_text_field( $setting['theme'] );
         $sanitized['type']      = sanitize_text_field( $setting['type'] );
         $sanitized['facebook']  = $this->enforce_https( $setting['facebook'] );
         $sanitized['flickr']    = $this->enforce_https( $setting['flickr'] );
