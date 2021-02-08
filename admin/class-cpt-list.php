@@ -172,7 +172,9 @@ class CPT_List {
    */
   public function add_custom_bulk_actions( $bulk_actions ) {
     if ( 'archived' !== get_query_var( 'post_status' ) && 'trash' !== get_query_var( 'post_status' ) ) {
-      unset( $bulk_actions['trash'] );
+      if ( isset( $bulk_actions['trash'] ) ) {
+        unset( $bulk_actions['trash'] );
+      }
       $bulk_actions['archive'] = __( 'Archive', 'gpalab-slo' );
       $bulk_actions['trash']   = __( 'Move to Trash', 'gpalab-slo' );
     }
