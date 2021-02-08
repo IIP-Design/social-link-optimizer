@@ -5,7 +5,6 @@
   "engines": {
     "node": ">=10.0.0"
   },
-  "files": [],
   "scripts": {
     "build": "wp-scripts build admin/js/*.js --output-path=admin/build && wp-scripts build public/js/*.js --output-path=public/build",
     "dev": "wp-scripts start admin/js/*.js --output-path=admin/build && wp-scripts start public/js/*.js --output-path=public/build",
@@ -37,7 +36,7 @@
     "@wordpress/plugins": "^2.24.2"
   },
   "devDependencies": {
-    "@gpa-lab/eslint-config": "^1.4.0",
+    "@gpa-lab/eslint-config": "1.4.1",
     "@wordpress/scripts": "^13.0.0",
     "eslint": "^7.18.0",
     "eslint-plugin-import": "^2.22.1",
