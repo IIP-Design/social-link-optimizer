@@ -409,8 +409,8 @@ class CPT {
 
     /* Checks for single template by post type */
     if ( 'gpalab-social-link' === $post->post_type ) {
-      if ( file_exists( GPALAB_SLO_DIR . '/templates/preview-gpalab-social-link.php' ) ) {
-        return GPALAB_SLO_DIR . '/templates/preview-gpalab-social-link.php';
+      if ( file_exists( GPALAB_SLO_DIR . '/templates/base-preview-gpalab-social-link.php' ) ) {
+        return GPALAB_SLO_DIR . '/templates/base-preview-gpalab-social-link.php';
       }
     }
 
