@@ -166,6 +166,7 @@ class SLO {
     $this->loader->add_filter( 'bulk_actions-edit-gpalab-social-link', $plugin_cpt_list, 'add_custom_bulk_actions' );
     $this->loader->add_filter( 'handle_bulk_actions-edit-gpalab-social-link', $plugin_cpt_list, 'handle_bulk_archive', 10, 3 );
     $this->loader->add_action( 'admin_notices', $plugin_cpt_list, 'show_archive_notice' );
+    $this->loader->add_filter( 'wpseo_accessible_post_types', $plugin_cpt_list, 'remove_yoast_filters' );
 
     // Adds a widget to the WordPress user dashboard.
     $this->loader->add_action( 'wp_dashboard_setup', $plugin_dashboard, 'slo_dashboard_widget' );
