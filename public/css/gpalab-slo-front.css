@@ -213,6 +213,10 @@ a:active {
   font-weight: 600;
 }
 
+.gpalab-slo-page-title > .preview-badge {
+  text-transform: uppercase;
+}
+
 @media (min-width: 540px) {
   .gpalab-slo-page-title {
     padding-left: 0;

@@ -66,7 +66,7 @@ class CPT {
       'attributes'            => __( 'Item Attributes', 'gpalab-slo' ),
       'parent_item_colon'     => __( 'Parent Item:', 'gpalab-slo' ),
       'all_items'             => __( 'All Links', 'gpalab-slo' ),
-      'add_new_item'          => __( 'Add New Link', 'gpalab-slo' ),
+      'add_new_item'          => __( 'Add New Social Link', 'gpalab-slo' ),
       'add_new'               => __( 'Add New Link', 'gpalab-slo' ),
       'new_item'              => __( 'New Item', 'gpalab-slo' ),
       'edit_item'             => __( 'Edit Social Link', 'gpalab-slo' ),
@@ -129,18 +129,18 @@ class CPT {
    */
   public function gpalab_slo_custom_meta() {
     add_meta_box(
-      'gpalab_slo_mission',
-      __( 'Select Mission (required)', 'gpalab-slo' ),
-      array( $this, 'add_mission_select' ),
+      'gpalab_slo_link',
+      __( 'Add a Link to This Social Post (required)', 'gpalab-slo' ),
+      array( $this, 'add_link_input' ),
       'gpalab-social-link',
       'normal',
       'high'
     );
 
     add_meta_box(
-      'gpalab_slo_link',
-      __( 'Add a Link to This Social Post (required)', 'gpalab-slo' ),
-      array( $this, 'add_link_input' ),
+      'gpalab_slo_mission',
+      __( 'Select Mission (required)', 'gpalab-slo' ),
+      array( $this, 'add_mission_select' ),
       'gpalab-social-link',
       'normal',
       'default'
@@ -454,19 +454,36 @@ class CPT {
 
     $msg['gpalab-social-link'] = array(
       0  => '', // Unused. Messages start at index 1.
-      1  => __( 'Social link updated.', 'gpalab-slo' ),
+      1  => __( 'Social Link updated.', 'gpalab-slo' ),
       2  => __( 'Custom field updated.', 'gpalab-slo' ),
       3  => __( 'Custom field deleted.', 'gpalab-slo' ),
-      4  => __( 'Social link updated.', 'gpalab-slo' ),
+      4  => __( 'Social Link updated.', 'gpalab-slo' ),
       5  => $is_revision,
-      6  => __( 'Social link published.', 'gpalab-slo' ),
-      7  => __( 'Social link saved.', 'gpalab-slo' ),
-      8  => __( 'Social link submitted.', 'gpalab-slo' ),
+      6  => __( 'Social Link published.', 'gpalab-slo' ),
+      7  => __( 'Social Link saved.', 'gpalab-slo' ),
+      8  => __( 'Social Link submitted.', 'gpalab-slo' ),
       9  => sprintf( $scheduled, '<strong>' . $scheduled_date . '</strong>' ),
-      10 => __( 'Social link draft updated.', 'gpalab-slo' ),
+      10 => __( 'Social Link saved as draft.', 'gpalab-slo' ),
     );
 
     return $msg;
+  }
+
+  /**
+   * Filters the default untrashed message.
+   *
+   * @param array $messages Array of messages.
+   * @param array $counts   Array of item counts for each message.
+   *
+   * @since 0.0.1
+   */
+  public function social_link_untrashed_message( $messages, $counts ) {
+    $messages['gpalab-social-link'] = array(
+      /* translators: %s: count of untrashed social links */
+      'untrashed' => _n( '%s social link restored from the Trash. Go to Edit Social Link to republish.', '%s social link restored from the Trash. Go to Edit Social Link to republish.', $counts['untrashed'] ),
+    );
+
+    return $messages;
   }
 
   /**

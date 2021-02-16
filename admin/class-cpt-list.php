@@ -27,10 +27,11 @@ class CPT_List {
    */
   public function add_custom_columns( $defaults ) {
     $columns = array(
-      'cb'                 => $defaults['cb'],
-      'title'              => $defaults['title'],
-      'gpalab_slo_mission' => __( 'Mission', 'gpalab-slo' ),
-      'date'               => $defaults['date'],
+      'cb'                    => $defaults['cb'],
+      'title'                 => $defaults['title'],
+      'gpalab_slo_mission'    => __( 'Mission', 'gpalab-slo' ),
+      'gpalab_slo_grid_image' => __( 'Grid Image', 'gpalab-slo' ),
+      'date'                  => $defaults['date'],
     );
 
     return $columns;
@@ -72,6 +73,11 @@ class CPT_List {
       $human_friendly = is_numeric( $settings_key ) ? $slo_settings[ $settings_key ]['title'] : '';
 
       echo esc_html( $human_friendly );
+    }
+
+    // Populate the Grid Image column.
+    if ( 'gpalab_slo_grid_image' === $column_name ) {
+      echo get_the_post_thumbnail( $post_id, array( 75 ) );
     }
   }
 
@@ -172,7 +178,11 @@ class CPT_List {
    */
   public function add_custom_bulk_actions( $bulk_actions ) {
     if ( 'archived' !== get_query_var( 'post_status' ) && 'trash' !== get_query_var( 'post_status' ) ) {
-      $bulk_actions['archive'] = __( 'Archive Links', 'gpalab-slo' );
+      if ( isset( $bulk_actions['trash'] ) ) {
+        unset( $bulk_actions['trash'] );
+      }
+      $bulk_actions['archive'] = __( 'Archive', 'gpalab-slo' );
+      $bulk_actions['trash']   = __( 'Move to Trash', 'gpalab-slo' );
     }
 
     return $bulk_actions;

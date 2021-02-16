@@ -51,7 +51,7 @@ require 'template-parts/header-slo.php';
         // Render the preview page title.
         $page_title = isset( $selected_mission ) ? $page_settings['title'] : __( 'All Missions', 'gpalab-slo' );
 
-        $preview_title = '<h1 class="gpalab-slo-page-title">' . $page_title . ' - Preview</h1>';
+        $preview_title = '<h1 class="gpalab-slo-page-title"><span class="preview-badge">Preview</span> – ' . $page_title . '</h1>';
 
         echo wp_kses( $preview_title, 'post' );
 

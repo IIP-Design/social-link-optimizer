@@ -490,20 +490,15 @@ class Settings {
 
       // Render out link to the mission's SLO page.
       if ( isset( $missions[ $index ]['page'] ) ) {
-        $post_id = esc_html( $missions[ $index ]['page'] );
-        $link    = get_permalink( $post_id );
-
-        $link_text = __( 'Social link optimizer page created at', 'gpalab-slo' );
-        $details   = __( 'You can configure the page using the fields below. Use the "Change permalink" field below to change the page URL.', 'gpalab-slo' );
-
+        $post_id   = esc_html( $missions[ $index ]['page'] );
+        $link      = get_permalink( $post_id );
+        $link_text = __( 'Social Link page URL', 'gpalab-slo' );
         ?>
         <p class="gpalab-slo-tabpanel-text">
           <?php echo esc_html( $link_text ); ?>:
             <a href="<?php echo esc_url( $link, array( 'http', 'https' ) ); ?>">
               <?php echo esc_url( $link, array( 'http', 'https' ) ); ?>
             </a>.
-          </br>
-          <?php echo esc_html( $details ); ?>
         </p>
         <?php
       }
@@ -666,11 +661,12 @@ class Settings {
    * @since 0.0.1
    */
   private function render_danger_section( $id, $post_id ) {
-    $title       = __( 'Danger Zone', 'gpalab-slo' );
-    $warning     = __( 'Warning, altering the below settings can have destructive results. Proceed with caution.', 'gpalab-slo' );
-    $perma_label = __( 'Change permalink:', 'gpalab-slo' );
-    $perma_btn   = __( 'Update Permalink', 'gpalab-slo' );
-    $remove_btn  = __( 'Remove This Mission', 'gpalab-slo' );
+    $title               = __( 'Danger Zone', 'gpalab-slo' );
+    $warning             = __( 'Warning, altering the below settings can have destructive results. Proceed with caution.', 'gpalab-slo' );
+    $perma_label         = __( 'Change permalink:', 'gpalab-slo' );
+    $perma_btn           = __( 'Update Permalink', 'gpalab-slo' );
+    $removal_explanation = __( 'Delete this Social Link page (cannot be restored):', 'gpalab-slo' );
+    $remove_btn          = __( 'Remove This Mission', 'gpalab-slo' );
 
     ?>
     <hr class="gpalab-slo-hr">
@@ -696,6 +692,7 @@ class Settings {
         </button>
       </div>
     </label>
+    <p class="slo-remove-mission-explanation"><?php echo esc_html( $removal_explanation ); ?></p>
     <!-- Button to remove the current section from the settings array. -->
     <button
       class="button button-link-delete slo-remove-mission"

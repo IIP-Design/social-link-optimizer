@@ -44,7 +44,7 @@ class Dashboard {
 
     wp_add_dashboard_widget(
       'gpalab-slo-dashboard-widget',
-      __( 'Social Link Optimizer', 'gpalab-slo' ),
+      __( 'Social Links', 'gpalab-slo' ),
       function () {
         return $this->widget_callback();
       },
@@ -63,7 +63,7 @@ class Dashboard {
     $selected = get_user_meta( get_current_user_id(), 'gpalab_slo_preferred_mission', true );
 
     // Translated text strings used in the dashboard widget.
-    $listing   = __( 'Go to the social links listing page.', 'gpalab-slo' );
+    $listing   = __( 'Go to my Social Links page', 'gpalab-slo' );
     $preferred = __( 'You can use the below dropdown to identify your preferred mission', 'gpalab-slo' );
 
     // Build and escape the settings page URL.
@@ -89,7 +89,7 @@ class Dashboard {
       </div>
       <?php
         submit_button(
-          __( 'Set Your Mission', 'gpalab-slo' ),
+          __( 'Set Default View', 'gpalab-slo' ),
           'primary',
           'submit',
           true,
