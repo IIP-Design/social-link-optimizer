@@ -220,6 +220,7 @@ class SLO {
 
     // Hooks needed to utilize the SLO page template.
     $this->loader->add_filter( 'template_include', $plugin_template, 'view_project_template' );
+    $this->loader->add_filter( 'sage/wrap_base', $plugin_template, __NAMESPACE__ . '\\sage_wrap_base_cpts' );
   }
 
   /**
