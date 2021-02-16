@@ -141,7 +141,8 @@ class SLO {
     // Custom post type hooks.
     $this->loader->add_action( 'init', $plugin_cpt, 'gpalab_slo_cpt', 0 );
     $this->loader->add_action( 'init', $plugin_cpt, 'register_archive_status' );
-    $this->loader->add_action( 'add_meta_boxes', $plugin_cpt, 'gpalab_slo_custom_meta' );
+    $this->loader->add_action( 'add_meta_boxes', $plugin_cpt, 'slo_custom_meta' );
+    $this->loader->add_action( 'add_meta_boxes', $plugin_cpt, 'remove_mwp_metaboxes', 11 );
     $this->loader->add_action( 'save_post', $plugin_cpt, 'gpalab_slo_meta_save' );
     $this->loader->add_action( 'do_meta_boxes', $plugin_cpt, 'gpalab_slo_image_meta_box' );
     $this->loader->add_filter( 'admin_post_thumbnail_html', $plugin_cpt, 'gpalab_slo_image_meta_box_helper_text', 10, 1 );

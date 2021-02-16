@@ -127,7 +127,7 @@ class CPT {
    *
    * @since 0.0.1
    */
-  public function gpalab_slo_custom_meta() {
+  public function slo_custom_meta() {
     add_meta_box(
       'gpalab_slo_link',
       __( 'Add a Link to This Social Post (required)', 'gpalab-slo' ),
@@ -160,6 +160,31 @@ class CPT {
       'slugdiv',
       'gpalab-social-link',
       'normal'
+    );
+  }
+
+  /**
+   * Remove the custom metaboxes added by the MWP team.
+   *
+   * @since 1.1.0
+   */
+  public function remove_mwp_metaboxes() {
+    remove_meta_box(
+      'pp_enable_type',
+      'gpalab-social-link',
+      'side'
+    );
+
+    remove_meta_box(
+      'expirationdatediv',
+      'gpalab-social-link',
+      'side'
+    );
+
+    remove_meta_box(
+      'hide_featured',
+      'gpalab-social-link',
+      'side'
     );
   }
 
@@ -214,16 +239,16 @@ class CPT {
 
     $this->populate_mission_select( $selected, $missions, 'gpalab_slo_mission' );
 
-    if (! empty( $selected ) ) {
+    if ( ! empty( $selected ) ) {
       $missions = get_option( 'gpalab-slo-settings' );
 
       // Search for selected mission among the mission sessions and return it's data.
-      $settings_key  = array_search( $selected, array_column( $missions, 'id' ), true );
-      $settings = is_numeric( $settings_key ) ? $missions[ $settings_key ] : array();
+      $settings_key = array_search( $selected, array_column( $missions, 'id' ), true );
+      $settings     = is_numeric( $settings_key ) ? $missions[ $settings_key ] : array();
 
       /* translators: %s: the tile of the selected mission */
       $text  = __( 'Go to the %s page', 'gpalab-slo' );
-      $link  = get_permalink($settings['page']);
+      $link  = get_permalink( $settings['page'] );
       $title = $settings['title'];
 
       ?>
@@ -233,8 +258,6 @@ class CPT {
           <?php printf( '<a href=' . esc_attr( $link ) . ' target="_blank" style="margin-left:0.5rem">' . esc_html( $text ) . '</a>', esc_html( $title ) ); ?>
         </div>
       <?php
-      
-      
     }
   }
 
