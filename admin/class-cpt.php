@@ -172,7 +172,7 @@ class CPT {
     remove_meta_box(
       'pp_enable_type',
       'gpalab-social-link',
-      'side'
+      'advanced'
     );
 
     remove_meta_box(
