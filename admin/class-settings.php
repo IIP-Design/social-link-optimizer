@@ -696,6 +696,7 @@ class Settings {
     <!-- Button to remove the current section from the settings array. -->
     <button
       class="button button-link-delete slo-remove-mission"
+      data-a11y-dialog-show="gpalab-slo-removal-confirmation-dialog"
       data-id=<?php echo esc_attr( $id ); ?>
       type="button"
     >

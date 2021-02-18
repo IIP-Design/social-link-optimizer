@@ -214,16 +214,16 @@ class CPT {
 
     $this->populate_mission_select( $selected, $missions, 'gpalab_slo_mission' );
 
-    if (! empty( $selected ) ) {
+    if ( ! empty( $selected ) ) {
       $missions = get_option( 'gpalab-slo-settings' );
 
       // Search for selected mission among the mission sessions and return it's data.
-      $settings_key  = array_search( $selected, array_column( $missions, 'id' ), true );
-      $settings = is_numeric( $settings_key ) ? $missions[ $settings_key ] : array();
+      $settings_key = array_search( $selected, array_column( $missions, 'id' ), true );
+      $settings     = is_numeric( $settings_key ) ? $missions[ $settings_key ] : array();
 
       /* translators: %s: the tile of the selected mission */
       $text  = __( 'Go to the %s page', 'gpalab-slo' );
-      $link  = get_permalink($settings['page']);
+      $link  = get_permalink( $settings['page'] );
       $title = $settings['title'];
 
       ?>
@@ -233,8 +233,6 @@ class CPT {
           <?php printf( '<a href=' . esc_attr( $link ) . ' target="_blank" style="margin-left:0.5rem">' . esc_html( $text ) . '</a>', esc_html( $title ) ); ?>
         </div>
       <?php
-      
-      
     }
   }
 

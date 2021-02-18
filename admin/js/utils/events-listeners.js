@@ -1,3 +1,6 @@
+import { __ } from '@wordpress/i18n';
+import A11yDialog from 'a11y-dialog';
+
 import { addSLOMission, removeSLOMission, updateSLOPermalink } from './ajax';
 import { mediaUploader, removeMedia } from './file-uploads';
 import { selectTab, switchTab } from './tab-nav';
@@ -48,6 +51,8 @@ export const eventListeners = () => {
 
   // Add event listeners to the Remove This Mission buttons.
   const removeMissionBtns = document.querySelectorAll( '.slo-remove-mission' );
+  const confirmRemovalDialog = document.getElementById( 'gpalab-slo-removal-confirmation-dialog' );
+  const dialogTitle = document.getElementById( 'gpalab-slo-dialog-title' );
 
   removeMissionBtns.forEach( btn => {
     btn.addEventListener( 'click', e => {
@@ -57,11 +62,35 @@ export const eventListeners = () => {
       const selected = [...tabBtns].filter( tab => tab.attributes['aria-selected'] !== undefined );
       const index = selected[0].dataset.id;
 
-      // If deleting first tab one new first tab, otherwise ope tab prior to that just deleted.
+      // If deleting first tab one new first tab, otherwise open tab prior to that just deleted.
       const indexAfterRemoval = index > 0 ? index - 1 : 0;
+      const msg = `Are you sure you want to delete the ${selected[0].innerText} page?`;
 
-      removeSLOMission( id, indexAfterRemoval );
+      dialogTitle.textContent = __( msg, 'gpalab-slo');
+      confirmRemovalDialog.dataset.id = id;
+      confirmRemovalDialog.dataset.idxafter = indexAfterRemoval;
     } );
+  } );
+
+  // Add event listener to the remove mission confirmation dialog button.
+  const dialog = new A11yDialog( confirmRemovalDialog, '#wpwrap' );
+  const confirmBtn = document.getElementById( 'remove-affirmative' );
+
+  confirmBtn.addEventListener( 'click', () => {
+    const { id, idxafter: indexAfterRemoval } = confirmRemovalDialog.dataset;
+
+    removeSLOMission( id, indexAfterRemoval );
+    dialog.hide();
+  } );
+
+  // Prevent content beneath dialog from scrolling when dialog is open.
+  dialog.on( 'show', () => {
+    document.documentElement.style.overflow = 'hidden';
+  } );
+
+  // Restore content scrolling when dialog is closed.
+  dialog.on( 'hide', () => {
+    document.documentElement.removeAttribute( 'style' );
   } );
 
   // Add event listeners to the Update Permalink buttons.
