@@ -47,53 +47,31 @@ class Template {
   /**
    * Checks if the template is assigned to the page.
    *
-   * @param string $template  The current page's template.
+   * @param string $template_path  The name of the current page's template.
+   * @return string                The page template that should be rendered.
    *
    * @since 0.0.1
    */
-  public function view_project_template( $template ) {
-    // Return the search template if we're searching (instead of the template for the first result).
-    if ( is_search() ) {
-      return $template;
-    }
+  public function include_custom_templates( $template_path ) {
+    if ( 'gpalab-social-link' === get_post_type() && is_single() ) {
+      $theme_file = locate_template( array( 'preview-gpalab-social-link.php' ) );
 
-    // Get global post.
-    global $post;
-
-    // Return template if post is empty.
-    if ( ! $post ) {
-      return $template;
-    }
-
-    // Return default template if we don't have a custom one defined.
-    if ( ! isset(
-      $this->templates[ get_post_meta(
-        $post->ID,
-        '_wp_page_template',
-        true
-      ) ]
-    ) ) {
-      return $template;
-    }
-
-    // Allows filtering of file path.
-    $filepath = GPALAB_SLO_DIR . 'templates/';
-
-    $file = $filepath . get_post_meta(
-      $post->ID,
-      '_wp_page_template',
-      true
-    );
-
-    // Just to be safe, we check if the file exist first.
-    if ( file_exists( $file ) ) {
-      return $file;
+      if ( $theme_file ) {
+        $template_path = $theme_file;
+      } else {
+        $template_path = GPALAB_SLO_DIR . 'templates/preview-gpalab-social-link.php';
+      }
     } else {
-      echo esc_html( $file );
+      global $post;
+
+      $current_template = get_post_meta( $post->ID, '_wp_page_template', true );
+
+      if ( isset( $this->templates[ $current_template ] ) ) {
+        $template_path = GPALAB_SLO_DIR . 'templates/' . $current_template;
+      }
     }
 
-    // Return template.
-    return $template;
+    return $template_path;
   }
 
   /**
