@@ -54,12 +54,12 @@ class Template {
    */
   public function include_custom_templates( $template_path ) {
     if ( 'gpalab-social-link' === get_post_type() && is_single() ) {
-      $theme_file = locate_template( array( 'preview-gpalab-social-link.php' ) );
+      $theme_file = locate_template( array( 'base-gpalab-social-link.php' ) );
 
       if ( $theme_file ) {
         $template_path = $theme_file;
       } else {
-        $template_path = GPALAB_SLO_DIR . 'templates/preview-gpalab-social-link.php';
+        $template_path = GPALAB_SLO_DIR . 'templates/base-gpalab-social-link.php';
       }
     } else {
       global $post;
@@ -67,7 +67,7 @@ class Template {
       $current_template = get_post_meta( $post->ID, '_wp_page_template', true );
 
       if ( isset( $this->templates[ $current_template ] ) ) {
-        $template_path = GPALAB_SLO_DIR . 'templates/' . $current_template;
+        $template_path = GPALAB_SLO_DIR . 'templates/base-gpalab-social-link.php';
       }
     }
 
