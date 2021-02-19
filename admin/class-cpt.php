@@ -592,4 +592,23 @@ class CPT {
 
     return $states;
   }
+
+  /**
+   * Enqueue event custom sidebar on the event custom post type admin page.
+   *
+   * @param string $hook_suffix  The current admin page.
+   *
+   * @since 0.0.1
+   */
+  public function enqueue_edit_screen_styles( $hook_suffix ) {
+    $cpt = 'gpalab-social-link';
+
+    if ( in_array( $hook_suffix, array( 'post.php', 'post-new.php' ), true ) ) {
+      $screen = get_current_screen();
+
+      if ( is_object( $screen ) && $cpt === $screen->post_type ) {
+        wp_enqueue_style( 'gpalab-slo-edit-screen-css' );
+      }
+    }
+  }
 }
