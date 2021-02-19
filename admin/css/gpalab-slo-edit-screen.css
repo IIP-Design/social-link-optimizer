@@ -3,6 +3,6 @@
   display: none;
 }
 
-#normal-sortables > div #postimagediv.postbox {
+#normal-sortables > #postimagediv.postbox {
   display: block !important;
 }

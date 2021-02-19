@@ -438,20 +438,6 @@ class CPT {
   }
 
   /**
-   * Hides the permalink below the post title and the post visibility
-   * settings on the social link edit screen to avoid confusion.
-   *
-   * @since 0.0.1
-   */
-  public function hide_unused_elements() {
-    global $post_type;
-
-    if ( 'gpalab-social-link' === $post_type ) {
-      echo '<style type="text/css">#edit-slug-box, #visibility{display: none;}</style>';
-    }
-  }
-
-  /**
    * Rewrite the messages in the growl notifications shown to users on updates.
    *
    * @param array $msg   List of messages shown to the user on update.
