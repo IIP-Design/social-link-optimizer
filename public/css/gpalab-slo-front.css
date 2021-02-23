@@ -531,3 +531,8 @@ a:active {
     url('../assets/fonts/roboto-v20-latin-300.woff') format('woff'),
     url('../assets/fonts/roboto-v20-latin-300.ttf') format('truetype');
 }
+
+/* Hide AddThis share bar */
+.addthis-smartlayers.addthis-smartlayers-desktop {
+  display: none;
+}
