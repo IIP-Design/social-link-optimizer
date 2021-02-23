@@ -19,18 +19,18 @@ html {
   --length-30: calc(var(--length-1) * 30);
   --length-40: calc(var(--length-1) * 40);
 
-  --white: #FFFFFF;
-  --white-ice: #E7F6FB;
-  --gallery: #EFEFEF;
-  --iron: #CDD0D5;
-  --pacific-blue: #008FC6;
-  --astral-blue: #306FA5;
-  --royal-blue: #3474DA;
-  --azure-blue: #3357A1;
+  --white: #ffffff;
+  --white-ice: #e7f6fb;
+  --gallery: #efefef;
+  --iron: #cdd0d5;
+  --pacific-blue: #008fc6;
+  --astral-blue: #306fa5;
+  --royal-blue: #3474da;
+  --azure-blue: #3357a1;
   --san-juan-blue: #334477;
   --regal-blue: #003875;
-  --downriver-blue: #0A2240;
-  --dark: #0000004D;
+  --downriver-blue: #0a2240;
+  --dark: #0000004d;
 
   --transition-properties: 150ms ease-in;
 
@@ -231,9 +231,11 @@ a:active {
 }
 
 .mission-website > a {
+  color: var(--white);
   display: initial;
   padding-left: var(--length-0-25);
   padding-right: var(--length-0-25);
+  text-decoration: underline;
 }
 
 .mission-website > a:hover,
@@ -365,8 +367,7 @@ a:active {
   text-transform: uppercase;
   background-color: var(--theme-hue-light-quaternary);
   cursor: pointer;
-  transition: background-color var(--transition-properties),
-              color var(--transition-properties);
+  transition: background-color var(--transition-properties), color var(--transition-properties);
 }
 
 .load-more-container > #load-more:hover,
@@ -427,8 +428,7 @@ a:active {
   font-weight: 800;
   text-decoration: none;
   text-transform: uppercase;
-  transition: opacity var(--transition-properties),
-              color var(--transition-properties);
+  transition: opacity var(--transition-properties), color var(--transition-properties);
 }
 
 #gpalab-slo-site-footer > .back-to-top > * {
@@ -467,8 +467,7 @@ a:active {
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 500;
-  src: local(''),
-    url('../assets/fonts/montserrat-v15-latin-500.woff2') format('woff2'),
+  src: local(''), url('../assets/fonts/montserrat-v15-latin-500.woff2') format('woff2'),
     url('../assets/fonts/montserrat-v15-latin-500.woff') format('woff'),
     url('../assets/fonts/montserrat-v15-latin-500.ttf') format('truetype');
 }
@@ -478,8 +477,7 @@ a:active {
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 600;
-  src: local(''),
-    url('../assets/fonts/montserrat-v15-latin-600.woff2') format('woff2'),
+  src: local(''), url('../assets/fonts/montserrat-v15-latin-600.woff2') format('woff2'),
     url('../assets/fonts/montserrat-v15-latin-600.woff') format('woff'),
     url('../assets/fonts/montserrat-v15-latin-600.ttf') format('truetype');
 }
@@ -489,8 +487,7 @@ a:active {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
-  src: local(''),
-    url('../assets/fonts/open-sans-v18-latin-regular.woff2') format('woff2'),
+  src: local(''), url('../assets/fonts/open-sans-v18-latin-regular.woff2') format('woff2'),
     url('../assets/fonts/open-sans-v18-latin-regular.woff') format('woff'),
     url('../assets/fonts/open-sans-v18-latin-regular.ttf') format('truetype');
 }
@@ -500,8 +497,7 @@ a:active {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 800;
-  src: local(''),
-    url('../assets/fonts/open-sans-v18-latin-800.woff2') format('woff2'),
+  src: local(''), url('../assets/fonts/open-sans-v18-latin-800.woff2') format('woff2'),
     url('../assets/fonts/open-sans-v18-latin-800.woff') format('woff'),
     url('../assets/fonts/open-sans-v18-latin-800.ttf') format('truetype');
 }
@@ -511,8 +507,7 @@ a:active {
   font-family: 'Oswald';
   font-style: normal;
   font-weight: 400;
-  src: local(''),
-    url('../assets/fonts/oswald-v35-latin-regular.woff2') format('woff2'),
+  src: local(''), url('../assets/fonts/oswald-v35-latin-regular.woff2') format('woff2'),
     url('../assets/fonts/oswald-v35-latin-regular.woff') format('woff'),
     url('../assets/fonts/oswald-v35-latin-regular.ttf') format('truetype');
 }
@@ -522,8 +517,7 @@ a:active {
   font-family: 'Oswald';
   font-style: normal;
   font-weight: 700;
-  src: local(''),
-    url('../assets/fonts/oswald-v35-latin-700.woff2') format('woff2'),
+  src: local(''), url('../assets/fonts/oswald-v35-latin-700.woff2') format('woff2'),
     url('../assets/fonts/oswald-v35-latin-700.woff') format('woff'),
     url('../assets/fonts/oswald-v35-latin-700.ttf') format('truetype');
 }
@@ -533,8 +527,7 @@ a:active {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 300;
-  src: local(''),
-    url('../assets/fonts/roboto-v20-latin-300.woff2') format('woff2'),
+  src: local(''), url('../assets/fonts/roboto-v20-latin-300.woff2') format('woff2'),
     url('../assets/fonts/roboto-v20-latin-300.woff') format('woff'),
     url('../assets/fonts/roboto-v20-latin-300.ttf') format('truetype');
 }
