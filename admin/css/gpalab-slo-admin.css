@@ -119,6 +119,10 @@ button.button.button-link-delete.slo-remove-mission {
   margin: 1rem 1rem 0.5rem;
 }
 
+button.button.button-link-delete.slo-remove-mission:focus {
+  box-shadow: 0 0 0 1px currentColor;
+}
+
 button.button.button-secondary.slo-permalink {
   margin-left: 2rem;
 }
@@ -131,4 +135,82 @@ button.button.button-secondary.slo-permalink {
 .gpalab-slo-type-toggle > [for^='type_']:first-child,
 .gpalab-slo-theme-toggle > [for^='theme_']:first-child {
   margin-right: 1rem;
+}
+
+/* Remove mission confirmation dialog */
+.gpalab-slo-dialog-container[aria-hidden="true"] {
+  display: none;
+}
+
+.gpalab-slo-dialog-container {
+  text-align: center;
+}
+
+.gpalab-slo-dialog-container:not([aria-hidden="true"]) > [role="dialog"] {
+  animation-name: fade-in-slide-up;
+  animation-duration: 200ms;
+  animation-delay: 150ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+
+[aria-labelledby="gpalab-slo-dialog-title"][role="dialog"] {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 100010;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  padding: 1.75rem;
+  width: 45ch;
+  background-color: #ffffff;
+}
+
+.gpalab-slo-dialog-container:not([aria-hidden="true"]) > .gpalab-slo-dialog-overlay {
+  animation-name: fade-in;
+  animation-duration: 200ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+
+.gpalab-slo-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 100000;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.gpalab-slo-dialog-actions > :first-child {
+  margin-right: 1rem;
+}
+
+#gpalab-slo-dialog-title {
+  margin: 0 auto 1.75rem;
+  max-width: 25ch;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-slide-up {
+  0% {
+    transform: translate(-50%, -40%);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
 }
