@@ -74,24 +74,6 @@ class Template {
     return $template_path;
   }
 
-  /**
-   * Bypass the Sage base.php file for plugin custom post type.
-   *
-   * @param array $templates   List of available templates.
-   * @return array             Updated list of templates.
-   *
-   * @since 1.1.0
-   */
-  public function sage_wrap_base_cpts( $templates ) {
-    $cpt = get_post_type();
-
-    if ( 'gpalab-social-link' === $cpt ) {
-      array_unshift( $templates, 'base-' . $cpt . '.php' );
-    }
-
-    return $templates;
-  }
-
   /* DEPRECATED FUNCTIONS */
 
   /**
