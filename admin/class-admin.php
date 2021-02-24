@@ -51,6 +51,13 @@ class Admin {
       array(),
       $this->version
     );
+
+    wp_register_style(
+      'gpalab-slo-edit-screen-css',
+      GPALAB_SLO_URL . 'admin/css/gpalab-slo-edit-screen.css',
+      array(),
+      $this->version
+    );
   }
 
   /**

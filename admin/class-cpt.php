@@ -127,7 +127,7 @@ class CPT {
    *
    * @since 0.0.1
    */
-  public function gpalab_slo_custom_meta() {
+  public function slo_custom_meta() {
     add_meta_box(
       'gpalab_slo_link',
       __( 'Add a Link to This Social Post (required)', 'gpalab-slo' ),
@@ -160,6 +160,31 @@ class CPT {
       'slugdiv',
       'gpalab-social-link',
       'normal'
+    );
+  }
+
+  /**
+   * Remove the custom metaboxes added by the MWP team.
+   *
+   * @since 1.1.0
+   */
+  public function remove_mwp_metaboxes() {
+    remove_meta_box(
+      'pp_enable_type',
+      'gpalab-social-link',
+      'advanced'
+    );
+
+    remove_meta_box(
+      'expirationdatediv',
+      'gpalab-social-link',
+      'side'
+    );
+
+    remove_meta_box(
+      'hide_featured',
+      'gpalab-social-link',
+      'side'
     );
   }
 
@@ -395,27 +420,6 @@ class CPT {
   }
 
   /**
-   * When loading gpalab-social-link posts, load the post template provided by the plugin.
-   *
-   * @param string $single   The path to the appropriate single template.
-   * @return string          If a social link, the path to our template, otherwise the default path.
-   *
-   * @since 0.0.1
-   */
-  public function preview_link_template( $single ) {
-    global $post;
-
-    /* Checks for single template by post type */
-    if ( 'gpalab-social-link' === $post->post_type ) {
-      if ( file_exists( GPALAB_SLO_DIR . '/templates/preview-gpalab-social-link.php' ) ) {
-        return GPALAB_SLO_DIR . '/templates/preview-gpalab-social-link.php';
-      }
-    }
-
-    return $single;
-  }
-
-  /**
    * Rewrite the preview urls for social links to simulated SLO aggregate page.
    *
    * @param string $link  The default preview url.
@@ -430,20 +434,6 @@ class CPT {
       return '/?post_type=gpalab-social-link&p=' . $post->ID . '&preview=true';
     } else {
       return $link;
-    }
-  }
-
-  /**
-   * Hides the permalink below the post title and the post visibility
-   * settings on the social link edit screen to avoid confusion.
-   *
-   * @since 0.0.1
-   */
-  public function hide_unused_elements() {
-    global $post_type;
-
-    if ( 'gpalab-social-link' === $post_type ) {
-      echo '<style type="text/css">#edit-slug-box, #visibility{display: none;}</style>';
     }
   }
 
@@ -587,5 +577,24 @@ class CPT {
     $states['archived'] = __( 'Archived', 'gpalab-slo' );
 
     return $states;
+  }
+
+  /**
+   * Enqueue event custom sidebar on the event custom post type admin page.
+   *
+   * @param string $hook_suffix  The current admin page.
+   *
+   * @since 0.0.1
+   */
+  public function enqueue_edit_screen_styles( $hook_suffix ) {
+    $cpt = 'gpalab-social-link';
+
+    if ( in_array( $hook_suffix, array( 'post.php', 'post-new.php' ), true ) ) {
+      $screen = get_current_screen();
+
+      if ( is_object( $screen ) && $cpt === $screen->post_type ) {
+        wp_enqueue_style( 'gpalab-slo-edit-screen-css' );
+      }
+    }
   }
 }

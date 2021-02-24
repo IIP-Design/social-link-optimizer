@@ -273,6 +273,20 @@ class CPT_List {
   }
 
   /**
+   * Disable Yoast SEO plugin for Social Link posts.
+   *
+   * @param array $post_types   List of available post types.
+   * @return array              List of post types with social link posts filtered out.
+   *
+   * @since 1.1.0
+   */
+  public function remove_yoast_filters( $post_types ) {
+    unset( $post_types['gpalab-social-link'] );
+
+    return $post_types;
+  }
+
+  /**
    * Handle archive the given link when the archive link is clicked.
    *
    * @since 0.0.1

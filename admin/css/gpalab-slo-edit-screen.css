@@ -1,0 +1,8 @@
+#edit-slug-box,
+#visibility {
+  display: none;
+}
+
+#normal-sortables > #postimagediv.postbox {
+  display: block !important;
+}

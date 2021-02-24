@@ -15,14 +15,6 @@ namespace SLO;
  * @since 0.0.1
  */
 class Permissions {
-  /**
-   * The capability required to edit SLO archive pages.
-   *
-   * @var string $edit_cap
-   *
-   * @since 0.0.1
-   */
-  protected $edit_cap;
 
   /**
    * Initializes the class with the plugin name and version,
@@ -34,9 +26,9 @@ class Permissions {
    * @since 0.0.1
    */
   public function __construct( $plugin, $version ) {
-    $this->plugin    = $plugin;
-    $this->version   = $version;
-    $this->$edit_cap = 'gpalab_slo_edit_slo_page';
+    $this->plugin   = $plugin;
+    $this->version  = $version;
+    $this->edit_cap = 'gpalab_slo_edit_slo_page';
   }
 
   /**
@@ -48,7 +40,7 @@ class Permissions {
   public function slo_archive_remove_admin_bar_edit_link() {
     $is_gpa_slo_archive = is_page_template( 'archive-gpalab-social-link.php' );
 
-    if ( $is_gpa_slo_archive && ! current_user_can( $this->$edit_cap ) ) {
+    if ( $is_gpa_slo_archive && ! current_user_can( $this->edit_cap ) ) {
       global $wp_admin_bar;
 
       $wp_admin_bar->remove_menu( 'edit' );
@@ -67,7 +59,7 @@ class Permissions {
   public function disable_actions( $actions = array(), $post = null ) {
 
     // If the current user can edit SLO archive pages, return all actions.
-    if ( current_user_can( $this->$edit_cap ) ) {
+    if ( current_user_can( $this->edit_cap ) ) {
       return $actions;
     }
 
@@ -111,7 +103,7 @@ class Permissions {
     }
 
     $is_slo_archive = 'archive-gpalab-social-link.php' === get_post_meta( $post_id, '_wp_page_template', true );
-    $has_permission = current_user_can( $this->$edit_cap );
+    $has_permission = current_user_can( $this->edit_cap );
 
     // If a page is using the SLO template and the user is lacking adequate permissions, disable the edit link.
     if ( $is_slo_archive && ! $has_permission ) {

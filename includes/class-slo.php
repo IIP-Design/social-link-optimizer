@@ -141,19 +141,19 @@ class SLO {
     // Custom post type hooks.
     $this->loader->add_action( 'init', $plugin_cpt, 'gpalab_slo_cpt', 0 );
     $this->loader->add_action( 'init', $plugin_cpt, 'register_archive_status' );
-    $this->loader->add_action( 'add_meta_boxes', $plugin_cpt, 'gpalab_slo_custom_meta' );
+    $this->loader->add_action( 'add_meta_boxes', $plugin_cpt, 'slo_custom_meta' );
+    $this->loader->add_action( 'add_meta_boxes', $plugin_cpt, 'remove_mwp_metaboxes', 11 );
     $this->loader->add_action( 'save_post', $plugin_cpt, 'gpalab_slo_meta_save' );
     $this->loader->add_action( 'do_meta_boxes', $plugin_cpt, 'gpalab_slo_image_meta_box' );
     $this->loader->add_filter( 'admin_post_thumbnail_html', $plugin_cpt, 'gpalab_slo_image_meta_box_helper_text', 10, 1 );
     $this->loader->add_filter( 'post_type_link', $plugin_cpt, 'gpalab_slo_filter_permalink', 10, 2 );
-    $this->loader->add_filter( 'single_template', $plugin_cpt, 'preview_link_template' );
     $this->loader->add_filter( 'preview_post_link', $plugin_cpt, 'hijack_slo_preview' );
-    $this->loader->add_action( 'admin_head', $plugin_cpt, 'hide_unused_elements' );
     $this->loader->add_filter( 'post_updated_messages', $plugin_cpt, 'social_link_updated_messages', 10, 1 );
     $this->loader->add_filter( 'bulk_post_updated_messages', $plugin_cpt, 'social_link_untrashed_message', 10, 2 );
     $this->loader->add_action( 'admin_bar_menu', $plugin_cpt, 'remove_view_from_admin_bar', 999 );
     $this->loader->add_action( 'post_submitbox_misc_actions', $plugin_cpt, 'add_archived_to_status_dropdown' );
     $this->loader->add_filter( 'display_post_states', $plugin_cpt, 'add_archived_to_display_post_states', 10, 1 );
+    $this->loader->add_action( 'admin_enqueue_scripts', $plugin_cpt, 'enqueue_edit_screen_styles' );
 
     // Hooks to manage the All Links page.
     $this->loader->add_action( 'manage_gpalab-social-link_posts_custom_column', $plugin_cpt_list, 'populate_custom_columns', 10, 2 );
@@ -166,6 +166,7 @@ class SLO {
     $this->loader->add_filter( 'bulk_actions-edit-gpalab-social-link', $plugin_cpt_list, 'add_custom_bulk_actions' );
     $this->loader->add_filter( 'handle_bulk_actions-edit-gpalab-social-link', $plugin_cpt_list, 'handle_bulk_archive', 10, 3 );
     $this->loader->add_action( 'admin_notices', $plugin_cpt_list, 'show_archive_notice' );
+    $this->loader->add_filter( 'wpseo_accessible_post_types', $plugin_cpt_list, 'remove_yoast_filters' );
 
     // Adds a widget to the WordPress user dashboard.
     $this->loader->add_action( 'wp_dashboard_setup', $plugin_dashboard, 'slo_dashboard_widget' );
@@ -217,7 +218,7 @@ class SLO {
     $this->loader->add_action( 'wp_ajax_nopriv_gpalab_slo_load_more', $plugin_frontend, 'gpalab_slo_load_more' );
 
     // Hooks needed to utilize the SLO page template.
-    $this->loader->add_filter( 'template_include', $plugin_template, 'view_project_template' );
+    $this->loader->add_filter( 'template_include', $plugin_template, 'include_custom_templates', 1 );
   }
 
   /**
