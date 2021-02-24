@@ -8,7 +8,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 _This sections lists changes committed since most recent release_
 
-### [v1.0.0](https://github.com/IIP-Design/social-link-optimizer/releases/tag/v1.0.0) - 2020.01.27 (Initial Release)
+### [v1.1.0](https://github.com/IIP-Design/social-link-optimizer/releases/tag/v1.0.0) - 2021.02.24 (Initial Release)
+
+#### Added:
+
+- Theme toggle that allows use to chose between new or legacy MWP styling
+- Confirmation dialogue when deleting a mission page
+- Thumbnail image preview on the link listing page
+- Link to the selected mission archive page from within the edit social link screen
+- Disable Yoast and custom MWP metaboxes for social link pages
+- Hide AddThis share bar on the social link pages front end
+
+#### Changed:
+
+- Adjusted plugin UI copy to clarify/simply labels and instructional text
+- Enqueue a stylesheet for the social link edit screen
+- Updated ESLint configuration
+
+#### Fixed:
+
+- Improperly initialized custom capability variable in the Permissions class
+
+### [v1.0.0](https://github.com/IIP-Design/social-link-optimizer/releases/tag/v1.0.0) - 2021.01.27 (Initial Release)
 
 #### Added:
 
