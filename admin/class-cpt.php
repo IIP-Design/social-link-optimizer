@@ -534,14 +534,14 @@ class CPT {
   }
 
   /**
-   * Populate the status dropdown in the Publish metabox with an 'Archived' option.
+   * Handle archived status display in the Publish meta box.
    *
    * @since 0.0.1
    */
-  public function add_archived_to_status_dropdown() {
+  public function handle_archived_status_display() {
     global $post;
 
-    // Do not add the archive status unless the post is a gpalab social link.
+    // Skip unless the post is a gpalab social link.
     if ( 'gpalab-social-link' !== $post->post_type ) {
       return false;
     }

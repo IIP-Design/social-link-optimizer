@@ -151,7 +151,7 @@ class SLO {
     $this->loader->add_filter( 'post_updated_messages', $plugin_cpt, 'social_link_updated_messages', 10, 1 );
     $this->loader->add_filter( 'bulk_post_updated_messages', $plugin_cpt, 'social_link_untrashed_message', 10, 2 );
     $this->loader->add_action( 'admin_bar_menu', $plugin_cpt, 'remove_view_from_admin_bar', 999 );
-    $this->loader->add_action( 'post_submitbox_misc_actions', $plugin_cpt, 'add_archived_to_status_dropdown' );
+    $this->loader->add_action( 'post_submitbox_misc_actions', $plugin_cpt, 'handle_archived_status_display' );
     $this->loader->add_filter( 'display_post_states', $plugin_cpt, 'add_archived_to_display_post_states', 10, 1 );
     $this->loader->add_action( 'admin_enqueue_scripts', $plugin_cpt, 'enqueue_edit_screen_styles' );
     $this->loader->add_action( 'init', $plugin_cpt, 'register_save_as_archive_script' );
