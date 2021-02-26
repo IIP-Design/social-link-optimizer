@@ -28,7 +28,7 @@ const appendArchivedSelectOption = () => {
  * Add click listeners to handle the 'OK' and 'Cancel'
  * buttons for status and timestamp changes since WordPress
  * sets the #save-post button text when either of these
- * buttons is clicked. the edit/add new social link page.
+ * buttons is clicked.
  */
 const initializeEventListener = () => {
   const miscPublishActions = document.getElementById( 'misc-publishing-actions' );
