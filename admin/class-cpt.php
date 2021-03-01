@@ -534,22 +534,22 @@ class CPT {
   }
 
   /**
-   * Populate the status dropdown in the Publish metabox with an 'Archived' option.
+   * Handle archived status display in the Publish meta box.
    *
    * @since 0.0.1
    */
-  public function add_archived_to_status_dropdown() {
+  public function handle_archived_status_display() {
     global $post;
 
-    // Do not add the archive status unless the post is a gpalab social link.
+    // Skip unless the post is a gpalab social link.
     if ( 'gpalab-social-link' !== $post->post_type ) {
       return false;
     }
 
     echo '<script>';
-    echo 'jQuery(document).ready( function() { jQuery( \'select[name="post_status"]\' ).append( \'<option value="archived">Archived</option>\' );';
+    echo 'jQuery(document).ready( function() {';
     if ( 'archived' === $post->post_status ) {
-      echo "jQuery( '#post-status-display' ).text( 'Archived' ); jQuery('select[name=\"post_status\"]' ).val('archived');";
+      echo "jQuery( '#post-status-display' ).text( 'Archived' ); jQuery( 'select[name=\"post_status\"]' ).val( 'archived' ); jQuery( '#save-post' ).val( 'Save as Archived' );";
     }
     echo ' }); </script>';
   }
@@ -595,6 +595,41 @@ class CPT {
       if ( is_object( $screen ) && $cpt === $screen->post_type ) {
         wp_enqueue_style( 'gpalab-slo-edit-screen-css' );
       }
+    }
+  }
+
+  /**
+   * Register 'Save as Archive' button script.
+   *
+   * @since 0.0.1
+   */
+  public function register_save_as_archive_script() {
+    $script_asset = require GPALAB_SLO_DIR . 'admin/build/gpalab-slo-save-as-archive.asset.php';
+
+    wp_register_script(
+      'gpalab-slo-save-as-archive-js',
+      GPALAB_SLO_URL . 'admin/build/gpalab-slo-save-as-archive.js',
+      $script_asset['dependencies'],
+      $script_asset['version'],
+      true
+    );
+  }
+
+  /**
+   * Enqueue 'Save as Archive' script if on the edit social link page.
+   *
+   * @param string $hook   Name of the current page.
+   *
+   * @since 0.0.1
+   */
+  public function enqueue_slo_save_as_archive( $hook ) {
+    global $post_type;
+
+    $is_social_link = 'gpalab-social-link' === $post_type;
+    $is_post_screen = 'post.php' === $hook || 'post-new.php' === $hook;
+
+    if ( $is_social_link && $is_post_screen ) {
+      wp_enqueue_script( 'gpalab-slo-save-as-archive-js' );
     }
   }
 }
