@@ -1,6 +1,6 @@
 ### Navigate to the Social Links Plugin
 
-![](assets/user-guide/navigate-social-links.png)
+<img src="./assets/user-guide/navigate-social-links.png" height="auto" width="300">
 
 1. Within your WordPress instance, navigate to the left side menu panel.
 
@@ -8,13 +8,13 @@
 
 ### Use the Dashboard Widget to Set Preferences
 
-![](assets/user-guide/dashboard.png)
+<img src="./assets/user-guide/dashboard.png" height="auto" width="800">
 
 1. Click **Dashboard** on the left side menu to navigate to the **Social Links** dashboard widget.
 
 2. Select a **Mission** from the drop-down menu to set a default mission view.
 
-![](assets/user-guide/dashboard-link.png)
+<img src="./assets/user-guide/dashboard-link.png" height="auto" width="800">
 
 3. Click the **Set Default View** button. Your preferences are saved.
 
@@ -24,17 +24,17 @@
 
 ### Create a New Link Post 
 
-![](assets/user-guide/navigate-add-new-link.png)
+<img src="./assets/user-guide/navigate-add-new-link.png" height="auto" width="300">
 
 1. On the left side menu panel, click on **Social Links**.
 
 > **Note**: To add a new link from the homescreen, hover over the **Social Links** icon and click the **Add New Link** menu option.
 
-![](assets/user-guide/add-new-link.png)
+<img src="./assets/user-guide/add-new-link.png" height="auto" width="800">
 
 2. Click the **Add New Link** button at the top of the page. The **Add New Social Link** page will appear.
 
-![](assets/user-guide/configure-social-link.png)
+<img src="./assets/user-guide/configure-social-link.png" height="auto" width="800">
 
 3. Insert a title for the link in the first box on the page. This is a required field. If the field is not populated, you will receive an error message with instructions. All required fields must be populated in order to publish the post.
 
@@ -46,19 +46,19 @@
   >
   >If you are using the Vertical List template, skip step 6. If you are using the Three Column Grid template, continue with step 6.
 
-![](assets/user-guide/add-grid-image.png)
+<img src="./assets/user-guide/add-grid-image.png" height="auto" width="800">
 
 6. Click the **Add an image to the grid** link in the **Add a Grid Image** box. The **Media Library** pop-up will appear.
 
-![](assets/user-guide/upload-files.png)
+<img src="./assets/user-guide/upload-files.png" height="auto" width="800">
 
 7. Select a file from the **Media Library** or click the **Upload files** tab. 
 
-![](assets/user-guide/select-file.png)
+<img src="./assets/user-guide/select-file.png" height="auto" width="300">
 
 8. Click the **Select Files** button to search for an image in your files or drag and drop an image to upload. 
 
-![](assets/user-guide/add-alt.png)
+<img src="./assets/user-guide/add-alt.png" height="auto" width="800">
 
 9. Your image will appear in the **Media Library**. Select the image. Add alternative text in the **Alt Text** box for accessibility. Alternative text refers to the invisible description of images which are read aloud to visually impaired users on a screen reader.
 
@@ -66,33 +66,32 @@
 
 > **Note**: If you selected the image in error, click the **Remove image** link.
 
-![](assets/user-guide/save-and-preview.png)
+<img src="./assets/user-guide/save-and-preview.png" height="auto" width="300">
 
 11. In the **Publish** box, click the **Save Draft** button to save the post as a draft or click the **Preview** button to preview the post on its Social Link page before publishing.
 
-![](assets/user-guide/publish.png)
+<img src="./assets/user-guide/publish.png" height="auto" width="300">
 
 12. Click the **Publish** button to publish the post. A message will appear at the top of the screen confirming the post has been published.
 
-![](assets/user-guide/view-page.png)
+<img src="./assets/user-guide/view-page.png" height="auto" width="800">
 
 13. To view the post on the live Social Links page, click the link in the **Select Mission (required)** box. A new tab will open with the live, external Social Links page.
 
 > **Note**: If you would like to schedule the publish time and date of the post, click on the **Edit** link for the **Publish immediately** option and select a date and time. Click the **Ok** button, then click the **Schedule** button.
 
-![](assets/user-guide/see-published.png)
+<img src="./assets/user-guide/see-published.png" height="auto" width="800">
 
 14. To view published posts, navigate to the **Social Links** main menu. Click the **Published** link at the top of the page. A list of the published posts will appear and are sorted by published date. The default **All** view will also show the published links.
 
 ### Edit Existing Posts
-
-![](assets/user-guide/hover-links.png)
+<img src="./assets/user-guide/hover-links.png" height="auto" width="800">
 
 1. On the left side menu panel, click on **Social Links**.
 
 2. Hover over the post that you want to edit. Either click the **Edit** link or click on the post title and the **Edit Social Link** page will appear.
 
-![](assets/user-guide/publish-options.png)
+<img src="./assets/user-guide/publish-options.png" height="auto" width="300">
 
 3. Make the necessary changes. Click the **Preview Changes** button to preview the post before publishing.
 
@@ -104,59 +103,59 @@
 
 ### Delete Existing Posts
 
-![](assets/user-guide/hover-links.png)
+<img src="./assets/user-guide/hover-links.png" height="auto" width="800">
 
 1. On the left side menu panel, click on **Social Links**.
 
-2. Hover over the post that you want to delete. Click the red **Trash** link to move the post to the trash. A notification will appear at the top of the page that reads: 1 post moved to the Trash. 
+2. Hover over the post that you want to delete. Click the red **Trash** link to move the post to the trash. A notification will appear at the top of the page that reads: 1 post moved to the Trash.
 
-![](assets/user-guide/trash-growl.png)
+<img src="./assets/user-guide/trash-growl.png" height="auto" width="300">
 
 > **Note**: If you moved something to the trash in error, you can click the **Undo** link to restore the post. 
 
 ### Delete Posts Permanently or Restore Deleted Posts
 
-![](assets/user-guide/see-trash.png)
+<img src="./assets/user-guide/see-trash.png" height="auto" width="800">
 
 1. On the left side menu panel, click on **Social Links**.
 
-2. Click on the **Trash** link at the top of the page. 
+2. Click on the **Trash** link at the top of the page.
 
-![](assets/user-guide/restore.png)
+<img src="./assets/user-guide/restore.png" height="auto" width="800">
 
 3. Hover over the post that you want to restore or delete permanently with your mouse. Click on the **Restore** link to restore the post. Click on the **Delete Permanently** link to permanently delete the post (this cannot be undone).
 
-4. If you chose to restore the post, it will now appear in the **Draft** list. Click on the **Draft** link at the top of the page to view the list of draft posts. 
+4. If you chose to restore the post, it will now appear in the **Draft** list. Click on the **Draft** link at the top of the page to view the list of draft posts.
 
-![](assets/user-guide/see-drafts.png)
+<img src="./assets/user-guide/see-drafts.png" height="auto" width="800">
 
 ### Archive and Unarchive Posts
 
-![](assets/user-guide/archive.png)
+<img src="./assets/user-guide/archive.png" height="auto" width="800">
 
 1. On the left side menu panel, click on **Social Links**.
 
-![](assets/user-guide/unarchive.png)
+<img src="./assets/user-guide/unarchive.png" height="auto" width="800">
 
 2. Hover over the post title that you want to archive. Click the **Archive** link. The title of the post will now have the word **Archived** at the end of it. 
 
 3. To unarchive the post, click the **Edit** link. The **Edit Social Links** page will appear.
 
-![](assets/user-guide/set-as-archive.png)
+<img src="./assets/user-guide/set-as-archive.png" height="auto" width="300">
 
 4. In the **Publish** box, click the **Edit** link to change the status. 
 
-![](assets/user-guide/set-as-draft.png)
+<img src="./assets/user-guide/set-as-draft.png" height="auto" width="300">
 
 5. Select **Draft** from the drop-down menu and click the **OK** button.
 
-![](assets/user-guide/save-and-publish.png)
+<img src="./assets/user-guide/save-and-publish.png" height="auto" width="300">
 
 6. Click the **Save Draft** button to unarchive the post and save as a draft or click the **Publish** button to publish the post. 
 
 ### View Posts in Draft, Published, Archived Status
 
-![](assets/user-guide/action-links.png)
+<img src="./assets/user-guide/action-links.png" height="auto" width="800">
 
 1. On the left side menu panel, click on **Social Links**.
 
@@ -166,7 +165,7 @@
 
 ### Filter Posts
 
-![](assets/user-guide/all-dates-dropdown.png)
+<img src="./assets/user-guide/all-dates-dropdown.png" height="auto" width="800">
 
 1. On the left side menu panel, click on **Social Links**.
 
@@ -174,11 +173,11 @@
 
 3. To filter by Mission, click on the **All Missions** drop-down menu and select a Mission. Click the **Filter** button.
 
-![](assets/user-guide/all-missions-dropdown.png)
+<img src="./assets/user-guide/all-missions-dropdown.png" height="auto" width="500">
 
 ### Perform Bulk Actions
 
-![](assets/user-guide/bulk-actions.png)
+<img src="./assets/user-guide/bulk-actions.png" height="auto" width="500">
 
 1. On the left side menu panel, click on **Social Links**.
 
