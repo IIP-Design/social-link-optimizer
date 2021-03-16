@@ -329,11 +329,12 @@ a:active {
 }
 
 .gpalab-slo-content-list.list > li .title a {
+  background: var(--theme-hue-dark-secondary) 0% 0% no-repeat;
   border-radius: var(--length-1);
+  box-shadow: 0 var(--length-0-25) var(--length-0-625) var(--dark);
+  color: var(--white);
   padding: var(--length-1-5);
   text-decoration: none;
-  background: var(--theme-hue-dark-secondary) 0% 0% no-repeat;
-  box-shadow: 0 var(--length-0-25) var(--length-0-625) var(--dark);
   transition: background var(--transition-properties);
 }
 
