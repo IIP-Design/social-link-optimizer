@@ -1,5 +1,5 @@
 ---
-title: Social Link Optimizer Technical Documentation
+title: Social Link Technical Documentation
 ---
 
 ### Installation

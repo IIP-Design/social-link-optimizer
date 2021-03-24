@@ -1,3 +1,7 @@
+---
+title: Guide for Web Managers
+---
+
 ### Add a New Mission
 
 From the WordPress admin dashboard, navigate to the **Social Links > Settings** sub-menu in the admin sidebar on the left hand side.
@@ -26,7 +30,7 @@ Once you've uploaded and/or selected an image, click the **Use as avatar image**
 
 #### An avatar set previously
 
-If an avatar has been set previously, you can remove it by clicking on the **Remove avatar image** button or you can replace it with a different image by clicking the **Change avatar image** button, which will open the WordPress media uploader where you can upload and/or select a new image. 
+If an avatar has been set previously, you can remove it by clicking on the **Remove avatar image** button or you can replace it with a different image by clicking the **Change avatar image** button, which will open the WordPress media uploader where you can upload and/or select a new image.
 
 After making your selection, click the **Use as avatar image** button, which will close the uploader and return you to the mission's tab. Click the **Save Changes** button to save your new avatar selection.
 
