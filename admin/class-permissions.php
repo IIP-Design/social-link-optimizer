@@ -32,15 +32,18 @@ class Permissions {
   }
 
   /**
-   * Remove the Edit link from the admin bar on the SLO archive page frontend
-   * for admin users without the proper permissions.
+   * Remove the Edit link from the admin bar on the
+   * SLO archive page frontend or preview.
    *
    * @since 0.0.1
    */
   public function slo_archive_remove_admin_bar_edit_link() {
+    global $post;
+    
     $is_gpa_slo_archive = is_page_template( 'archive-gpalab-social-link.php' );
+    $is_gpa_slo_preview = 'gpalab-social-link' === $post->post_type;
 
-    if ( $is_gpa_slo_archive && ! current_user_can( $this->edit_cap ) ) {
+    if ( $is_gpa_slo_archive || $is_gpa_slo_preview ) {
       global $wp_admin_bar;
 
       $wp_admin_bar->remove_menu( 'edit' );
