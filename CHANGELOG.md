@@ -8,6 +8,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 _This sections lists changes committed since most recent release_
 
+#### Added:
+
+- Added documentation for social media managers (non-admin users)
+
+#### Changed:
+
+- Hide edit link in admin bar for all users (rather than just non-admin users) and on the preview page as well as SLO page
+- Increase the specificity of frontend CSS to override inherit styles
+- Change the save button text for archived posts
+- Hide AddThis share bar on mobile as well as desktop
+
 ### [v1.1.0](https://github.com/IIP-Design/social-link-optimizer/releases/tag/v1.0.0) - 2021.02.24 (Initial Release)
 
 #### Added:
