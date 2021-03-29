@@ -534,6 +534,7 @@ a:active {
 }
 
 /* Hide AddThis share bar */
-.addthis-smartlayers.addthis-smartlayers-desktop {
+.addthis-smartlayers.addthis-smartlayers-desktop,
+.addthis-smartlayers.addthis-smartlayers-mobile {
   display: none;
 }
