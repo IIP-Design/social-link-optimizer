@@ -484,9 +484,10 @@ class Settings {
 
       $missions = get_option( 'gpalab-slo-settings' );
 
-      // Extract the mission index and id from the section id.
+      // Extract the mission index, id, and title from the section id.
       $index = str_replace( 'gpalab-slo-settings-', '', $key );
       $id    = $missions[ $index ]['id'];
+      $title = $missions[ $index ]['title'];
 
       // Render out link to the mission's SLO page.
       if ( isset( $missions[ $index ]['page'] ) ) {
@@ -529,17 +530,20 @@ class Settings {
         <?php
           submit_button(
             __( 'Save Changes', 'gpalab-slo' ),
-            'primary',
+            'primary slo-submit',
             'submit',
             true,
-            array( 'id' => 'slo-submit-' . $id )
+            array(
+              'id'        => 'slo-submit-' . $id,
+              'data-post' => $post_id,
+            )
           );
         ?>
       </div>
       <?php
 
       // Render out the danger section.
-      $this->render_danger_section( $id, $post_id );
+      $this->render_danger_section( $id, $post_id, $title );
 
       echo '</section>';
     }
@@ -655,12 +659,13 @@ class Settings {
   /**
    * Render out the section containing dangerous operations on the settings page.
    *
-   * @param string $id        The id of the current mission.
-   * @param string $post_id   The WordPress post id of the SLO page for the given mission.
+   * @param string $id          The id of the current mission.
+   * @param string $post_id     The WordPress post id of the SLO page for the given mission.
+   * @param string $post_title  The title of the SLO page for the given mission.
    *
    * @since 0.0.1
    */
-  private function render_danger_section( $id, $post_id ) {
+  private function render_danger_section( $id, $post_id, $post_title ) {
     $title               = __( 'Danger Zone', 'gpalab-slo' );
     $warning             = __( 'Warning, altering the below settings can have destructive results. Proceed with caution.', 'gpalab-slo' );
     $perma_label         = __( 'Change permalink:', 'gpalab-slo' );
@@ -686,6 +691,7 @@ class Settings {
           class="button button-secondary slo-permalink"
           data-id=<?php echo esc_attr( $id ); ?>
           data-post=<?php echo esc_attr( $post_id ); ?>
+          data-title="<?php echo esc_attr( $post_title ); ?>"
           type="button"
         >
           <?php echo esc_html( $perma_btn ); ?>

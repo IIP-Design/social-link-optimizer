@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import A11yDialog from 'a11y-dialog';
 
-import { addSLOMission, removeSLOMission, updateSLOPermalink } from './ajax';
+import { addSLOMission, removeSLOMission, updateSLOPageTitle, updateSLOPermalink } from './ajax';
 import { mediaUploader, removeMedia } from './file-uploads';
 import { selectTab, switchTab } from './tab-nav';
 
@@ -66,7 +66,7 @@ export const eventListeners = () => {
       const indexAfterRemoval = index > 0 ? index - 1 : 0;
       const msg = `Are you sure you want to delete the ${selected[0].innerText} page?`;
 
-      dialogTitle.textContent = __( msg, 'gpalab-slo');
+      dialogTitle.textContent = __( msg, 'gpalab-slo' );
       confirmRemovalDialog.dataset.id = id;
       confirmRemovalDialog.dataset.idxafter = indexAfterRemoval;
     } );
@@ -93,16 +93,29 @@ export const eventListeners = () => {
     document.documentElement.removeAttribute( 'style' );
   } );
 
+  // Add event listeners to the Save Changes buttons.
+  const saveChangesBtns = document.querySelectorAll( '.slo-submit' );
+
+  saveChangesBtns.forEach( ( btn, idx ) => {
+    btn.addEventListener( 'click', e => {
+      const { post } = e.target.dataset;
+
+      const input = document.getElementById( `title_${idx}` );
+
+      updateSLOPageTitle( post, input.value, idx );
+    } );
+  } );
+
   // Add event listeners to the Update Permalink buttons.
   const updatePermalinkBtns = document.querySelectorAll( '.slo-permalink' );
 
   updatePermalinkBtns.forEach( ( btn, idx ) => {
     btn.addEventListener( 'click', e => {
-      const { id, post } = e.target.dataset;
+      const { id, post, title } = e.target.dataset;
 
       const input = document.getElementById( `permalink-${id}` );
 
-      updateSLOPermalink( post, input.value, idx );
+      updateSLOPermalink( post, title, input.value, idx );
     } );
   } );
 

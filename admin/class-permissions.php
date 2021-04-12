@@ -39,7 +39,7 @@ class Permissions {
    */
   public function slo_archive_remove_admin_bar_edit_link() {
     global $post;
-    
+
     $is_gpa_slo_archive = is_page_template( 'archive-gpalab-social-link.php' );
     $is_gpa_slo_preview = 'gpalab-social-link' === $post->post_type;
 

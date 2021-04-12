@@ -95,13 +95,46 @@ export const setPreferredMission = async missionId => {
 };
 
 /**
+ * Update the post_title of a given WordPress post.
+ *
+ * @param {string} postId   The id of a WordPress SLO page.
+ * @param {string} title    The new title value to be saved.
+ * @param {string} index    The index of the current tab.
+ */
+export const updateSLOPageTitle = async ( postId, title, index ) => {
+  // Get values provided to the client by the server
+  const fromPHP = window?.gpalabSloAdmin || {};
+
+  const formData = new FormData();
+
+  formData.append( 'action', 'gpalab_update_slo_page_title' );
+  formData.append( 'security', fromPHP.sloNonce );
+  formData.append( 'post_id', postId );
+  formData.append( 'title', title );
+
+  try {
+    const response = await fetch( fromPHP.ajaxUrl, {
+      method: 'POST',
+      body: formData,
+    } );
+
+    const result = await response.json();
+
+    console.log( result );
+    reloadInTab( index );
+  } catch ( err ) {
+    console.error( err );
+  }
+};
+
+/**
  * Update the post_name (i.e. permalink) of a given WordPress post.
  *
  * @param {string} postId     The id of a WordPress SLO page.
  * @param {string} permalink  The new permalink value to be saved.
  * @param {string} index      The index of the current tab.
  */
-export const updateSLOPermalink = async ( postId, permalink, index ) => {
+export const updateSLOPermalink = async ( postId, title, permalink, index ) => {
   // Get values provided to the client by the server
   const fromPHP = window?.gpalabSloAdmin || {};
 
@@ -111,6 +144,7 @@ export const updateSLOPermalink = async ( postId, permalink, index ) => {
   formData.append( 'security', fromPHP.sloNonce );
   formData.append( 'permalink', permalink );
   formData.append( 'post_id', postId );
+  formData.append( 'title', title );
 
   try {
     const response = await fetch( fromPHP.ajaxUrl, {
