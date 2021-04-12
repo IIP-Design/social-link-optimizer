@@ -461,10 +461,7 @@ h1.gpalab-slo-page-title,
 
 /* admin Edit link */
 .section-inner .post-edit.meta-wrapper {
-  display: flex;
-  align-items: center;
-  gap: var(--length-0-625);
-  font-family: var(--theme-font-secondary);
+  display: none;
 }
 
 .section-inner .post-edit.meta-wrapper .svg-icon {
