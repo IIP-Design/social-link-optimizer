@@ -530,10 +530,13 @@ class Settings {
         <?php
           submit_button(
             __( 'Save Changes', 'gpalab-slo' ),
-            'primary',
+            'primary slo-submit',
             'submit',
             true,
-            array( 'id' => 'slo-submit-' . $id )
+            array(
+              'id'        => 'slo-submit-' . $id,
+              'data-post' => $post_id,
+            )
           );
         ?>
       </div>

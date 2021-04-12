@@ -10,6 +10,7 @@ _This sections lists changes committed since most recent release_
 
 #### Added:
 
+- Use the mission name (if set) to populate the SLO page title when saving page settings or updating permalink
 - Added documentation for social media managers (non-admin users)
 
 #### Changed:
@@ -19,7 +20,7 @@ _This sections lists changes committed since most recent release_
 - Change the save button text for archived posts
 - Hide AddThis share bar on mobile as well as desktop
 
-### [v1.1.0](https://github.com/IIP-Design/social-link-optimizer/releases/tag/v1.0.0) - 2021.02.24 (Initial Release)
+### [v1.1.0](https://github.com/IIP-Design/social-link-optimizer/compare/v1.0.0...v1.1.0) - 2021.02.24
 
 #### Added:
 

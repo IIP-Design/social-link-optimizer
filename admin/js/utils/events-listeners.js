@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import A11yDialog from 'a11y-dialog';
 
-import { addSLOMission, removeSLOMission, updateSLOPermalink } from './ajax';
+import { addSLOMission, removeSLOMission, updateSLOPageTitle, updateSLOPermalink } from './ajax';
 import { mediaUploader, removeMedia } from './file-uploads';
 import { selectTab, switchTab } from './tab-nav';
 
@@ -91,6 +91,19 @@ export const eventListeners = () => {
   // Restore content scrolling when dialog is closed.
   dialog.on( 'hide', () => {
     document.documentElement.removeAttribute( 'style' );
+  } );
+
+  // Add event listeners to the Save Changes buttons.
+  const saveChangesBtns = document.querySelectorAll( '.slo-submit' );
+
+  saveChangesBtns.forEach( ( btn, idx ) => {
+    btn.addEventListener( 'click', e => {
+      const { post } = e.target.dataset;
+
+      const input = document.getElementById( `title_${idx}` );
+
+      updateSLOPageTitle( post, input.value, idx );
+    } );
   } );
 
   // Add event listeners to the Update Permalink buttons.

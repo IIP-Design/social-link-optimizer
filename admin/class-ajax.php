@@ -194,6 +194,45 @@ class Ajax {
   }
 
   /**
+   * Update the title of a given SLO page.
+   *
+   * @since 1.2.0
+   */
+  public function handle_slo_page_title_update() {
+    // The following rules are handled by the slo_verify_nonce function and hence can be safely ignored.
+    // phpcs:disable WordPress.Security.NonceVerification.Missing
+    // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+    // phpcs:disable WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+    // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+    $this->slo_verify_nonce( $_POST['security'] );
+
+    $post_id = null;
+    $title   = null;
+
+    if ( isset( $_POST['post_id'] ) ) {
+      $post_id = sanitize_text_field( wp_unslash( $_POST['post_id'] ) );
+    }
+
+    if ( isset( $_POST['title'] ) ) {
+      $title = sanitize_text_field( wp_unslash( $_POST['title'] ) );
+    }
+    // phpcs:enable
+
+    $current_title = get_the_title( $post_id );
+
+    // Only update the page title if it is being changed.
+    if ( isset( $title ) && $current_title !== $title ) {
+      $args = array(
+        'ID'         => $post_id,
+        'post_title' => $title,
+      );
+
+      wp_update_post( $args );
+      update_post_meta( $post_id, '_wp_page_template', 'archive-gpalab-social-link.php' );
+    }
+  }
+
+  /**
    * Saves the mission that a given user would like to see when visiting the Social Links page.
    *
    * @since 0.0.1

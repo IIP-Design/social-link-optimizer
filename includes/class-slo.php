@@ -136,6 +136,7 @@ class SLO {
     $this->loader->add_action( 'wp_ajax_gpalab_add_slo_mission', $plugin_ajax, 'handle_mission_addition' );
     $this->loader->add_action( 'wp_ajax_gpalab_remove_slo_mission', $plugin_ajax, 'handle_mission_removal' );
     $this->loader->add_action( 'wp_ajax_gpalab_slo_user_mission', $plugin_ajax, 'handle_user_mission_selection' );
+    $this->loader->add_action( 'wp_ajax_gpalab_update_slo_page_title', $plugin_ajax, 'handle_slo_page_title_update' );
     $this->loader->add_action( 'wp_ajax_gpalab_update_slo_permalink', $plugin_ajax, 'handle_permalink_update' );
 
     // Custom post type hooks.
