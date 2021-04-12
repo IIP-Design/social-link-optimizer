@@ -101,7 +101,7 @@ export const setPreferredMission = async missionId => {
  * @param {string} permalink  The new permalink value to be saved.
  * @param {string} index      The index of the current tab.
  */
-export const updateSLOPermalink = async ( postId, permalink, index ) => {
+export const updateSLOPermalink = async ( postId, title, permalink, index ) => {
   // Get values provided to the client by the server
   const fromPHP = window?.gpalabSloAdmin || {};
 
@@ -111,6 +111,7 @@ export const updateSLOPermalink = async ( postId, permalink, index ) => {
   formData.append( 'security', fromPHP.sloNonce );
   formData.append( 'permalink', permalink );
   formData.append( 'post_id', postId );
+  formData.append( 'title', title );
 
   try {
     const response = await fetch( fromPHP.ajaxUrl, {

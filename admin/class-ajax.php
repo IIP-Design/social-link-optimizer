@@ -164,8 +164,9 @@ class Ajax {
     // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
     $this->slo_verify_nonce( $_POST['security'] );
 
-    $post_id   = null;
-    $post_name = null;
+    $post_id    = null;
+    $post_name  = null;
+    $post_title = null;
 
     if ( isset( $_POST['post_id'] ) ) {
       $post_id = sanitize_text_field( wp_unslash( $_POST['post_id'] ) );
@@ -174,12 +175,18 @@ class Ajax {
     if ( isset( $_POST['permalink'] ) ) {
       $post_name = sanitize_title_with_dashes( wp_unslash( $_POST['permalink'] ) );
     }
+
+    if ( isset( $_POST['title'] ) ) {
+      $post_title = sanitize_text_field( wp_unslash( $_POST['title'] ) );
+    } else {
+      $post_title = ucwords( str_replace( array( '-' ), ' ', $post_name ) );
+    }
     // phpcs:enable
 
     $args = array(
       'ID'         => $post_id,
       'post_name'  => $post_name,
-      'post_title' => ucwords( str_replace( array( '-' ), ' ', $post_name ) ),
+      'post_title' => $post_title,
     );
 
     wp_update_post( $args );

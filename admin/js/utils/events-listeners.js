@@ -66,7 +66,7 @@ export const eventListeners = () => {
       const indexAfterRemoval = index > 0 ? index - 1 : 0;
       const msg = `Are you sure you want to delete the ${selected[0].innerText} page?`;
 
-      dialogTitle.textContent = __( msg, 'gpalab-slo');
+      dialogTitle.textContent = __( msg, 'gpalab-slo' );
       confirmRemovalDialog.dataset.id = id;
       confirmRemovalDialog.dataset.idxafter = indexAfterRemoval;
     } );
@@ -98,11 +98,11 @@ export const eventListeners = () => {
 
   updatePermalinkBtns.forEach( ( btn, idx ) => {
     btn.addEventListener( 'click', e => {
-      const { id, post } = e.target.dataset;
+      const { id, post, title } = e.target.dataset;
 
       const input = document.getElementById( `permalink-${id}` );
 
-      updateSLOPermalink( post, input.value, idx );
+      updateSLOPermalink( post, title, input.value, idx );
     } );
   } );
 
