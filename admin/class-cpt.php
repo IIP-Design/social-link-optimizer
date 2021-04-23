@@ -348,7 +348,7 @@ class CPT {
       update_post_meta(
         $post_id,
         'gpalab_slo_link',
-        sanitize_text_field( wp_unslash( $_POST['gpalab_slo_link'] ) )
+        esc_url_raw( wp_unslash( $_POST['gpalab_slo_link'] ) )
       );
     }
 
