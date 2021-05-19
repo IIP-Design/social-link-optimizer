@@ -124,14 +124,16 @@ class CPT_List {
       $missions     = array();
       $slo_settings = get_option( 'gpalab-slo-settings' );
 
-      // Get title and id for each mission.
-      foreach ( $slo_settings as $setting ) {
-        $mission = array();
+      if ( isset( $slo_settings ) && is_iterable( $slo_settings ) ) {
+        // Get title and id for each mission.
+        foreach ( $slo_settings as $setting ) {
+          $mission = array();
 
-        $mission['label'] = $setting['title'];
-        $mission['value'] = $setting['id'];
+          $mission['label'] = $setting['title'];
+          $mission['value'] = $setting['id'];
 
-        array_push( $missions, $mission );
+          array_push( $missions, $mission );
+        }
       }
 
       // Initialize the selected mission as empty (ie. all missions).

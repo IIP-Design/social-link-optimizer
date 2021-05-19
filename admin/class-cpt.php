@@ -444,7 +444,6 @@ class CPT {
    * @since 0.0.1
    */
   public function social_link_updated_messages( $msg ) {
-
     global $post;
 
     /* translators: %s: date and time of the revision */

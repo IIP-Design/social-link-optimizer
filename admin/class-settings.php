@@ -84,36 +84,39 @@ class Settings {
       // Create the tabs for the tabbed container.
       if ( isset( $missions ) ) {
         echo '<h2>' . esc_html( $title ) . '</h2>';
-        echo '<ul class="gpalab-slo-tab-container" role="tablist">';
 
         if ( empty( $missions ) ) {
           echo '<p>' . esc_html( $no_missions ) . '</p>';
         }
 
-        foreach ( $missions as $key => $mission ) {
-          ?>
-          <li class="gpalab-slo-tab" role="presentation" >
-            <a
-              class="gpalab-slo-tab-button"
-              href=<?php echo esc_attr( '#gpalab-slo-tab-' . $key ); ?>
-              id=<?php echo esc_attr( 'gpalab-slo-tab-' . $key ); ?>
-              data-id=<?php echo esc_attr( $key ); ?>
-              role="tab"
-              <?php echo empty( $mission['title'] ) ? 'style="font-style: italic;"' : ''; ?>
-            >
-              <?php
-              if ( ! empty( $mission['title'] ) ) {
-                echo esc_html( $mission['title'] );
-              } else {
-                echo esc_html__( 'untitled', 'gpalab-slo' );
-              }
-              ?>
-            </a>
-          </li>
-          <?php
-        }
+        if ( ! empty( $missions ) && is_iterable( $missions ) ) {
+          echo '<ul class="gpalab-slo-tab-container" role="tablist">';
 
-        echo '</ul>';
+          foreach ( $missions as $key => $mission ) {
+            ?>
+            <li class="gpalab-slo-tab" role="presentation" >
+              <a
+                class="gpalab-slo-tab-button"
+                href=<?php echo esc_attr( '#gpalab-slo-tab-' . $key ); ?>
+                id=<?php echo esc_attr( 'gpalab-slo-tab-' . $key ); ?>
+                data-id=<?php echo esc_attr( $key ); ?>
+                role="tab"
+                <?php echo empty( $mission['title'] ) ? 'style="font-style: italic;"' : ''; ?>
+              >
+                <?php
+                if ( ! empty( $mission['title'] ) ) {
+                  echo esc_html( $mission['title'] );
+                } else {
+                  echo esc_html__( 'untitled', 'gpalab-slo' );
+                }
+                ?>
+              </a>
+            </li>
+            <?php
+          }
+
+          echo '</ul>';
+        }
       }
       ?>
     <form id="post" method="post" action="options.php">
@@ -134,7 +137,7 @@ class Settings {
   public function populate_settings_page() {
     $missions = get_option( 'gpalab-slo-settings' );
 
-    if ( isset( $missions ) ) {
+    if ( isset( $missions ) && is_iterable( $missions ) ) {
 
       foreach ( $missions as $key => $mission ) {
         add_settings_section(
@@ -354,6 +357,7 @@ class Settings {
     $key         = $args['key'];
     $option      = $args['option'];
     $placeholder = ! empty( $args['placeholder'] ) ? 'placeholder="' . $args['placeholder'] . '" ' : '';
+    $required    = ! empty( $args['required'] ) ? $args['required'] : false;
     $type        = ! empty( $args['type'] ) ? $args['type'] : 'text';
 
     $id    = $field . '_' . $key;
@@ -365,7 +369,7 @@ class Settings {
       id=<?php echo esc_attr( $id ); ?>
       name=<?php echo esc_attr( 'gpalab-slo-settings[' . $key . '][' . $field . ']' ); ?>
       <?php echo wp_kses( $placeholder, 'post' ); ?>
-      <?php echo true === $args['required'] ? 'required ' : ''; ?>
+      <?php echo true === $required ? 'required ' : ''; ?>
       type=<?php echo esc_attr( $type ); ?>
       value="<?php echo esc_attr( $value ); ?>"
     >
@@ -590,7 +594,7 @@ class Settings {
    * @since 0.0.1
    */
   private function render_avatar_uploader( $mission, $index, $id ) {
-    $avatar      = esc_html( $mission['avatar'] );
+    $avatar      = ! empty( $mission['avatar'] ) ? esc_html( $mission['avatar'] ) : '';
     $media_label = __( 'Mission avatar:', 'gpalab-slo' );
 
     // Change the text of the upload button if no value saved.
