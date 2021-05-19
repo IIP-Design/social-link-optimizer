@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 _This sections lists changes committed since most recent release_
 
+#### Fix:
+
+- Don't attempt to add Archive to post states if post type is not available
+
 ### [v1.2.1](https://github.com/IIP-Design/social-link-optimizer/compare/v1.2.0...v1.2.1) - 2021.04.23
 
 #### Fix:

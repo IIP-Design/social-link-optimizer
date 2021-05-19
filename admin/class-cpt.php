@@ -565,6 +565,11 @@ class CPT {
   public function add_archived_to_display_post_states( $states ) {
     global $post;
 
+    // Short circuit if not a post.
+    if ( ! $post ) {
+      return $states;
+    }
+
     $post_type   = $post->post_type;
     $post_status = $post->post_status;
 
