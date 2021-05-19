@@ -20,7 +20,10 @@ _This sections lists changes committed since most recent release_
 
 #### Fix:
 
-- Don't attempt to add Archive to post states if post type is not available
+- Provide additional checks to address infrequent edge cases, namely:
+  - Return early if calling global post variable outside of the loop
+  - Check that values are iterable before running a foreach loop on option values
+  - Ensure that variables inherited by templates part from their parent are set before using
 
 ### [v1.2.1](https://github.com/IIP-Design/social-link-optimizer/compare/v1.2.0...v1.2.1) - 2021.04.23
 

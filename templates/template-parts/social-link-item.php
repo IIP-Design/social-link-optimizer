@@ -16,4 +16,6 @@ require_once GPALAB_SLO_DIR . 'public/class-frontend.php';
 
 $plugin_frontend = new SLO\Frontend( $plugin_constants->plugin_name, $plugin_constants->version );
 
+$current_post = get_the_ID();
+
 $plugin_frontend->get_social_link_item( $layout, $current_post );
