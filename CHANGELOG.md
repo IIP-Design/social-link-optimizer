@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 _This sections lists changes committed since most recent release_
 
+#### Added:
+
+- Show the changelog in the documentation site
+
 #### Fix:
 
 - Don't attempt to add Archive to post states if post type is not available
