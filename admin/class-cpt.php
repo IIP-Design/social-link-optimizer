@@ -325,9 +325,7 @@ class CPT {
    * @since 0.0.1
    */
   public function gpalab_slo_meta_save( $post_id ) {
-    global $post;
-
-    if ( 'gpalab-social-link' !== $post->post_type ) {
+    if ( 'gpalab-social-link' !== get_post_type( $post_id ) ) {
       return;
     }
 
