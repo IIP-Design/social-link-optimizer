@@ -82,7 +82,7 @@ Click the **Publish** button to publish the post. A message will appear at the t
 
 To view the post on the live Social Links page, click the link in the **Select Mission (required)** box. A new tab will open with the live, external Social Links page.
 
-> **Note**: If you would like to schedule the publish time and date of the post, click on the **Edit** link for the **Publish immediately** option and select a date and time. Click the **Ok** button, then click the **Schedule** button.
+> **Note**: If you would like to schedule the publish time and date of the post, click on the **Edit** link for the **Publish immediately** option and select a date and time. Click the **Ok** button, then click the **Schedule** button. The post will be published within 15 minutes after the scheduled time.
 
 <img src="./assets/user-guide/see-published.png" height="auto" width="800">
 
@@ -104,7 +104,7 @@ To change the status of the post, click the **Edit** link and select an option f
 
 Click the **Update** button to update the post.
 
-> **Note**: If you would like to schedule the publish time and date of the post, click on the **Edit** link for the **Publish immediately** option and select a date and time. Click the **OK** button, then click the **Schedule** button.
+> **Note**: If you would like to schedule the publish time and date of the post, click on the **Edit** link for the **Publish immediately** option and select a date and time. Click the **OK** button, then click the **Schedule** button. The post will be published within 15 minutes after the scheduled time.
 
 ### Delete Existing Posts
 
