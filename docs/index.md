@@ -2,9 +2,9 @@
 title: Social Link Technical Documentation
 ---
 
-### Installation
+## Installation
 
-#### Basic Install
+### Basic Install
 
 To install this plugin, you can copy the files into the plugins directory of your WordPress install. An easy way to do this is to clone the repository from GitHub:
 
@@ -13,7 +13,7 @@ $ cd my-site/wp-content/plugins
 $ git clone https://github.com/IIP-Design/social-link-optimizer.git
 ```
 
-#### Composer Install
+### Composer Install
 
 If using a Composer build process, add a reference to the plugin's git repository to the repositories array of your `composer.json`. In the require section, add an entry for `gpalab/social-link-optimizer` pointing to the version of the plugin you would like to use. Your resulting `composer.json` file will look something like this:
 
@@ -36,13 +36,13 @@ If using a Composer build process, add a reference to the plugin's git repositor
 }
 ```
 
-#### Activation
+### Activation
 
 Once the plugin is installed, you can go to the installed plugins in the WordPress admin panel and click on the `Activate` link under the Social Link Optimizer plugin.
 
 Activation of the plugin will add an entry for the plugin settings to the site's options table. It will create the custom capabilities that will be used to manage the plugin (form more information see the [section on permissions](#permissions)).
 
-#### Uninstall
+### Uninstall
 
 To deactivate the plugin go to the installed plugins in the WordPress admin panel and click on the `Deactivate` link under the Social Link Optimizer plugin.
 
@@ -58,13 +58,13 @@ Please note that deleting the plugin runs a series of uninstall hooks to clean u
 
 These **deletions are irreversible** so please only delete the plugin if you are certain that you no longer want to use this data and/or that you have backed up your database.
 
-### Development
+## Development
 
 Please note that ESLint and PHP Codesniffer will run on every commit to ensure that the plugin's code is conforming to the correct standards. If any code fails this linting, you will not be able to complete your commit. As such it is highly recommended that you integrate ESLint and PHP Codesniffer into your preferred text editor or frequently run the linting script `npm run lint`.
 
 To compile the plugin's JavaScript files for production, run the command `npm run build`, which will update the production files in the `admin/build` directory.
 
-### Plugin Structure
+## Plugin Structure
 
 This plugin contains a `social-link-optimizer.php` file, which registers the plugin and begins its execution. There is an admin directory (`admin`) where all functions relating to the admin portion of the plugin are registered and a public directory (`public`) where all functions relating to the plugin's frontend are registered. The `includes` directory contains the main plugin class (`include/class-slo.php`) - which defines the core functionality of the plugin, the loader class (`include/class-loader.php`) - which feeds the admin and public hooks in from their respective classes into the main class file, and activator/uninstall hooks - which define the plugin's behavior upon installation/deletion.
 
@@ -110,7 +110,7 @@ root
 └── webpack.config.js # Customizes the configurations used by wp-scripts to build the production JS bundles.
 ```
 
-### Permissions
+## Permissions
 
 This plugin adds a number of custom WordPress capabilities that allow site admins to manage who has access to use/configure the functionality provided by the plugin. The capabilities consist of three core capabilities for configuring social link pages and a group capabilities relating to individual social links.
 

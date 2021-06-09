@@ -2,7 +2,7 @@
 title: Guide for Social Media Managers
 ---
 
-### Navigate to the Social Links Plugin
+## Navigate to the Social Links Plugin
 
 <img src="./assets/user-guide/navigate-social-links.png" height="auto" width="300">
 
@@ -10,7 +10,7 @@ Within your WordPress instance, navigate to the left side menu panel.
 
 Hover over **Social Links** to view the quick navigation options or click on **Social Links** to go to the main menu.
 
-### Use the Dashboard Widget to Set Preferences
+## Use the Dashboard Widget to Set Preferences
 
 <img src="./assets/user-guide/dashboard.png" height="auto" width="800">
 
@@ -26,7 +26,7 @@ Click the **Go to my Social Links page** link to access your default view.
 
 > **Note**: You will only be able to access the default view through the link in the Social Links dashboard widget.
 
-### Create a New Link Post
+## Create a New Link Post
 
 <img src="./assets/user-guide/navigate-add-new-link.png" height="auto" width="300">
 
@@ -88,7 +88,7 @@ To view the post on the live Social Links page, click the link in the **Select M
 
 To view published posts, navigate to the **Social Links** main menu. Click the **Published** link at the top of the page. A list of the published posts will appear and are sorted by published date. The default **All** view will also show the published links.
 
-### Edit Existing Posts
+## Edit Existing Posts
 
 <img src="./assets/user-guide/hover-links.png" height="auto" width="800">
 
@@ -106,7 +106,7 @@ Click the **Update** button to update the post.
 
 > **Note**: If you would like to schedule the publish time and date of the post, click on the **Edit** link for the **Publish immediately** option and select a date and time. Click the **OK** button, then click the **Schedule** button. The post will be published within 15 minutes after the scheduled time.
 
-### Delete Existing Posts
+## Delete Existing Posts
 
 <img src="./assets/user-guide/hover-links.png" height="auto" width="800">
 
@@ -118,7 +118,7 @@ Hover over the post that you want to delete. Click the red **Trash** link to mov
 
 > **Note**: If you moved something to the trash in error, you can click the **Undo** link to restore the post.
 
-### Delete Posts Permanently or Restore Deleted Posts
+## Delete Posts Permanently or Restore Deleted Posts
 
 <img src="./assets/user-guide/see-trash.png" height="auto" width="800">
 
@@ -134,7 +134,7 @@ If you chose to restore the post, it will now appear in the **Draft** list. Clic
 
 <img src="./assets/user-guide/see-drafts.png" height="auto" width="800">
 
-### Archive and Unarchive Posts
+## Archive and Unarchive Posts
 
 <img src="./assets/user-guide/archive.png" height="auto" width="800">
 
@@ -158,7 +158,7 @@ Select **Draft** from the drop-down menu and click the **OK** button.
 
 Click the **Save Draft** button to unarchive the post and save as a draft or click the **Publish** button to publish the post.
 
-### View Posts in Draft, Published, Archived Status
+## View Posts in Draft, Published, Archived Status
 
 <img src="./assets/user-guide/action-links.png" height="auto" width="800">
 
@@ -168,7 +168,7 @@ Click on the **Published**, **Draft**, or **Archived** links at the top of the p
 
 > **Note:** You can click on the **Mine** link to view posts that you created. Click on the **All** link to view all Social Link posts. Click on the **Trash** link to view posts that are in the trash.
 
-### Filter Posts
+## Filter Posts
 
 <img src="./assets/user-guide/all-dates-dropdown.png" height="auto" width="800">
 
@@ -180,7 +180,7 @@ To filter by Mission, click on the **All Missions** drop-down menu and select a 
 
 <img src="./assets/user-guide/all-missions-dropdown.png" height="auto" width="500">
 
-### Perform Bulk Actions
+## Perform Bulk Actions
 
 <img src="./assets/user-guide/bulk-actions.png" height="auto" width="500">
 
