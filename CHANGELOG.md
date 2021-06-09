@@ -10,7 +10,11 @@ _This sections lists changes committed since most recent release_
 
 ### Changed:
 
-- Updated the doc site configuration to conform to the recent changes to the Lab Notes theme
+- Updated the doc site configuration to utilize new features from the Lab Notes documentation theme
+
+### Security:
+
+- Updated JavaScript dependencies
 
 ## [v1.2.2](https://github.com/IIP-Design/social-link-optimizer/compare/v1.2.1...v1.2.2) - 2021.05.19
 
