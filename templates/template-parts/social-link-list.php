@@ -8,6 +8,7 @@
 
 // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 // phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+// phpcs:disable WordPress.WP.PostsPerPage.posts_per_page_posts_per_page
 $globals = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 $args    = array(
   'post_type'      => 'gpalab-social-link',
