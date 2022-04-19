@@ -31,5 +31,5 @@ class Constants {
    *
    * @since 0.0.1
    */
-  public $version = '1.2.2';
+  public $version = '1.2.3';
 }

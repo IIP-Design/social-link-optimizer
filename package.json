@@ -17,32 +17,32 @@
     "type": "git",
     "url": "git+https://github.com/IIP-Design/social-link-optimizer.git"
   },
-  "author": "U.S. Department of State, Bureau of Global Public Affairs Digital Lab <gpa-lab@america.gov>",
+  "author": "U.S. Department of State, Bureau of Global Public Affairs Digital Lab <gpa-lab@fan.gov>",
   "license": "GPL-2.0-or-later",
   "bugs": {
     "url": "https://github.com/IIP-Design/social-link-optimizer/issues"
   },
   "homepage": "https://github.com/IIP-Design/social-link-optimizer#readme",
   "dependencies": {
-    "@wordpress/components": "^14.1.2",
-    "@wordpress/compose": "^4.1.1",
-    "@wordpress/data": "^5.1.1",
-    "@wordpress/edit-post": "^4.1.5",
-    "@wordpress/i18n": "^4.1.1",
-    "@wordpress/plugins": "^3.1.1",
-    "a11y-dialog": "^7.1.0"
+    "@wordpress/components": "^19.8.0",
+    "@wordpress/compose": "^5.4.0",
+    "@wordpress/data": "^6.6.0",
+    "@wordpress/edit-post": "^6.3.1",
+    "@wordpress/i18n": "^4.6.0",
+    "@wordpress/plugins": "^4.4.0",
+    "a11y-dialog": "^7.4.0"
   },
   "devDependencies": {
-    "@gpa-lab/eslint-config": "1.4.1",
-    "@wordpress/scripts": "^16.1.2",
-    "eslint": "^7.28.0",
-    "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jest": "^24.3.6",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "@gpa-lab/eslint-config": "1.6.1",
+    "@wordpress/scripts": "^22.4.0",
+    "eslint": "^8.13.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^26.1.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-react": "^7.24.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "husky": "^6.0.0",
-    "jest": "^27.0.4"
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.4.0",
+    "husky": "^7.0.4",
+    "jest": "^27.5.1"
   }
 }

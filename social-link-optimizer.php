@@ -3,7 +3,7 @@
  * Plugin Name: Social Link Optimizer
  * Plugin URI: https://github.com/IIP-Design/social-link-optimizer
  * Description: Adds a Social Link custom post type, custom meta box, and Social Link Optimizer page template
- * Version: v1.2.2
+ * Version: v1.2.3
  * Author: U.S. Department of State, Bureau of Global Public Affairs Digital Lab <gpa-lab@america.gov>
  * Author URI: https://lab.america.gov
  * License: GNU General Public License v2.0
