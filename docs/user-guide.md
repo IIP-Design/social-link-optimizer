@@ -2,6 +2,8 @@
 title: Guide for Social Media Managers
 ---
 
+This page is intended for social media managers who will be adding content to the social links landing page. It'll guide you through adding, editing, and deleting content from the social links page.
+
 ## Navigate to the Social Links Plugin
 
 <img src="./assets/user-guide/navigate-social-links.png" height="auto" width="300">

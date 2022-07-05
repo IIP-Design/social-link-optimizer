@@ -1,137 +1,33 @@
 ---
-title: Social Link Technical Documentation
+title: About This Plugin
 ---
 
-## Installation
+Social Links is a WordPress plugin designed and developed by the [GPA Digital Lab](https://lab.america.gov/) as an alternative to third-party platforms such as [linkin.bio](https://later.com/free-link-in-bio/) and [LinkTree](https://linktr.ee/). While great products, these platforms raise the following concerns when used by post:
 
-### Basic Install
+1. As third-party cloud products, questions often arise about FedRAMP status or security implication of using these services. Even when there is no security concern, such questions can impose complications and burdensome paperwork for users. By deploying this plugin on the Mission Websites Platform, the resulting pages inherit the security of the underlying platform and ensure data is stored in a safe and secure fashion.
+1. Third-party services often have a cost associated with them. Beyond the simple dollar amount needed to acquire the product, recurring subscriptions are often perversely difficult to get through the acquisitions process. This plugin, on the other hand, was developed and open sourced by the Department making it free to use for all.
+1. As U.S. Department of State properties, mission web assets should utilize a consistent branding and style. This is often difficult to achieve with third-party tools. Meanwhile, Social Links applies the Department styles out of the box and ensures consistency across all post's social links pages. Furthermore, special care was taken to ensure that the end product follows accessibility best practices so that your content is available to all users.
 
-To install this plugin, you can copy the files into the plugins directory of your WordPress install. An easy way to do this is to clone the repository from GitHub:
+## What This Plugin Provides
 
-```bash
-$ cd my-site/wp-content/plugins
-$ git clone https://github.com/IIP-Design/social-link-optimizer.git
-```
+Driving user traffic from social media to key web content is a cornerstone of any organization’s content strategy. This is often accomplished by means of a landing page that aggregates links.
 
-### Composer Install
+The easy-to-use Social Links plugin was [created with Mission personnel in mind](https://lab.america.gov/2021/06/23/introducing-social-links/) and developed in collaboration with staff in the field. It provides an administrative interface with a post's mission website to create "mission" pages where you will be able to add your links. Each WordPress instance can have multiple social link pages. The plugin also adds a "social link" custom post type to your site, which can be used to populate the social link pages.
 
-If using a Composer build process, add a reference to the plugin's git repository to the repositories array of your `composer.json`. In the require section, add an entry for `gpalab/social-link-optimizer` pointing to the version of the plugin you would like to use. Your resulting `composer.json` file will look something like this:
+Among the configuration options is a choice of two layouts, a list view and a grid view:
 
-```json
-{
-  "name": "sample-webroot",
-  "repositories": [
-    {
-      "type": "git",
-      "url": "git@github.com:IIP-Design/social-link-optimizer"
-    },
-    {
-      "other repo": "..."
-    }
-  ],
-  "require": {
-    "gpalab/social-link-optimizer": "*",
-    "other-dependency": "..."
-  }
-}
-```
+<img alt="mock up of a mobile device displaying a list of links under the heading U.S. Mission to the European Union" src="./assets/list-view.png" height="500" width="auto">
+<img alt="mock up of a mobile device displaying a grid of images under the heading U.S. Mission to the European Union" src="./assets/grid-view.png" height="500" width="auto">
 
-### Activation
+As seen above, the list view is a simple column of linked text. The grid view displays three columns of linked images. Other configurable page elements include:
 
-Once the plugin is installed, you can go to the installed plugins in the WordPress admin panel and click on the `Activate` link under the Social Link Optimizer plugin.
+- An image at the top of the page to indicate the mission
+- The mission name
+- The mission site URL
+- Links to the mission social media properties (Twitter, Facebook, YouTube, etc.) as needed
 
-Activation of the plugin will add an entry for the plugin settings to the site's options table. It will create the custom capabilities that will be used to manage the plugin (form more information see the [section on permissions](#permissions)).
+## Further Information
 
-### Uninstall
-
-To deactivate the plugin go to the installed plugins in the WordPress admin panel and click on the `Deactivate` link under the Social Link Optimizer plugin.
-
-To completely removed the plugin, first deactivate the plugin. Once deactivated, you should see the `Deactivate` link replaced with a `Delete` link. [Note that on a multisite installation, you can only delete a plugin from the network admin.]
-
-Please note that deleting the plugin runs a series of uninstall hooks to clean up the database. These hooks will:
-
-1. Delete the plugin settings saved in the options table,
-1. Delete the custom capabilities created by the plugin to manage permissions,
-1. Delete the metadata saved to social link pages,
-1. Change the page template on all social link pages from `Social Link Optimizer` to `Default`, and
-1. Delete all added social links.
-
-These **deletions are irreversible** so please only delete the plugin if you are certain that you no longer want to use this data and/or that you have backed up your database.
-
-## Development
-
-Please note that ESLint and PHP Codesniffer will run on every commit to ensure that the plugin's code is conforming to the correct standards. If any code fails this linting, you will not be able to complete your commit. As such it is highly recommended that you integrate ESLint and PHP Codesniffer into your preferred text editor or frequently run the linting script `npm run lint`.
-
-To compile the plugin's JavaScript files for production, run the command `npm run build`, which will update the production files in the `admin/build` directory.
-
-## Plugin Structure
-
-This plugin contains a `social-link-optimizer.php` file, which registers the plugin and begins its execution. There is an admin directory (`admin`) where all functions relating to the admin portion of the plugin are registered and a public directory (`public`) where all functions relating to the plugin's frontend are registered. The `includes` directory contains the main plugin class (`include/class-slo.php`) - which defines the core functionality of the plugin, the loader class (`include/class-loader.php`) - which feeds the admin and public hooks in from their respective classes into the main class file, and activator/uninstall hooks - which define the plugin's behavior upon installation/deletion.
-
-Below is a more detailed listing of key plugin files and directories:
-
-```bash
-root
-├── social-link-optimizer.php # Entry point for the plugin.
-│
-├── admin # All files pertaining to the administrative portion of the plugin.
-│   │
-│   ├── class-admin.php # Registers (and localizes) admin scripts, styles, and post metadata.
-│   ├── class-ajax.php # Handles AJAX calls needed to persist data on the server.
-│   ├── class-archive.php # Configures the admin interface for the social links page template.
-│   ├── class-cpt.php # Adds a custom post type that is used to add social link data.
-│   ├── class-permissions.php # Adds and manages custom WordPress capabilities used by the plugin.
-│   ├── class-settings.php # Adds a Social Links menu item to the administrative panel.
-│   ├── class-ure.php # Integrates this plugin with the User Role Editor plugin.
-│   ├── build # Production builds of admin JavaScript bundles (generated by running `npm run build`)
-│   ├── css # Settings page CSS
-│   └── js # (Un-transpiled) JavaScript for the plugin settings page and
-│
-├── includes # Registering and implements all classes.
-│   │
-│   ├── class-activator.php # Actions run on the plugin's activation.
-│   ├── class-loader.php # Loader file, which runs all needed action and filter hooks.
-│   ├── class-slo.php # Registers the SLO class and imports/instantiates all the plugin's classes.
-│   └── class-uninstall.php # Actions run on the plugin's deletion.
-│
-├── public # All files pertaining to the frontend portion of the plugin.
-│   │
-│   ├── assets # Social icons used by the social links page template.
-│   ├── class-frontend.php # Registers and localizes frontend scripts and styles.
-│   ├── class-template.php # Adds a the social links page to the list of page template options.
-│   └── css # The social links page template CSS.
-│
-├── templates # Template files for the social links page template.
-│   │
-│   ├── archive-gpalab-social-link.php # Renders the social links page template.
-│   └── template-parts # Part used by the social links page template.
-│
-├── docs # Plugin documentation.
-└── webpack.config.js # Customizes the configurations used by wp-scripts to build the production JS bundles.
-```
-
-## Permissions
-
-This plugin adds a number of custom WordPress capabilities that allow site admins to manage who has access to use/configure the functionality provided by the plugin. The capabilities consist of three core capabilities for configuring social link pages and a group capabilities relating to individual social links.
-
-The three core capabilities are:
-
-1. `gpalab_slo_manage_settings` - Provides access to the plugin's settings page.
-1. `gpalab_slo_add_slo_page` - Allows user to assign the `Social Link Optimizer` template to a page.
-1. `gpalab_slo_edit_slo_page` - Allows user to update the properties of a social link page.
-
-By default, only users assigned the role `Admin` will have these core capabilities.
-
-The plugin also adds a group of capabilities pertaining to the creation/editing of individual social links. These capabilities correspond to the set of capabilities used to manage posts/pages and provide the [equivalent permission](https://developer.wordpress.org/reference/functions/get_post_type_capabilities/) (excluding those for private posts). They are:
-
-- `gpalab_slo_edit_links`
-- `gpalab_slo_edit_others_links`
-- `gpalab_slo_edit_published_links`
-- `gpalab_slo_delete_links`
-- `gpalab_slo_delete_others_links`
-- `gpalab_slo_delete_published_links`
-- `gpalab_slo_publish_links`
-
-By default, users with the role `Editor` and higher have access to these capabilities.
-
-These custom capabilities can easily be integrated into any WordPress role/user management tool. In fact this plugin integrates with the [User Role Editor](https://wordpress.org/plugins/user-role-editor/) plugin out of the box.
+- If you are looking to install this plugin on your WordPress instance, please visit our [installation guide]({{ '/installation' | relative_url }}).
+- Please see the [guide for web managers]({{ '/admin-user-guide' | relative_url }}) for instructions on setting up a new social links landing page using this plugin. If you already have a landing page set up, the [guide for social media managers]({{ 'user-guide' | relative_url }}) will guide you through the process of managing the links on your page.
+- If you would like to contribute to this project, please review the [technical documentation]({{ '/technical' | relative_url }}) and submit a pull request on our [GitHub repository](https://github.com/IIP-Design/social-link-optimizer).

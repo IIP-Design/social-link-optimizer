@@ -1,21 +1,18 @@
 nav_list:
+- title: About
+  url: "/"
+
 - title: Installation
-  url: "#installation"
-
-- title: Development
-  url: "#development"
-
-- title: Plugin Structure
-  url: "#plugin-structure"
-
-- title: Permissions
-  url: "#permissions"
+  url: "installation"
 
 - title: Guide for Web Managers
   url: admin-user-guide
 
 - title: Guide for Social Media Managers
   url: user-guide
+
+- title: Technical Documentation
+  url: "technical"
 
 - title: Changelog
   url: changelog

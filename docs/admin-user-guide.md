@@ -2,6 +2,8 @@
 title: Guide for Web Managers
 ---
 
+This page is intended for web managers who will be constructing the social links landing page (ie. missions). It'll guide you through adding, configuring, and deleting content a social links landing page.
+
 ## Add a New Mission
 
 From the WordPress admin dashboard, navigate to the **Social Links > Settings** sub-menu in the admin sidebar on the left hand side.
