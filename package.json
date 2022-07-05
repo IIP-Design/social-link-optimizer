@@ -17,7 +17,7 @@
     "type": "git",
     "url": "git+https://github.com/IIP-Design/social-link-optimizer.git"
   },
-  "author": "U.S. Department of State, Bureau of Global Public Affairs Digital Lab <gpa-lab@fan.gov>",
+  "author": "U.S. Department of State, Bureau of Global Public Affairs Digital Lab <gpa-lab-devs@fan.gov>",
   "license": "GPL-2.0-or-later",
   "bugs": {
     "url": "https://github.com/IIP-Design/social-link-optimizer/issues"
