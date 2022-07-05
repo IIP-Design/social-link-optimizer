@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad153cc98ea710609a1f4984915b22a9",
+    "content-hash": "9729df9d799bd048f6ae2ef943de3a88",
     "packages": [],
     "packages-dev": [
         {
@@ -84,22 +84,22 @@
         },
         {
             "name": "gpalab/coding-standards",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/IIP-Design/php-coding-standards.git",
-                "reference": "69618c835cbf84d458dfa1b5bc2ac939bcc34adf"
+                "reference": "51f1929e2aec460704bfeacb491e431b17bb0770"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/IIP-Design/php-coding-standards/zipball/69618c835cbf84d458dfa1b5bc2ac939bcc34adf",
-                "reference": "69618c835cbf84d458dfa1b5bc2ac939bcc34adf",
+                "url": "https://api.github.com/repos/IIP-Design/php-coding-standards/zipball/51f1929e2aec460704bfeacb491e431b17bb0770",
+                "reference": "51f1929e2aec460704bfeacb491e431b17bb0770",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.2 || ^8.0",
                 "phpcsstandards/phpcsextra": "^1.0",
-                "squizlabs/php_codesniffer": "^3.6.2"
+                "squizlabs/php_codesniffer": "^3.7.1"
             },
             "suggest": {
                 "phpcompatibility/php-compatibility": "Required when using the GPA-Lab-WordPress standard",
@@ -114,7 +114,7 @@
             "authors": [
                 {
                     "name": "U.S. Department of State, Bureau of Global Public Affairs Digital Lab",
-                    "email": "gpa-lab@fan.gov"
+                    "email": "gpa-lab-devs@fan.gov"
                 },
                 {
                     "name": "Marek Rewers",
@@ -122,6 +122,7 @@
                 }
             ],
             "description": "PHP_CodeSniffer rules (sniffs) to enforce GPA Lab coding conventions",
+            "homepage": "https://github.com/IIP-Design/php-coding-standards",
             "keywords": [
                 "gpalab",
                 "phpcs",
@@ -129,9 +130,9 @@
             ],
             "support": {
                 "issues": "https://github.com/IIP-Design/php-coding-standards/issues",
-                "source": "https://github.com/IIP-Design/php-coding-standards/tree/v1.0.0"
+                "source": "https://github.com/IIP-Design/php-coding-standards"
             },
-            "time": "2022-03-31T19:26:57+00:00"
+            "time": "2022-07-05T20:19:17+00:00"
         },
         {
             "name": "phpcompatibility/php-compatibility",
@@ -431,16 +432,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.6.2",
+            "version": "3.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "5e4e71592f69da17871dba6e80dd51bce74a351a"
+                "reference": "1359e176e9307e906dc3d890bcc9603ff6d90619"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/5e4e71592f69da17871dba6e80dd51bce74a351a",
-                "reference": "5e4e71592f69da17871dba6e80dd51bce74a351a",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/1359e176e9307e906dc3d890bcc9603ff6d90619",
+                "reference": "1359e176e9307e906dc3d890bcc9603ff6d90619",
                 "shasum": ""
             },
             "require": {
@@ -483,7 +484,7 @@
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
-            "time": "2021-12-12T21:44:58+00:00"
+            "time": "2022-06-18T07:21:10+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
